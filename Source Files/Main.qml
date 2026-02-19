@@ -4,13 +4,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import QtQuick.Controls.Material
-import QtQuick.Controls.Material.impl
+import QtQuick.Controls.Material.impl 2.15
 
 ApplicationWindow {
     width: 1080
     height: 720
     visible: true
-    title: qsTr("智能识别系统")
+    title: qsTr("人脸检测程序")
 
     Material.theme: Material.Light
     Material.accent: Material.Indigo
@@ -31,129 +31,189 @@ ApplicationWindow {
             anchors.fill: parent
             spacing: 0
 
-            // ==================== 侧边栏 ====================
             Rectangle {
                 id: sidebar
                 width: 200
                 height: parent.height
-                color: "#2c3e50"
+                color: "#f0f0f0"
 
                 Column {
                     anchors.fill: parent
+                    anchors.margins: 10
                     spacing: 0
 
-                    // Logo 区域
-                    Rectangle {
-                        width: parent.width
-                        height: 80
-                        color: "#1a252f"
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: "智能识别系统"
+                    Button {
+                        width: parent.width - 20
+                        height: 60
+                        text: "首页"
+                        highlighted: currentTab === 0
+                        onClicked: currentTab = 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        background: Rectangle {
+                            radius: 5
+                            color: {
+                                if (parent.highlighted) return "#d0e0fa"
+                                if (parent.pressed)     return "#c0d0ea"
+                                if (parent.hovered)     return "#e0e0e0"
+                                return "#00ffffff"
+                            }
+                            Behavior on color { ColorAnimation { duration: 120 } }
+                            Ripple {
+                                clip: true
+                                clipRadius: parent.radius
+                                anchors.fill: parent
+                                pressed: parent.parent.pressed
+                                x: parent.parent.mouseX - width / 2
+                                y: parent.parent.mouseY - height / 2
+                                active: parent.parent.pressed
+                                color: "#10000000"
+                            }
+                        }
+                        contentItem: Text {
+                            text: parent.text
+                            color: "#030303"
                             font.pixelSize: 18
-                            font.bold: true
-                            color: "white"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
                         }
                     }
 
-                    // 人脸检测按钮
-                    Rectangle {
-                        width: parent.width
-                        height: 50
-                        color: currentTab === 0 ? "#3498db" : "transparent"
-
-                        Row {
-                            anchors.centerIn: parent
-                            spacing: 10
-
-                            Text {
-                                text: "👤"
-                                font.pixelSize: 20
+                    Button {
+                        width: parent.width -20
+                        height: 60
+                        text: "人脸检测"
+                        highlighted: currentTab === 1
+                        onClicked: currentTab = 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        background: Rectangle {
+                            radius: 5
+                            color: {
+                                if (parent.highlighted) return "#d0e0fa"
+                                if (parent.pressed)     return "#c0d0ea"
+                                if (parent.hovered)     return "#e0e0e0"
+                                return "#00ffffff"
                             }
-                            Text {
-                                text: "人脸检测"
-                                font.pixelSize: 14
-                                color: "white"
-                            }
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: currentTab = 0
-                        }
-                    }
-
-                    // 垃圾分类按钮
-                    Rectangle {
-                        width: parent.width
-                        height: 50
-                        color: currentTab === 1 ? "#3498db" : "transparent"
-
-                        Row {
-                            anchors.centerIn: parent
-                            spacing: 10
-
-                            Text {
-                                text: "🗑️"
-                                font.pixelSize: 20
-                            }
-                            Text {
-                                text: "垃圾分类"
-                                font.pixelSize: 14
-                                color: "white"
+                            Behavior on color { ColorAnimation { duration: 120 } }
+                            Ripple {
+                                clip: true
+                                clipRadius: parent.radius
+                                anchors.fill: parent
+                                pressed: parent.parent.pressed
+                                active: parent.parent.pressed
+                                color: "#10000000"
                             }
                         }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: currentTab = 1
+                        contentItem: Text {
+                            text: parent.text
+                            color: "#030303"
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
                         }
                     }
 
-                    // 历史记录按钮
-                    Rectangle {
-                        width: parent.width
-                        height: 50
-                        color: currentTab === 2 ? "#3498db" : "transparent"
-
-                        Row {
-                            anchors.centerIn: parent
-                            spacing: 10
-
-                            Text {
-                                text: "📋"
-                                font.pixelSize: 20
+                    Button {
+                        width: parent.width - 20
+                        height: 60
+                        text: "垃圾分类"
+                        highlighted: currentTab === 2
+                        onClicked: currentTab = 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        background: Rectangle {
+                            radius: 5
+                            color: {
+                                if (parent.highlighted) return "#d0e0fa"
+                                if (parent.pressed)     return "#c0d0ea"
+                                if (parent.hovered)     return "#e0e0e0"
+                                return "#00ffffff"
                             }
-                            Text {
-                                text: "历史记录"
-                                font.pixelSize: 14
-                                color: "white"
+                            Behavior on color { ColorAnimation { duration: 120 } }
+                            Ripple {
+                                clip: true
+                                clipRadius: parent.radius
+                                anchors.fill: parent
+                                pressed: parent.parent.pressed
+                                x: parent.parent.mouseX - width / 2
+                                y: parent.parent.mouseY - height / 2
+                                active: parent.parent.pressed
+                                color: "#10000000"
                             }
                         }
+                        contentItem: Text {
+                            text: parent.text
+                            color: "#030303"
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                    }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: currentTab = 2
+                    Button {
+                        width: parent.width - 20
+                        height: 60
+                        text: "更多功能"
+                        highlighted: currentTab === 3
+                        onClicked: currentTab = 3
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        background: Rectangle {
+                            radius: 5
+                            color: {
+                                if (parent.highlighted) return "#d0e0fa"
+                                if (parent.pressed)     return "#c0d0ea"
+                                if (parent.hovered)     return "#e0e0e0"
+                                return "#00ffffff"
+                            }
+                            Behavior on color { ColorAnimation { duration: 120 } }
+                            Ripple {
+                                clip: true
+                                clipRadius: parent.radius
+                                anchors.fill: parent
+                                pressed: parent.parent.pressed
+                                x: parent.parent.mouseX - width / 2
+                                y: parent.parent.mouseY - height / 2
+                                active: parent.parent.pressed
+                                color: "#10000000"
+                            }
+                        }
+                        contentItem: Text {
+                            text: parent.text
+                            color: "#030303"
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
                         }
                     }
                 }
             }
 
-            // ==================== 主内容区 ====================
+            Rectangle {
+                width: 2
+                height: parent.height
+                color: "#ececec"
+            }
+
             StackLayout {
                 width: parent.width - sidebar.width
                 height: parent.height
                 currentIndex: currentTab
 
-                // ========== 页面0: 人脸检测 ==========
                 Item {
                     Rectangle {
                         anchors.fill: parent
-                        color: "#f5f5f5"
+                        color: "#f0f0f0"
+                        Text {
+                            anchors.centerIn: parent
+                            text: "当个首页看看得了"
+                            font.pixelSize: 20
+                            color: "#030303"
+                        }
+                    }
+                }
+
+                Item {
+                    Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
 
                         Column {
                             anchors.centerIn: parent
@@ -166,7 +226,6 @@ ApplicationWindow {
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
 
-                            // 图片显示区域
                             Rectangle {
                                 width: 500
                                 height: 400
@@ -193,7 +252,6 @@ ApplicationWindow {
                                 }
                             }
 
-                            // 按钮区域
                             Row {
                                 spacing: 15
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -212,7 +270,6 @@ ApplicationWindow {
                                 }
                             }
 
-                            // 结果显示
                             Rectangle {
                                 width: 300
                                 height: 50
@@ -231,7 +288,6 @@ ApplicationWindow {
                     }
                 }
 
-                // ========== 页面1: 垃圾分类 ==========
                 Item {
                     Rectangle {
                         anchors.fill: parent
@@ -322,7 +378,7 @@ ApplicationWindow {
 
                                     Text {
                                         text: garbageClassifier.confidence > 0
-                                              ? "置信度: " + (garbageClassifier.confidence * 100).toFixed(1) + "%"
+                                              ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%"
                                               : ""
                                         font.pixelSize: 14
                                         color: "white"
@@ -363,53 +419,40 @@ ApplicationWindow {
                     }
                 }
 
-                // ========== 页面2: 历史记录 ==========
                 Item {
-                    Rectangle {
+                    Rectangle{
                         anchors.fill: parent
-                        color: "#f5f5f5"
+                        color: "#f0f0f0"
 
-                        Column {
+                        Text{
                             anchors.centerIn: parent
-                            spacing: 20
-
-                            Text {
-                                text: "历史记录"
-                                font.pixelSize: 24
-                                font.bold: true
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
-
-                            Text {
-                                text: "功能开发中..."
-                                font.pixelSize: 16
-                                color: "#666"
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
+                            text: "您看看这个侧边栏做的彳亍不彳亍"
+                            font.pixelSize: 20
+                            color: "#030303"
                         }
                     }
                 }
             }
         }
     }
-
-    // ==================== 文件对话框 ====================
     FileDialog {
         id: fileDialogFaces
         title: "选择图片"
         nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp)"]
         onAccepted: {
             var filePath = selectedFile.toString();
+
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
-            console.log("人脸检测 - 文件路径:", filePath);
+
+            console.log("人脸识别 - 文件路径:", filePath);
             imageProcessor.loadImage(filePath);
         }
     }
 
     FileDialog {
         id: fileDialogTrash
-        title: "选择垃圾图片"
+        title: "选择图片"
         nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp)"]
         onAccepted: {
             var filePath = selectedFile.toString();
@@ -420,17 +463,17 @@ ApplicationWindow {
         }
     }
 
-    // ==================== 消息对话框 ====================
     Dialog {
         id: messageDialog
         parent: Overlay.overlay
         modal: true
-        title: "系统消息"
+        title: "📬系统消息"
         standardButtons: Dialog.Ok
+
         anchors.centerIn: parent
 
         function show(msg) {
-            messageLabel.text = msg
+            contentItem.text = msg
             open()
         }
 
@@ -439,18 +482,32 @@ ApplicationWindow {
             text: ""
             wrapMode: Text.WordWrap
         }
+
+        enter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 150 } }
+        exit: Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 150 } }
     }
 
-    // ==================== 信号连接 ====================
     Connections {
         target: imageProcessor
-        function onImageChanged() { imageRevisionFaces++ }
-        function onMessageSent(msg) { messageDialog.show(msg) }
+
+        function onMessageSent(msg) {
+            messageDialog.show(msg)
+        }
+
+        function onImageChanged() {
+            imageRevisionFaces++;
+        }
     }
 
     Connections {
         target: garbageClassifier
-        function onImageChanged() { imageRevisionTrash++ }
-        function onMessageSent(msg) { messageDialog.show(msg) }
+
+        function onMessageSent(msg) {
+            messageDialog.show(msg)
+        }
+
+        function onImageChanged(){
+            imageRevisionTrash++
+        }
     }
 }
