@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QImage>
 #include <QString>
+
 #include <opencv2/opencv.hpp>
 
 class ImageProcessor : public QObject {
@@ -13,8 +14,7 @@ class ImageProcessor : public QObject {
 
 public:
     explicit ImageProcessor(QObject *parent = nullptr);
-
-    QImage getResultImage() const { return m_ResultImage; }
+    Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
     int faceCount() const { return m_FaceCount; }
 
 public slots:
