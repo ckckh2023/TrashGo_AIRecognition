@@ -5,10 +5,8 @@ project(OpenCV_attempt VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
 
-find_package(OpenCV REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Quick)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Sql)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc objdetect dnn)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
@@ -22,6 +20,7 @@ qt_add_qml_module(appOpenCV_attempt
         Main.qml
         SOURCES imageprocessor.h imageprocessor.cpp
         SOURCES returnimage.h returnimage.cpp
+        SOURCES garbageclassifier.h garbageclassifier.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -41,12 +40,16 @@ target_link_libraries(appOpenCV_attempt
     PRIVATE Qt6::Sql
     ${OpenCV_LIBS}
 )
+target_link_libraries(appOpenCV_attempt PRIVATE Qt6::Core)
 
 add_custom_command(
     TARGET appOpenCV_attempt POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/haarcascade_frontalface_default.xml
         $<TARGET_FILE_DIR:appOpenCV_attempt>/haarcascade_frontalface_default.xml
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/mobilenet.onnx
+        $<TARGET_FILE_DIR:appOpenCV_attempt>/mobilenet.onnx
 )
 
 include(GNUInstallDirs)
