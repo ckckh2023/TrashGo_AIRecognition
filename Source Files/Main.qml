@@ -19,14 +19,6 @@ ApplicationWindow {
     property int imageRevisionTrash: 0
     property int currentTab: 0
 
-    color: Qt.application.styleHints.colorScheme === Qt.Dark ? "black" : "white"
-
-    Label {
-        anchors.centerIn: parent
-        text: Qt.application.styleHints.colorScheme === Qt.Dark ? "深色模式" : "浅色模式"
-        color: Qt.application.styleHints.colorScheme === Qt.Dark ? "white" : "black"
-    }
-
     Rectangle {
         anchors.fill: parent
         color: "#e0e0e0"
