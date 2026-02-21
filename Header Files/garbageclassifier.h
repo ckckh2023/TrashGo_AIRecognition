@@ -15,6 +15,7 @@ class GarbageClassifier : public QObject {
     Q_PROPERTY(QString result READ result NOTIFY resultChanged)
     Q_PROPERTY(QString garbageType READ garbageType NOTIFY resultChanged)
     Q_PROPERTY(double confidence READ confidence NOTIFY resultChanged)
+    Q_PROPERTY(bool hasImage READ hasImage NOTIFY imageChanged)
 
 public:
     explicit GarbageClassifier(QObject *parent = nullptr);
@@ -23,6 +24,7 @@ public:
     Q_INVOKABLE void classify();
     Q_INVOKABLE bool isModelLoader() const { return m_ModelLoaded; }
     Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
+    Q_INVOKABLE bool hasImage() const { return m_HasImage; }
 
     QString result() const { return m_Result; }
     QString garbageType() const { return m_GarbageType; }
@@ -45,6 +47,8 @@ private:
     QString m_Result;
     QString m_GarbageType;
     double m_Confidence = 0.0;
+
+    bool m_HasImage = false;
 
     QStringList m_Categories = {"cardboard", "glass", "metal", "paper", "plastic", "trash"};
 };
