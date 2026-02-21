@@ -47,8 +47,9 @@ void GarbageClassifier::loadImage(const QString &FilePath) {
 
     cv::Mat RgbImage;
     cv::cvtColor(m_CvImage, RgbImage, cv::COLOR_BGR2RGB);
-
     m_ResultImage = QImage(RgbImage.data, RgbImage.cols, RgbImage.rows, RgbImage.step, QImage::Format_RGB888).copy();
+
+    m_HasImage = true;
 
     emit imageChanged();
     emit messageSent("图片加载成功");
@@ -78,7 +79,6 @@ void GarbageClassifier::classify() {
         qDebug() << "分类数量:" << m_Categories.size();
 
         int classId = maxLoc.x;
-
         if (classId < 0 || classId >= m_Categories.size()) {
             emit messageSent("分类结果无效");
             return;
@@ -86,7 +86,7 @@ void GarbageClassifier::classify() {
 
         m_Confidence = maxVal;
         m_GarbageType = mapToChineseType(classId);
-        m_Result = QString("%1 - 置信度: %2%").arg(m_GarbageType).arg(m_Confidence * 100, 0, 'f', 1);
+        m_Result = QString("%1 - 置信度: %2%").arg(m_GarbageType).arg(m_Confidence * 10, 0, 'f', 2);
 
         cv::Mat resultImg = m_CvImage.clone();
         cv::rectangle(resultImg, cv::Point(0,0), cv::Point(250,60), cv::Scalar(0,0,0), cv::FILLED);

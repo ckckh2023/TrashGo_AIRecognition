@@ -33,6 +33,8 @@ void ImageProcessor::loadImage(const QString& FilePath) {
 
     m_ResultImage = QImage(RgbImage.data, RgbImage.cols, RgbImage.rows, RgbImage.step, QImage::Format_RGB888).copy();
 
+    m_HasImage = true;
+
     emit imageChanged();
     emit messageSent("图片加载成功");
 }

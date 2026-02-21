@@ -19,6 +19,14 @@ ApplicationWindow {
     property int imageRevisionTrash: 0
     property int currentTab: 0
 
+    color: Qt.application.styleHints.colorScheme === Qt.Dark ? "black" : "white"
+
+    Label {
+        anchors.centerIn: parent
+        text: Qt.application.styleHints.colorScheme === Qt.Dark ? "深色模式" : "浅色模式"
+        color: Qt.application.styleHints.colorScheme === Qt.Dark ? "white" : "black"
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "#e0e0e0"
@@ -198,6 +206,7 @@ ApplicationWindow {
                 currentIndex: currentTab
 
                 Item {
+
                     Rectangle {
                         anchors.fill: parent
                         color: "#f0f0f0"
@@ -211,6 +220,7 @@ ApplicationWindow {
                 }
 
                 Item {
+
                     Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
@@ -227,28 +237,56 @@ ApplicationWindow {
                             }
 
                             Rectangle {
-                                width: 500
-                                height: 400
+                                width: parent.parent.width - 200
+                                height: parent.parent.height - 300
                                 color: "white"
                                 radius: 8
-                                border.color: "#ddd"
+                                border.color: "#d0d0d0"
                                 border.width: 1
                                 anchors.horizontalCenter: parent.horizontalCenter
 
+                                DropArea {
+                                    anchors.fill: parent
+
+                                    onEntered: (drag) => {
+                                        if (drag.hasUrls) drag.accept()
+                                    }
+
+                                    onExited: {
+
+                                    }
+
+                                    onDropped: (drop) => {
+
+                                        if (drop.hasUrls && drop.urls.length > 0) {
+                                            var url = drop.urls[0];
+                                            var filePath = url.toString();
+
+                                            if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
+                                            else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+
+                                            console.log("拖拽文件路径:", filePath);
+                                            imageProcessor.loadImage(filePath);
+                                            messageDialog.show("图片已加载");
+                                        }
+                                        drop.accept();
+                                    }
+                                }
                                 Image {
                                     id: faceImage
                                     anchors.fill: parent
                                     anchors.margins: 10
                                     fillMode: Image.PreserveAspectFit
-                                    source: "image://result/face?" + imageRevisionFaces
+                                    source: imageProcessor.hasImage ? "image://result/face?" + imageRevisionFaces : ""
                                     cache: false
+                                    visible: status === Image.Ready
                                 }
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: "请选择图片"
-                                    color: "#999"
-                                    visible: faceImage.status !== Image.Ready
+                                    text: "请选择图片(拖拽或点击下方按钮)"
+                                    color: "#090909"
+                                    visible: !faceImage.visible
                                 }
                             }
 
@@ -304,34 +342,63 @@ ApplicationWindow {
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
 
-                            // 图片显示区域
                             Rectangle {
-                                width: 500
-                                height: 400
+                                width: parent.parent.width - 200
+                                height: parent.parent.height - 300
                                 color: "white"
                                 radius: 8
-                                border.color: "#ddd"
+                                border.color: "#d0d0d0"
                                 border.width: 1
                                 anchors.horizontalCenter: parent.horizontalCenter
+
+                                DropArea {
+                                    anchors.fill: parent
+
+                                    onEntered: (drag) => {
+                                        if (drag.hasUrls) drag.accept()
+                                    }
+
+                                    onExited: {
+
+                                    }
+
+                                    onDropped: (drop) => {
+
+                                        if (drop.hasUrls && drop.urls.length > 0) {
+                                            var url = drop.urls[0];
+                                            var filePath = url.toString();
+
+
+                                            if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
+                                            else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+
+                                            console.log("拖拽文件路径:", filePath);
+                                            garbageClassifier.loadImage(filePath);
+                                            messageDialog.show("图片已加载");
+                                        }
+                                        drop.accept();
+                                    }
+                                }
 
                                 Image {
                                     id: trashImage
                                     anchors.fill: parent
                                     anchors.margins: 10
                                     fillMode: Image.PreserveAspectFit
-                                    source: "image://result/trash?" + imageRevisionTrash
+                                    source: garbageClassifier.hasImage ? "image://result/trash?" + imageRevisionTrash : ""
                                     cache: false
                                 }
 
+
+
                                 Text {
                                     anchors.centerIn: parent
-                                    text: "请选择垃圾图片"
-                                    color: "#999"
+                                    text: "请选择图片(拖拽或点击下方按钮)"
+                                    color: "#090909"
                                     visible: trashImage.status !== Image.Ready
                                 }
                             }
 
-                            // 按钮区域
                             Row {
                                 spacing: 15
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -349,7 +416,6 @@ ApplicationWindow {
                                 }
                             }
 
-                            // 分类结果显示
                             Rectangle {
                                 width: 350
                                 height: 80
@@ -387,7 +453,6 @@ ApplicationWindow {
                                 }
                             }
 
-                            // 分类说明
                             Row {
                                 spacing: 10
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -438,7 +503,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialogFaces
         title: "选择图片"
-        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp)"]
+        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp *.webp)"]
         onAccepted: {
             var filePath = selectedFile.toString();
 
@@ -453,7 +518,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialogTrash
         title: "选择图片"
-        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp)"]
+        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp *.webp)"]
         onAccepted: {
             var filePath = selectedFile.toString();
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
