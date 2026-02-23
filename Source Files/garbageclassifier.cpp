@@ -39,7 +39,7 @@ void GarbageClassifier::loadImage(const QString &FilePath) {
         return;
     }
 
-    m_CvImage = cv::imread(FilePath.toStdString());
+    m_CvImage = cv::imread(QFile::encodeName(FilePath).toStdString());
     if (m_CvImage.empty()) {
         emit messageSent("无法读取图片");
         return;
@@ -56,7 +56,7 @@ void GarbageClassifier::loadImage(const QString &FilePath) {
 }
 
 void GarbageClassifier::classify() {
-    if (m_CvImage.empty()) {
+    if (!m_HasImage || m_CvImage.empty()) {
         emit messageSent("请先选择图片");
         return;
     }
@@ -100,7 +100,7 @@ void GarbageClassifier::classify() {
         emit resultChanged();
         emit messageSent(m_Result);
     }
-    catch (const cv::Exception & e) { emit messageSent(QString("分类失败: %1").arg(e.what())); }
+    catch (const cv::Exception& e) { emit messageSent(QString("分类失败: %1").arg(e.what())); }
 }
 
 QString GarbageClassifier::mapToChineseType(int classId) {
@@ -113,4 +113,11 @@ QString GarbageClassifier::mapToChineseType(int classId) {
         case 5: return "其他垃圾";
         default: return "未知";
     }
+}
+
+void GarbageClassifier::clearImage() {
+    m_HasImage = false;
+
+    emit imageChanged();
+    emit messageSent("图片清除成功");
 }

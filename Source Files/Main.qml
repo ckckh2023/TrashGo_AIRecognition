@@ -298,6 +298,12 @@ ApplicationWindow {
                                     highlighted: true
                                     onClicked: imageProcessor.detectFaces()
                                 }
+
+                                Button {
+                                    text: "清除图片"
+                                    highlighted: true
+                                    onClicked: imageProcessor.clearImage()
+                                }
                             }
 
                             Rectangle {
@@ -406,6 +412,12 @@ ApplicationWindow {
                                     highlighted: true
                                     onClicked: garbageClassifier.classify()
                                 }
+
+                                Button {
+                                    text: "清除图片"
+                                    highlighted: true
+                                    onClicked: garbageClassifier.clearImage()
+                                }
                             }
 
                             Rectangle {
@@ -414,11 +426,13 @@ ApplicationWindow {
                                 radius: 8
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 color: {
-                                    var type = garbageClassifier.garbageType
-                                    if (type.indexOf("可回收") >= 0) return "#2196F3"
-                                    else if (type.indexOf("有害") >= 0) return "#f44336"
-                                    else if (type.indexOf("厨余") >= 0) return "#4CAF50"
-                                    else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                                    if (garbageClassifier.hasImage) {
+                                        var type = garbageClassifier.garbageType
+                                        if (type.indexOf("可回收") >= 0) return "#2196F3"
+                                        else if (type.indexOf("有害") >= 0) return "#f44336"
+                                        else if (type.indexOf("厨余") >= 0) return "#4CAF50"
+                                        else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                                    }
                                     else return "#E0E0E0"
                                 }
 
@@ -427,7 +441,13 @@ ApplicationWindow {
                                     spacing: 5
 
                                     Text {
-                                        text: garbageClassifier.garbageType || "等待识别..."
+                                        text: {
+                                            if (garbageClassifier.hasImage) {
+                                                if (garbageClassifier.garbageType) return garbageClassifier.garbageType
+                                                else return "等待识别..."
+                                            }
+                                            else return "等待添加图片..."
+                                        }
                                         font.pixelSize: 18
                                         font.bold: true
                                         color: "white"
@@ -435,9 +455,10 @@ ApplicationWindow {
                                     }
 
                                     Text {
-                                        text: garbageClassifier.confidence > 0
-                                              ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%"
-                                              : ""
+                                        text: {
+                                            if (garbageClassifier.hasImage) return garbageClassifier.confidence > 0 ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%" : ""
+                                            else return ""
+                                        }
                                         font.pixelSize: 14
                                         color: "white"
                                         anchors.horizontalCenter: parent.horizontalCenter
