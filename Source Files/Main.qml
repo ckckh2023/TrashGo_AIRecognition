@@ -294,7 +294,6 @@ ApplicationWindow {
 
                                 Button {
                                     text: "开始检测"
-                                    icon.name: "search"
                                     highlighted: true
                                     onClicked: imageProcessor.detectFaces()
                                 }
@@ -315,7 +314,7 @@ ApplicationWindow {
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: "检测到人脸数量: " + imageProcessor.faceCount
+                                    text: imageProcessor.hasImage ? "检测到人脸数量: " + imageProcessor.faceCount : "等待添加图片..."
                                     font.pixelSize: 16
                                     color: "#2e7d32"
                                 }
