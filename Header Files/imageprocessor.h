@@ -15,13 +15,14 @@ class ImageProcessor : public QObject {
 
 public:
     explicit ImageProcessor(QObject *parent = nullptr);
-    Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
+
     int faceCount() const { return m_FaceCount; }
     bool hasImage() const { return m_HasImage; }
 
-public slots:
-    void loadImage(const QString& FilePath);
-    void detectFaces();
+    Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
+    Q_INVOKABLE void loadImage(const QString& FilePath);
+    Q_INVOKABLE void clearImage();
+    Q_INVOKABLE void detectFaces();
 
 signals:
     void imageChanged();

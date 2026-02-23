@@ -21,6 +21,7 @@ public:
     explicit GarbageClassifier(QObject *parent = nullptr);
 
     Q_INVOKABLE void loadImage(const QString& FilePath);
+    Q_INVOKABLE void clearImage();
     Q_INVOKABLE void classify();
     Q_INVOKABLE bool isModelLoader() const { return m_ModelLoaded; }
     Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
