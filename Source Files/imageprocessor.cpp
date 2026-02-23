@@ -22,7 +22,7 @@ void ImageProcessor::loadImage(const QString& FilePath) {
         return;
     }
 
-    m_CvImage = cv::imread(FilePath.toStdString());
+    m_CvImage = cv::imread(QFile::encodeName(FilePath).toStdString());
     if (m_CvImage.empty()) {
         emit messageSent("无法读取图片");
         return;
@@ -40,7 +40,7 @@ void ImageProcessor::loadImage(const QString& FilePath) {
 }
 
 void ImageProcessor::detectFaces() {
-    if (m_CvImage.empty()) {
+    if (!m_HasImage || m_CvImage.empty()) {
         emit messageSent("请先加载图片");
         return;
     }
@@ -65,4 +65,11 @@ void ImageProcessor::detectFaces() {
     emit imageChanged();
     emit faceCountChanged();
     emit messageSent(QString("检测到 %1 张人脸").arg(m_FaceCount));
+}
+
+void ImageProcessor::clearImage() {
+    m_HasImage = false;
+
+    emit imageChanged();
+    emit messageSent("图片清除成功");
 }
