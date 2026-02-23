@@ -198,7 +198,6 @@ ApplicationWindow {
                 currentIndex: currentTab
 
                 Item {
-
                     Rectangle {
                         anchors.fill: parent
                         color: "#f0f0f0"
@@ -212,22 +211,18 @@ ApplicationWindow {
                 }
 
                 Item {
-
                     Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
-
                         Column {
                             anchors.centerIn: parent
                             spacing: 20
-
                             Text {
                                 text: "人脸检测"
                                 font.pixelSize: 24
                                 font.bold: true
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
-
                             Rectangle {
                                 width: parent.parent.width - 200
                                 height: parent.parent.height - 300
@@ -236,20 +231,11 @@ ApplicationWindow {
                                 border.color: "#d0d0d0"
                                 border.width: 1
                                 anchors.horizontalCenter: parent.horizontalCenter
-
                                 DropArea {
                                     anchors.fill: parent
-
-                                    onEntered: (drag) => {
-                                        if (drag.hasUrls) drag.accept()
-                                    }
-
-                                    onExited: {
-
-                                    }
-
+                                    onEntered: (drag) => { if (drag.hasUrls) drag.accept() }
+                                    onExited: {}
                                     onDropped: (drop) => {
-
                                         if (drop.hasUrls && drop.urls.length > 0) {
                                             var url = drop.urls[0];
                                             var filePath = url.toString();
@@ -264,6 +250,7 @@ ApplicationWindow {
                                         drop.accept();
                                     }
                                 }
+
                                 Image {
                                     id: faceImage
                                     anchors.fill: parent
@@ -350,21 +337,12 @@ ApplicationWindow {
 
                                 DropArea {
                                     anchors.fill: parent
-
-                                    onEntered: (drag) => {
-                                        if (drag.hasUrls) drag.accept()
-                                    }
-
-                                    onExited: {
-
-                                    }
-
+                                    onEntered: (drag) => { if (drag.hasUrls) drag.accept() }
+                                    onExited: {}
                                     onDropped: (drop) => {
-
                                         if (drop.hasUrls && drop.urls.length > 0) {
                                             var url = drop.urls[0];
                                             var filePath = url.toString();
-
 
                                             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
                                             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
@@ -385,8 +363,6 @@ ApplicationWindow {
                                     source: garbageClassifier.hasImage ? "image://result/trash?" + imageRevisionTrash : ""
                                     cache: false
                                 }
-
-
 
                                 Text {
                                     anchors.centerIn: parent
@@ -503,7 +479,7 @@ ApplicationWindow {
 
                         Text{
                             anchors.centerIn: parent
-                            text: "您看看这个侧边栏做的彳亍不彳亍"
+                            text: "历史记录功能正在开发中..."
                             font.pixelSize: 20
                             color: "#030303"
                         }
@@ -518,7 +494,6 @@ ApplicationWindow {
         nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp *.webp)"]
         onAccepted: {
             var filePath = selectedFile.toString();
-
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
@@ -535,6 +510,7 @@ ApplicationWindow {
             var filePath = selectedFile.toString();
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+
             console.log("垃圾分类 - 文件路径:", filePath);
             garbageClassifier.loadImage(filePath);
         }
@@ -546,7 +522,6 @@ ApplicationWindow {
         modal: true
         title: "📬系统消息"
         standardButtons: Dialog.Ok
-
         anchors.centerIn: parent
 
         function show(msg) {
@@ -567,24 +542,14 @@ ApplicationWindow {
     Connections {
         target: imageProcessor
 
-        function onMessageSent(msg) {
-            messageDialog.show(msg)
-        }
-
-        function onImageChanged() {
-            imageRevisionFaces++;
-        }
+        function onMessageSent(msg) { messageDialog.show(msg) }
+        function onImageChanged() { imageRevisionFaces++; }
     }
 
     Connections {
         target: garbageClassifier
 
-        function onMessageSent(msg) {
-            messageDialog.show(msg)
-        }
-
-        function onImageChanged(){
-            imageRevisionTrash++
-        }
+        function onMessageSent(msg) { messageDialog.show(msg) }
+        function onImageChanged() { imageRevisionTrash++; }
     }
 }
