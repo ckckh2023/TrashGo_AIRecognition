@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(OpenCV_attempt VERSION 0.1 LANGUAGES CXX)
+project(OpenCV_attempt VERSION 1.0.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
@@ -40,7 +40,6 @@ target_link_libraries(appOpenCV_attempt
     PRIVATE Qt6::Sql
     ${OpenCV_LIBS}
 )
-target_link_libraries(appOpenCV_attempt PRIVATE Qt6::Core)
 
 add_custom_command(
     TARGET appOpenCV_attempt POST_BUILD
