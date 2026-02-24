@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(OpenCV_attempt VERSION 1.0.2 LANGUAGES CXX)
+project(OpenCV_attempt VERSION 1.0.3 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
