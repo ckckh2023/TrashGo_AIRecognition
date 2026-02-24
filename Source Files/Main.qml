@@ -4,13 +4,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import QtQuick.Controls.Material
-import QtQuick.Controls.Material.impl 2.15
+import QtQuick.Controls.Material.impl
 
 ApplicationWindow {
     width: 1080
     height: 720
     visible: true
-    title: qsTr("人脸检测程序")
+    title: qsTr("TrashGo信息识别")
 
     Material.theme: Material.Light
     Material.accent: Material.Indigo
