@@ -429,15 +429,12 @@ ApplicationWindow {
                                         anchors.horizontalCenter: parent.horizontalCenter
                                     }
 
-                                    Text {
-                                        text: {
-                                            if (garbageClassifier.hasImage) return garbageClassifier.confidence > 0 ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%" : ""
-                                            else return ""
-                                        }
+                                    /*Text {
+                                        text: garbageClassifier.hasImage ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%" : ""
                                         font.pixelSize: 14
                                         color: "white"
                                         anchors.horizontalCenter: parent.horizontalCenter
-                                    }
+                                    }*/
                                 }
                             }
 

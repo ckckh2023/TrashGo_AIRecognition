@@ -86,7 +86,7 @@ void GarbageClassifier::classify() {
 
         m_Confidence = maxVal;
         m_GarbageType = mapToChineseType(classId);
-        m_Result = QString("%1 - 置信度: %2%").arg(m_GarbageType).arg(m_Confidence * 10, 0, 'f', 2);
+        m_Result = QString("识别成功！种类：%1").arg(m_GarbageType)/*.arg(m_Confidence * 10, 0, 'f', 2)*/;
 
         cv::Mat resultImg = m_CvImage.clone();
         cv::rectangle(resultImg, cv::Point(0,0), cv::Point(250,60), cv::Scalar(0,0,0), cv::FILLED);
@@ -104,15 +104,8 @@ void GarbageClassifier::classify() {
 }
 
 QString GarbageClassifier::mapToChineseType(int classId) {
-    switch (classId) {
-        case 0: return "可回收物-纸板";
-        case 1: return "可回收物-玻璃";
-        case 2: return "可回收物-金属";
-        case 3: return "可回收物-纸张";
-        case 4: return "可回收物-塑料";
-        case 5: return "其他垃圾";
-        default: return "未知";
-    }
+    if (m_MapToChinese.find(classId) != m_MapToChinese.end()) return m_MapToChinese[classId];
+    else return "其他垃圾";
 }
 
 void GarbageClassifier::clearImage() {
