@@ -1,4 +1,5 @@
 #include "imageprocessor.h"
+#include "historyrecord.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
@@ -34,6 +35,7 @@ void ImageProcessor::loadImage(const QString& FilePath) {
     m_ResultImage = QImage(RgbImage.data, RgbImage.cols, RgbImage.rows, RgbImage.step, QImage::Format_RGB888).copy();
 
     m_HasImage = true;
+    ImagePath = FilePath;
 
     emit imageChanged();
     emit messageSent("图片加载成功");
@@ -61,6 +63,9 @@ void ImageProcessor::detectFaces() {
     cv::Mat RgbImage;
     cv::cvtColor(Image, RgbImage, cv::COLOR_BGR2RGB);
     m_ResultImage = QImage(RgbImage.data, RgbImage.cols, RgbImage.rows, RgbImage.step, QImage::Format_RGB888).copy();
+
+    HistoryRecord FaceHistory;
+    FaceHistory.addFaceTables(ImagePath, QString::number(m_FaceCount));
 
     emit imageChanged();
     emit faceCountChanged();
