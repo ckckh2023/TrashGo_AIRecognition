@@ -37,6 +37,7 @@ private:
     cv::CascadeClassifier m_FaceCascade;
 
     bool m_HasImage = false;
+    QString ImagePath;
 };
 
 #endif // IMAGEPROCESSOR_H
