@@ -51,6 +51,7 @@ private:
     double m_Confidence = 0.0;
 
     bool m_HasImage = false;
+    QString ImagePath;
 
     QStringList m_Categories = {
         "Hazardous_waste_adhesive",
