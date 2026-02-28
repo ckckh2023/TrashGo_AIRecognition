@@ -21,12 +21,13 @@ class GarbageClassifier : public QObject {
 public:
     explicit GarbageClassifier(QObject *parent = nullptr);
 
-    Q_INVOKABLE void loadImage(const QString& FilePath);
+    Q_INVOKABLE void loadImage();
     Q_INVOKABLE void clearImage();
     Q_INVOKABLE void classify();
     Q_INVOKABLE bool isModelLoader() const { return m_ModelLoaded; }
     Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
     Q_INVOKABLE bool hasImage() const { return m_HasImage; }
+    Q_INVOKABLE void loadPath(const QString& FilePath) { ImagePath = FilePath; }
 
     QString result() const { return m_Result; }
     QString garbageType() const { return m_GarbageType; }
