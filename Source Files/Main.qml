@@ -244,8 +244,8 @@ ApplicationWindow {
                                             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
                                             console.log("拖拽文件路径:", filePath);
-                                            imageProcessor.loadImage(filePath);
-                                            messageDialog.show("图片已加载");
+                                            imageProcessor.loadPath(filePath);
+                                            imageProcessor.loadImage();
                                         }
                                         drop.accept();
                                     }
@@ -348,8 +348,8 @@ ApplicationWindow {
                                             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
                                             console.log("拖拽文件路径:", filePath);
-                                            garbageClassifier.loadImage(filePath);
-                                            messageDialog.show("图片已加载");
+                                            garbageClassifier.loadPath(filePath);
+                                            garbageClassifier.loadImage();
                                         }
                                         drop.accept();
                                     }
@@ -495,7 +495,8 @@ ApplicationWindow {
             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
             console.log("人脸识别 - 文件路径:", filePath);
-            imageProcessor.loadImage(filePath);
+            imageProcessor.loadPath(filePath);
+            imageProcessor.loadImage();
         }
     }
 
@@ -509,7 +510,8 @@ ApplicationWindow {
             else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
             console.log("垃圾分类 - 文件路径:", filePath);
-            garbageClassifier.loadImage(filePath);
+            garbageClassifier.loadPath(filePath);
+            garbageClassifier.loadImage();
         }
     }
 
