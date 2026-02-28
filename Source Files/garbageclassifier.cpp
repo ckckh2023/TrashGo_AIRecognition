@@ -32,15 +32,15 @@ void GarbageClassifier::loadModel() {
     }
 }
 
-void GarbageClassifier::loadImage(const QString &FilePath) {
-    qDebug() << "加载图片：" + FilePath;
+void GarbageClassifier::loadImage() {
+    qDebug() << "加载图片：" + ImagePath;
 
-    if (!QFile::exists(FilePath)) {
-        emit messageSent("文件不存在：" + FilePath);
+    if (!QFile::exists(ImagePath)) {
+        emit messageSent("文件不存在：" + ImagePath);
         return;
     }
 
-    m_CvImage = cv::imread(QFile::encodeName(FilePath).toStdString());
+    m_CvImage = cv::imread(QFile::encodeName(ImagePath).toStdString());
     if (m_CvImage.empty()) {
         emit messageSent("无法读取图片");
         return;
@@ -51,7 +51,6 @@ void GarbageClassifier::loadImage(const QString &FilePath) {
     m_ResultImage = QImage(RgbImage.data, RgbImage.cols, RgbImage.rows, RgbImage.step, QImage::Format_RGB888).copy();
 
     m_HasImage = true;
-    ImagePath = FilePath;
 
     emit imageChanged();
     emit messageSent("图片加载成功");
