@@ -24,7 +24,7 @@ signals:
 
 private:
     void loadTables();
-    QSqlDatabase m_db;
+    QSqlDatabase m_HistoryDb;
 };
 
 #endif // HISTORYRECORD_H

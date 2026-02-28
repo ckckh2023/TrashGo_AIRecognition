@@ -20,9 +20,10 @@ public:
     bool hasImage() const { return m_HasImage; }
 
     Q_INVOKABLE QImage resultImage() const { return m_ResultImage; }
-    Q_INVOKABLE void loadImage(const QString& FilePath);
+    Q_INVOKABLE void loadImage();
     Q_INVOKABLE void clearImage();
     Q_INVOKABLE void detectFaces();
+    Q_INVOKABLE void loadPath(const QString& FilePath) { ImagePath = FilePath; }
 
 signals:
     void imageChanged();
