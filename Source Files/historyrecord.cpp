@@ -31,7 +31,7 @@ HistoryRecord::~HistoryRecord(){
 }
 
 void HistoryRecord::openDb() {
-    QString DbPath = QCoreApplication::applicationDirPath() + "/data/TrashGO_History.db";
+    QString DbPath = QCoreApplication::applicationDirPath() + "/data/TrashGo_History.db";
 
     m_HistoryDb.setDatabaseName(DbPath);
     if (!m_HistoryDb.open()) {
