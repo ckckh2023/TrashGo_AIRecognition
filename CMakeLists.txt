@@ -50,8 +50,8 @@ add_custom_command(
         ${CMAKE_CURRENT_SOURCE_DIR}/haarcascade_frontalface_default.xml
         $<TARGET_FILE_DIR:appTrashGo>/haarcascade_frontalface_default.xml
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_CURRENT_SOURCE_DIR}/mobilenet.onnx
-        $<TARGET_FILE_DIR:appTrashGo>/mobilenet.onnx
+        ${CMAKE_CURRENT_SOURCE_DIR}/ResNet.onnx
+        $<TARGET_FILE_DIR:appTrashGo>/ResNet.onnx
 )
 
 include(GNUInstallDirs)
