@@ -10,11 +10,11 @@ GarbageClassifier::GarbageClassifier(QObject *parent) : QObject(parent) {
 }
 
 void GarbageClassifier::loadModel() {
-    QString ModelPath = QCoreApplication::applicationDirPath() + "/mobilenet.onnx";
+    QString ModelPath = QCoreApplication::applicationDirPath() + "/ResNet.onnx";
 
     if (!QFile::exists(ModelPath)) {
         qDebug() << "模型文件不存在:" << ModelPath;
-        emit messageSent("请将 mobilenet.onnx 放到程序目录");
+        emit messageSent("请将ResNet.onnx放到程序目录");
         m_ModelLoaded = false;
         return;
     }

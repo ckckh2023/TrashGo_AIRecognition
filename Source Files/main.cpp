@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     engine.addImageProvider(QLatin1String("result"), new ResultImageProvider(&ProcessorClass, &GarbageClass));
+    engine.rootContext()->setContextProperty("historyRecord", &HistoryClass);
     engine.rootContext()->setContextProperty("imageProcessor", &ProcessorClass);
     engine.rootContext()->setContextProperty("garbageClassifier", &GarbageClass);
 

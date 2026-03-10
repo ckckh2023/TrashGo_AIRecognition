@@ -1,6 +1,10 @@
 #include "historyrecord.h"
 #include <QDateTime>
 #include <QCoreApplication>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QPixmap>
+#include <QDebug>
 #include <QDir>
 
 HistoryRecord::HistoryRecord(QObject *parent) : QObject(parent) {
@@ -8,7 +12,9 @@ HistoryRecord::HistoryRecord(QObject *parent) : QObject(parent) {
 
     QDir dir;
     QString DataPath = QCoreApplication::applicationDirPath() + "/data";
+    QString ThumbPath = DataPath + "/thumbnails";
     if (!dir.exists(DataPath)) dir.mkpath(DataPath);
+    if (!dir.exists(ThumbPath)) dir.mkpath(ThumbPath);
 
     loadTables();
 }
@@ -52,10 +58,30 @@ void HistoryRecord::closeDb() {
 
 }
 
-void HistoryRecord::addTrashTables(const QString &path,const QString &result) {
+void HistoryRecord::generateThumbail(const QString &ImagePath, const QString &CurrentTime) {
+    QPixmap originalPixmap(ImagePath);
+    if (originalPixmap.isNull()) {
+        qDebug() << "无法加载缩略图";
+        return;
+    }
+
+    QSize fixedSize(80, 80);
+    QPixmap thumbnail = originalPixmap.scaled(fixedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QString saveDir = QCoreApplication::applicationDirPath() + "/data/thumbnails";
+
+    QFileInfo fileInfo(ImagePath);
+    QString suffix = fileInfo.suffix();
+    QString thumbFileName = CurrentTime + "_thumb.jpg";
+    QString thumbPath = saveDir + "/" + thumbFileName;
+
+    if (thumbnail.save(thumbPath, "JPG")) qDebug() << "缩略图已保存到：" << thumbPath;
+    else qDebug() << "保存缩略图失败：" << thumbPath;
+}
+
+void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
     QSqlQuery query(m_HistoryDb);
     QDateTime currentSystemTime = QDateTime::currentDateTime();
-    QString currentTime = currentSystemTime.toString("yyyy.MM.dd hh:mm:ss");
+    QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss");
     QString label = "TrashClassify";
 
     QString insertSql = "INSERT INTO CV_Table (currentTime, path, result, label) VALUES (?, ?, ?, ?)";
@@ -71,18 +97,17 @@ void HistoryRecord::addTrashTables(const QString &path,const QString &result) {
         emit messageSent(err);
         return;
     }
-
+    generateThumbail(path, currentTime);
     qDebug() << "数据插入成功";
 }
 
-void HistoryRecord::addFaceTables(const QString &path,const QString &result) {
+void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
     QSqlQuery query(m_HistoryDb);
     QDateTime currentSystemTime = QDateTime::currentDateTime();
-    QString currentTime = currentSystemTime.toString("yyyy.MM.dd hh:mm:ss");
+    QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss");
     QString label = "FaceRecognize";
 
-    QString insertSql = "INSERT INTO CV_Table (currentTime, path, result, label) "
-                        "VALUES (?, ?, ?, ?)";
+    QString insertSql = "INSERT INTO CV_Table (currentTime, path, result, label) VALUES (?, ?, ?, ?)";
     query.prepare(insertSql);
     query.addBindValue(currentTime);
     query.addBindValue(path);
@@ -95,6 +120,34 @@ void HistoryRecord::addFaceTables(const QString &path,const QString &result) {
         emit messageSent(err);
         return;
     }
-
+    generateThumbail(path, currentTime);
     qDebug() << "数据插入成功";
+}
+
+QVariantList HistoryRecord::getAllRecords() {
+    QVariantList resultList;
+
+    if (!m_HistoryDb.isOpen()) {
+        openDb();
+        if (!m_HistoryDb.isOpen()) {
+            qDebug() << "无法读取数据库";
+            return resultList;
+        }
+    }
+
+    QSqlQuery getQuery("SELECT currentTime, path , result, label FROM CV_Table");
+    if (!getQuery.isActive()) {
+        qDebug() << "数据查询失败:" << getQuery.lastError().text();
+        return resultList;
+    }
+
+    while (getQuery.next()) {
+        QVariantMap rowMap;
+        rowMap["currentTime"] = getQuery.value(0);
+        rowMap["path"] = getQuery.value(1);
+        rowMap["result"] = getQuery.value(2);
+        rowMap["label"] = getQuery.value(3);
+        resultList.append(rowMap);
+    }
+    return resultList;
 }
