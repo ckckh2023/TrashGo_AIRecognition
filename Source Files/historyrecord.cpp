@@ -142,12 +142,9 @@ QVariantList HistoryRecord::getAllRecords() {
     }
 
     while (getQuery.next()) {
-        QVariantMap rowMap;
-        rowMap["currentTime"] = getQuery.value(0);
-        rowMap["path"] = getQuery.value(1);
-        rowMap["result"] = getQuery.value(2);
-        rowMap["label"] = getQuery.value(3);
-        resultList.append(rowMap);
+        QStringList rowStrings;
+        rowStrings << getQuery.value(0).toString() << getQuery.value(1).toString() << getQuery.value(2).toString() << getQuery.value(3).toString();
+        resultList.append(rowStrings);
     }
     return resultList;
 }
