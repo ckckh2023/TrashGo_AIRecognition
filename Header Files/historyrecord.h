@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QString>
+#include <QVariant>
 
 class HistoryRecord : public QObject{
     Q_OBJECT
