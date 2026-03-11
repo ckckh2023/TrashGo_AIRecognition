@@ -4,7 +4,6 @@
 #include <QFile>
 
 GarbageClassifier::GarbageClassifier(QObject *parent) : QObject(parent) {
-    qDebug() << "垃圾分类器初始化...";
     loadModel();
 }
 
@@ -12,8 +11,8 @@ void GarbageClassifier::loadModel() {
     QString ModelPath = QCoreApplication::applicationDirPath() + "/ResNet.onnx";
 
     if (!QFile::exists(ModelPath)) {
-        qDebug() << "模型文件不存在:" << ModelPath;
-        emit messageSent("请将ResNet.onnx放到程序目录");
+        qDebug() << "模型文件不存在:" << ModelPath << "(GarbageClassifier-loadModel)";
+        emit messageSent("识别器组件缺少ResNet.onnx");
         m_ModelLoaded = false;
         return;
     }
@@ -23,16 +22,16 @@ void GarbageClassifier::loadModel() {
         m_Net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
         m_Net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
         m_ModelLoaded = true;
-        qDebug() << "垃圾分类模型加载成功!";
+        qDebug() << "垃圾分类模型加载成功(GarbageClassifier-loadModel)";
     }
     catch (const cv::Exception &e) {
-        qDebug() << "模型加载失败:" << e.what();
+        qDebug() << "模型加载失败:" << e.what() << "(GarbageClassifier-loadModel)";
         m_ModelLoaded = false;
     }
 }
 
 void GarbageClassifier::loadImage() {
-    qDebug() << "加载图片：" + ImagePath;
+    qDebug() << "加载图片：" + ImagePath << "(GarbageClassifier-loadImage)";
 
     if (!QFile::exists(ImagePath)) {
         emit messageSent("文件不存在：" + ImagePath);
@@ -86,7 +85,7 @@ void GarbageClassifier::classify() {
 
         m_Confidence = maxVal;
         m_GarbageType = mapToChineseType(classId);
-        m_Result = QString("识别成功！种类：%1").arg(m_GarbageType)/*.arg(m_Confidence * 10, 0, 'f', 2)*/;
+        m_Result = QString("识别成功！种类：%1").arg(m_GarbageType);
 
         cv::Mat resultImg = m_CvImage.clone();
         cv::rectangle(resultImg, cv::Point(0,0), cv::Point(250,60), cv::Scalar(0,0,0), cv::FILLED);

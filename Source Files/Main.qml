@@ -8,7 +8,7 @@ import QtQuick.Controls.Material.impl
 
 ApplicationWindow {
 
-    ListModel {id: historyModel}
+    ListModel { id: historyModel }
 
     width: 1080
     height: 720
@@ -472,13 +472,6 @@ ApplicationWindow {
                                         color: "white"
                                         anchors.horizontalCenter: parent.horizontalCenter
                                     }
-
-                                    /*Text {
-                                        text: garbageClassifier.hasImage ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%" : ""
-                                        font.pixelSize: 14
-                                        color: "white"
-                                        anchors.horizontalCenter: parent.horizontalCenter
-                                    }*/
                                 }
                             }
 
@@ -572,8 +565,7 @@ ApplicationWindow {
                                         asynchronous: true
 
                                         onStatusChanged: {
-                                            if (status === Image.Error)
-                                                source = "qrc:/fallback-thumbnail.png"
+                                            if (status === Image.Error) source = "qrc:/fallback-thumbnail.png"
                                         }
                                     }
 
@@ -636,7 +628,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialogFaces
         title: "选择图片"
-        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp *.webp)"]
+        nameFilters: ["图片文件 (*.bmp *.jpg *.jpeg *.png *.webp *.tiff *.tif *.jp2 *.ppm *.pgm *.exr *.hdr)","所有文件 (*.*)"]
         onAccepted: {
             var filePath = selectedFile.toString();
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
@@ -651,7 +643,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialogTrash
         title: "选择图片"
-        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp *.webp)"]
+        nameFilters: ["图片文件 (*.bmp *.jpg *.jpeg *.png *.webp *.tiff *.tif *.jp2 *.ppm *.pgm *.exr *.hdr)","所有文件 (*.*)"]
         onAccepted: {
             var filePath = selectedFile.toString();
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
@@ -702,7 +694,7 @@ ApplicationWindow {
     }
 
     function formatTime(timeStr) {
-        return timeStr.replace(/_/g, ' ');
+        return timeStr.replace(/(\d{4})_(\d{2})_(\d{2})_(\d{2})_(\d{2})_(\d{2})/, '$1/$2/$3 $4:$5:$6');
     }
 
     Connections {
