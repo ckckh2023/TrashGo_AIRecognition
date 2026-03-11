@@ -30,9 +30,7 @@ void HistoryRecord::loadTables() {
 
     QSqlQuery query(m_HistoryDb);
     if (!query.exec(createTable)) {
-        QString err = "CV_Table表格加载失败" + m_HistoryDb.lastError().text();
-        qDebug() << err;
-        emit messageSent(err);
+        qDebug() << "CV_Table表格加载失败" << m_HistoryDb.lastError().text() << "(HistoryRecord-loadTables)";
         return;
     }
 }
@@ -48,19 +46,17 @@ void HistoryRecord::openDb() {
 
     m_HistoryDb.setDatabaseName(DbPath);
     if (!m_HistoryDb.open()) {
-        QString err = "数据库连接失败" + m_HistoryDb.lastError().text();
-        qDebug() << err;
-        emit messageSent(err);
+        qDebug() << "数据库连接失败" << m_HistoryDb.lastError().text() << "(HistoryRecord-openDb)";
         return;
     }
-    qDebug() << "数据库已连接";
+    qDebug() << "数据库已连接(HistoryRecord-openDb)";;
 }
 
 void HistoryRecord::closeDb() {
     if (m_HistoryDb.isOpen()) {
         QString connectionName = m_HistoryDb.connectionName();
         m_HistoryDb.close();
-        qDebug() << "数据库已关闭";
+        qDebug() << "数据库已关闭(HistoryRecord-closeDb)";
     }
 
 }
@@ -68,7 +64,7 @@ void HistoryRecord::closeDb() {
 void HistoryRecord::generateThumbail(const QString &ImagePath, const QString &CurrentTime) {
     QPixmap originalPixmap(ImagePath);
     if (originalPixmap.isNull()) {
-        qDebug() << "无法加载缩略图";
+        qDebug() << "无法加载缩略图(HistoryRecord-generateThumbail)";
         return;
     }
 
@@ -81,8 +77,7 @@ void HistoryRecord::generateThumbail(const QString &ImagePath, const QString &Cu
     QString thumbFileName = CurrentTime + "_thumb.jpg";
     QString thumbPath = saveDir + "/" + thumbFileName;
 
-    if (thumbnail.save(thumbPath, "JPG")) qDebug() << "缩略图已保存到：" << thumbPath;
-    else qDebug() << "保存缩略图失败：" << thumbPath;
+    if (!thumbnail.save(thumbPath, "JPG")) qDebug() << "保存缩略图失败：" << thumbPath << "(HistoryRecord-generateThumbail)";
 }
 
 void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
@@ -101,13 +96,11 @@ void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
     query.addBindValue(label);
 
     if (!query.exec()) {
-        QString err = "数据插入失败: " + m_HistoryDb.lastError().text();
-        qDebug() << err;
-        emit messageSent(err);
+        qDebug() << "数据插入失败: " << m_HistoryDb.lastError().text() << "(HistoryRecord-addTrashTables)";
         return;
     }
     generateThumbail(path, currentTime);
-    qDebug() << "数据插入成功";
+    qDebug() << "数据插入成功(HistoryRecord-addTrashTables)";
 }
 
 void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
@@ -126,13 +119,11 @@ void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
     query.addBindValue(label);
 
     if (!query.exec()) {
-        QString err = "数据插入失败: " + m_HistoryDb.lastError().text();
-        qDebug() << err;
-        emit messageSent(err);
+        qDebug() << "数据插入失败: " + m_HistoryDb.lastError().text() << "(HistoryRecord-addFaceTables)";
         return;
     }
     generateThumbail(path, currentTime);
-    qDebug() << "数据插入成功";
+    qDebug() << "数据插入成功(HistoryRecord-addFaceTables)";
 }
 
 QVariantList HistoryRecord::getAllRecords() {
@@ -141,14 +132,14 @@ QVariantList HistoryRecord::getAllRecords() {
     if (!m_HistoryDb.isOpen()) {
         openDb();
         if (!m_HistoryDb.isOpen()) {
-            qDebug() << "无法读取数据库";
+            qDebug() << "无法读取数据库(HistoryRecord-getAllRecords)";
             return resultList;
         }
     }
 
     QSqlQuery getQuery("SELECT currentTime, path , result, label FROM CV_Table");
     if (!getQuery.isActive()) {
-        qDebug() << "数据查询失败:" << getQuery.lastError().text();
+        qDebug() << "数据查询失败:" << getQuery.lastError().text() << "(HistoryRecord-getAllRecords)";
         return resultList;
     }
 

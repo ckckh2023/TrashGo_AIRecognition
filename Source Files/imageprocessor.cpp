@@ -5,18 +5,18 @@
 #include <QDir>
 
 ImageProcessor::ImageProcessor(QObject *parent) : QObject(parent) {
-    qDebug() << "人脸分类器创建成功！";
+    qDebug() << "人脸分类器创建成功(ImageProcessor-ImageProcessor)";
 
     QString xmlPath = QCoreApplication::applicationDirPath() + "/haarcascade_frontalface_default.xml";
     if (!m_FaceCascade.load(xmlPath.toStdString())) {
-        qDebug() << "错误: 无法加载人脸分类器!";
-        emit messageSent("请将 haarcascade_frontalface_default.xml 放在程序目录");
+        qDebug() << "无法加载人脸分类器(ImageProcessor-ImageProcessor)";
+        emit messageSent("识别器组件缺少haarcascade_frontalface_default.xml");
         return;
     }
 }
 
 void ImageProcessor::loadImage() {
-    qDebug() << "加载图片：" + ImagePath;
+    qDebug() << "加载图片：" + ImagePath << "(ImageProcessor-loadImage)";
     if (!QFile::exists(ImagePath)) {
         emit messageSent("文件不存在：" + ImagePath);
         return;
