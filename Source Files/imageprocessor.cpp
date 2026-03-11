@@ -1,5 +1,4 @@
 #include "imageprocessor.h"
-#include "historyrecord.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
@@ -63,8 +62,7 @@ void ImageProcessor::detectFaces() {
     cv::cvtColor(Image, RgbImage, cv::COLOR_BGR2RGB);
     m_ResultImage = QImage(RgbImage.data, RgbImage.cols, RgbImage.rows, RgbImage.step, QImage::Format_RGB888).copy();
 
-    HistoryRecord FaceHistory;
-    FaceHistory.addFaceTables(ImagePath, QString::number(m_FaceCount));
+    if (m_historyRecord) m_historyRecord->addFaceTables(ImagePath, QString::number(m_FaceCount));
 
     emit imageChanged();
     emit faceCountChanged();

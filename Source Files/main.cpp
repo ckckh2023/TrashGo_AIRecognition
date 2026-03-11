@@ -16,6 +16,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    QString appDirPath = QCoreApplication::applicationDirPath();
+    engine.rootContext()->setContextProperty("appDirPath", appDirPath);
+
+    ProcessorClass.setHistoryRecord(&HistoryClass);
+    GarbageClass.setHistoryRecord(&HistoryClass);
     engine.addImageProvider(QLatin1String("result"), new ResultImageProvider(&ProcessorClass, &GarbageClass));
     engine.rootContext()->setContextProperty("historyRecord", &HistoryClass);
     engine.rootContext()->setContextProperty("imageProcessor", &ProcessorClass);
