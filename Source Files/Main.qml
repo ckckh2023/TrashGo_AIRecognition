@@ -7,6 +7,9 @@ import QtQuick.Controls.Material
 import QtQuick.Controls.Material.impl
 
 ApplicationWindow {
+
+    ListModel {id: historyModel}
+
     width: 1080
     height: 720
     visible: true
@@ -151,9 +154,45 @@ ApplicationWindow {
                     Button {
                         width: parent.width - 20
                         height: 60
-                        text: "更多功能"
+                        text: "历史记录"
                         highlighted: currentTab === 3
                         onClicked: currentTab = 3
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        background: Rectangle {
+                            radius: 5
+                            color: {
+                                if (parent.highlighted) return "#d0e0fa"
+                                if (parent.pressed)     return "#c0d0ea"
+                                if (parent.hovered)     return "#e0e0e0"
+                                return "#00ffffff"
+                            }
+                            Behavior on color { ColorAnimation { duration: 120 } }
+                            Ripple {
+                                clip: true
+                                clipRadius: parent.radius
+                                anchors.fill: parent
+                                pressed: parent.parent.pressed
+                                x: parent.parent.mouseX - width / 2
+                                y: parent.parent.mouseY - height / 2
+                                active: parent.parent.pressed
+                                color: "#10000000"
+                            }
+                        }
+                        contentItem: Text {
+                            text: parent.text
+                            color: "#030303"
+                            font.pixelSize: 18
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                    }
+
+                    Button {
+                        width: parent.width - 20
+                        height: 60
+                        text: "更多功能"
+                        highlighted: currentTab === 4
+                        onClicked: currentTab = 4
                         anchors.horizontalCenter: parent.horizontalCenter
                         background: Rectangle {
                             radius: 5
@@ -212,8 +251,8 @@ ApplicationWindow {
 
                 Item {
                     Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
+                        anchors.fill: parent
+                        color: "#f5f5f5"
                         Column {
                             anchors.centerIn: parent
                             spacing: 20
@@ -263,7 +302,8 @@ ApplicationWindow {
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: "请选择图片(拖拽或点击下方按钮)"
+                                    text: "请选择图片(拖拽至此或点击下方按钮)"
+                                    font.pixelSize: 15
                                     color: "#090909"
                                     visible: !faceImage.visible
                                 }
@@ -366,7 +406,8 @@ ApplicationWindow {
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: "请选择图片(拖拽或点击下方按钮)"
+                                    text: "请选择图片(拖拽至此或点击下方按钮)"
+                                    font.pixelSize: 15
                                     color: "#090909"
                                     visible: trashImage.status !== Image.Ready
                                 }
@@ -403,12 +444,15 @@ ApplicationWindow {
                                 color: {
                                     if (garbageClassifier.hasImage) {
                                         var type = garbageClassifier.garbageType
-                                        if (type.indexOf("可回收") >= 0) return "#2196F3"
-                                        else if (type.indexOf("有害") >= 0) return "#f44336"
-                                        else if (type.indexOf("厨余") >= 0) return "#4CAF50"
-                                        else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                                        if (type && typeof type === "string") {
+                                            if (type.indexOf("可回收") >= 0) return "#2196F3"
+                                            if (type.indexOf("有害") >= 0) return "#f44336"
+                                            if (type.indexOf("厨余") >= 0) return "#4CAF50"
+                                            if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                                        }
+                                        return "#E0E0E0"
                                     }
-                                    else return "#E0E0E0"
+                                    return "#E0E0E0"
                                 }
 
                                 Column {
@@ -470,13 +514,117 @@ ApplicationWindow {
                 }
 
                 Item {
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "#f0f0f0"
+                    }
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: 20
+                        spacing: 20
+
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: 16
+
+                            Text {
+                                text: "历史记录"
+                                font.pixelSize: 24
+                                font.bold: true
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                            }
+
+                            Item { Layout.fillWidth: true }
+
+                            Button {
+                                text: "刷新"
+                                icon.name: "view-refresh"
+                                onClicked: loadHistory()
+                            }
+                        }
+
+                        ListView {
+                            id: historyListView
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            clip: true
+                            model: historyModel
+
+                            delegate: Rectangle {
+                                width: ListView.view.width
+                                height: 100
+                                color: "#ffffff"
+                                border.color: "#e0e0e0"
+                                border.width: 1
+
+                                RowLayout {
+                                    anchors.fill: parent
+                                    anchors.margins: 12
+                                    spacing: 16
+
+                                    Image {
+                                        source: "file:///" + appDirPath + "/data/thumbnails/" + model.currentTime + "_thumb.jpg"
+                                        Layout.preferredWidth: 64
+                                        Layout.preferredHeight: 64
+                                        fillMode: Image.PreserveAspectCrop
+                                        asynchronous: true
+
+                                        onStatusChanged: {
+                                            if (status === Image.Error)
+                                                source = "qrc:/fallback-thumbnail.png"
+                                        }
+                                    }
+
+                                    ColumnLayout {
+                                        Layout.fillWidth: true
+                                        spacing: 6
+
+                                        Text {
+                                            text: formatTime(model.currentTime)
+                                            font.pixelSize: 16
+                                            font.bold: true
+                                            color: "#030303"
+                                        }
+
+                                        Text {
+                                            text: model.label === "TrashClassify" ? "垃圾分类: " + model.result : "人脸检测: " + model.result
+                                            font.pixelSize: 14
+                                            color: model.label === "TrashClassify" ? "#4CAF50" : "#2196F3"
+                                        }
+
+                                        Text {
+                                            text: "路径: " + model.path
+                                            font.pixelSize: 12
+                                            color: "#757575"
+                                            elide: Text.ElideRight
+                                            Layout.fillWidth: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "暂无历史记录"
+                        font.pixelSize: 18
+                        color: "#757575"
+                        visible: historyListView.count === 0
+                        z: 1
+                    }
+                }
+
+                Item {
                     Rectangle{
                         anchors.fill: parent
                         color: "#f0f0f0"
 
                         Text{
                             anchors.centerIn: parent
-                            text: "历史记录功能正在开发中..."
+                            text: "正在开发中..."
                             font.pixelSize: 20
                             color: "#030303"
                         }
@@ -517,6 +665,7 @@ ApplicationWindow {
 
     Dialog {
         id: messageDialog
+        width: 300
         parent: Overlay.overlay
         modal: true
         title: "📬系统消息"
@@ -536,6 +685,24 @@ ApplicationWindow {
 
         enter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 150 } }
         exit: Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 150 } }
+    }
+
+    function loadHistory() {
+        historyModel.clear();
+        var records = historyRecord.getAllRecords();
+        for (var i = 0; i < records.length; i++) {
+            var row = records[i]; // row 是 QStringList
+            historyModel.append({
+                currentTime: row[0],
+                path: row[1],
+                result: row[2],
+                label: row[3]
+            });
+        }
+    }
+
+    function formatTime(timeStr) {
+        return timeStr.replace(/_/g, ' ');
     }
 
     Connections {

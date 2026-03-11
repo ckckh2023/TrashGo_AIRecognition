@@ -7,8 +7,11 @@
 #include <QDebug>
 #include <QDir>
 
+const QString HistoryRecord::ConnectionName = "history_connection";
+
 HistoryRecord::HistoryRecord(QObject *parent) : QObject(parent) {
-    m_HistoryDb = QSqlDatabase::addDatabase("QSQLITE");
+    if (QSqlDatabase::contains(ConnectionName)) m_HistoryDb = QSqlDatabase::addDatabase(ConnectionName);
+    else m_HistoryDb = QSqlDatabase::addDatabase("QSQLITE");
 
     QDir dir;
     QString DataPath = QCoreApplication::applicationDirPath() + "/data";
@@ -16,11 +19,13 @@ HistoryRecord::HistoryRecord(QObject *parent) : QObject(parent) {
     if (!dir.exists(DataPath)) dir.mkpath(DataPath);
     if (!dir.exists(ThumbPath)) dir.mkpath(ThumbPath);
 
+    openDb();
     loadTables();
 }
 
 void HistoryRecord::loadTables() {
-    openDb();
+    if (!m_HistoryDb.isOpen()) openDb();
+
     QString createTable = "CREATE TABLE IF NOT EXISTS CV_Table(currentTime TEXT, path TEXT NOT NULL, result TEXT, label TEXT NOT NULL)";
 
     QSqlQuery query(m_HistoryDb);
@@ -37,6 +42,8 @@ HistoryRecord::~HistoryRecord(){
 }
 
 void HistoryRecord::openDb() {
+    if (m_HistoryDb.isOpen()) return;
+
     QString DbPath = QCoreApplication::applicationDirPath() + "/data/TrashGo_History.db";
 
     m_HistoryDb.setDatabaseName(DbPath);
@@ -50,8 +57,8 @@ void HistoryRecord::openDb() {
 }
 
 void HistoryRecord::closeDb() {
-
     if (m_HistoryDb.isOpen()) {
+        QString connectionName = m_HistoryDb.connectionName();
         m_HistoryDb.close();
         qDebug() << "数据库已关闭";
     }
@@ -79,6 +86,8 @@ void HistoryRecord::generateThumbail(const QString &ImagePath, const QString &Cu
 }
 
 void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
+    if (!m_HistoryDb.isOpen()) openDb();
+
     QSqlQuery query(m_HistoryDb);
     QDateTime currentSystemTime = QDateTime::currentDateTime();
     QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss");
@@ -102,6 +111,8 @@ void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
 }
 
 void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
+    if (!m_HistoryDb.isOpen()) openDb();
+
     QSqlQuery query(m_HistoryDb);
     QDateTime currentSystemTime = QDateTime::currentDateTime();
     QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss");

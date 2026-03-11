@@ -1,5 +1,4 @@
 #include "garbageclassifier.h"
-#include "historyrecord.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
@@ -97,8 +96,7 @@ void GarbageClassifier::classify() {
         cv::cvtColor(resultImg, rgbImage, cv::COLOR_BGR2RGB);
         m_ResultImage = QImage(rgbImage.data, rgbImage.cols, rgbImage.rows, static_cast<int>(rgbImage.step), QImage::Format_RGB888).copy();
 
-        HistoryRecord TrashHistory;
-        TrashHistory.addTrashTables(ImagePath, m_GarbageType);
+        if (m_historyRecord) m_historyRecord->addTrashTables(ImagePath, m_GarbageType);
 
         emit imageChanged();
         emit resultChanged();
