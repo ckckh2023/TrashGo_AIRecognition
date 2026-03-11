@@ -1,6 +1,7 @@
 #ifndef GARBAGECLASSIFIER_H
 #define GARBAGECLASSIFIER_H
 
+#include "historyrecord.h"
 #include <QObject>
 #include <QImage>
 #include <QString>
@@ -20,6 +21,7 @@ class GarbageClassifier : public QObject {
 
 public:
     explicit GarbageClassifier(QObject *parent = nullptr);
+    void setHistoryRecord(HistoryRecord *record) { m_historyRecord = record; }
 
     Q_INVOKABLE void loadImage();
     Q_INVOKABLE void clearImage();
@@ -53,6 +55,8 @@ private:
 
     bool m_HasImage = false;
     QString ImagePath;
+
+    HistoryRecord *m_historyRecord = nullptr;
 
     QStringList m_Categories = {
         "Hazardous_waste_adhesive",

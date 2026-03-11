@@ -16,16 +16,18 @@ public:
     void generateThumbail(const QString &ImagePath, const QString &CurrentTime);
     void addTrashTables(const QString &path,const QString &result);
     void addFaceTables(const QString &path,const QString &result);
-    void openDb();
-    void closeDb();
     Q_INVOKABLE QVariantList getAllRecords();
 
 signals:
     void messageSent(const QString &msg);
 
 private:
+    void openDb();
+    void closeDb();
     void loadTables();
     QSqlDatabase m_HistoryDb;
+
+    static const QString ConnectionName;
 };
 
 #endif // HISTORYRECORD_H

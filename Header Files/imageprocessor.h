@@ -1,6 +1,7 @@
 #ifndef IMAGEPROCESSOR_H
 #define IMAGEPROCESSOR_H
 
+#include "historyrecord.h"
 #include <QObject>
 #include <QImage>
 #include <QString>
@@ -15,6 +16,7 @@ class ImageProcessor : public QObject {
 
 public:
     explicit ImageProcessor(QObject *parent = nullptr);
+    void setHistoryRecord(HistoryRecord *record) { m_historyRecord = record; }
 
     int faceCount() const { return m_FaceCount; }
     bool hasImage() const { return m_HasImage; }
@@ -39,6 +41,8 @@ private:
 
     bool m_HasImage = false;
     QString ImagePath;
+
+    HistoryRecord *m_historyRecord = nullptr;
 };
 
 #endif // IMAGEPROCESSOR_H
