@@ -8,7 +8,7 @@ ImageProcessor::ImageProcessor(QObject *parent) : QObject(parent) {
     qDebug() << "人脸分类器创建成功(ImageProcessor-ImageProcessor)";
 
     QString xmlPath = QCoreApplication::applicationDirPath() + "/haarcascade_frontalface_default.xml";
-    if (!m_FaceCascade.load(xmlPath.toStdString())) {
+    if (!m_FaceCascade.load(QFile::encodeName(xmlPath).toStdString())) {
         qDebug() << "无法加载人脸分类器(ImageProcessor-ImageProcessor)";
         emit messageSent("识别器组件缺少haarcascade_frontalface_default.xml");
         return;
