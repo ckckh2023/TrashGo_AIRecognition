@@ -18,7 +18,7 @@ void GarbageClassifier::loadModel() {
     }
 
     try {
-        m_Net = cv::dnn::readNetFromONNX(ModelPath.toStdString());
+        m_Net = cv::dnn::readNetFromONNX(QFile::encodeName(ModelPath).toStdString());
         m_Net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
         m_Net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
         m_ModelLoaded = true;
