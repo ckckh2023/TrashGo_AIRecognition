@@ -1,11 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(TrashGo VERSION 1.1.0 LANGUAGES CXX)
+project(TrashGo VERSION 1.1.1 LANGUAGES CXX)
+configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
+set(COMPANY_NAME    "GitHub ckckh2023")
+set(PRODUCT_NAME    "TrashGo")
+set(TARGET_NAME     "appTrashGo")
+set(FILE_DESCRIPTION "TrashGo信息识别")
+set(COPYRIGHT_NOTICE "版权所有 GitHub-ckckh2023")
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network Multimedia)
 find_package(OpenCV REQUIRED COMPONENTS core imgproc objdetect dnn)
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -22,7 +28,26 @@ qt_add_qml_module(appTrashGo
         SOURCES historyrecord.h historyrecord.cpp
         SOURCES imageprocessor.h imageprocessor.cpp
         SOURCES returnimage.h returnimage.cpp
+        SOURCES githubonline.h githubonline.cpp
+        QML_FILES Game.qml
 )
+
+qt6_add_resources(appTrashGo "app_icons"
+    PREFIX "/icons"
+    FILES
+        images/icon_16.png
+        images/icon_32.png
+        images/icon_64.png
+        images/icon_128.png
+)
+
+if(WIN32)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/version.rc @ONLY)
+    target_sources(appTrashGo PRIVATE
+            appicon.rc
+            ${CMAKE_CURRENT_BINARY_DIR}/version.rc
+        )
+endif()
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -39,10 +64,12 @@ target_link_libraries(appTrashGo
     PRIVATE Qt6::Quick
     PRIVATE Qt6::Core
     PRIVATE Qt6::Sql
+    PRIVATE Qt6::Network
     PRIVATE Qt6::Multimedia
     ${OpenCV_LIBS}
 )
-target_link_libraries(appTrashGo PRIVATE Qt6::Core)
+
+target_include_directories(appTrashGo PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 add_custom_command(
     TARGET appTrashGo POST_BUILD
@@ -55,6 +82,7 @@ add_custom_command(
 )
 
 include(GNUInstallDirs)
+
 install(TARGETS appTrashGo
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
