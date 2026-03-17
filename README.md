@@ -1,5 +1,6 @@
 # TrashGo-信息识别助手
-![TrashGo Logo]<img width="128" height="128" alt="icon_128" src="https://github.com/user-attachments/assets/1711681d-3eb7-49e8-9459-fd2a323fde6b" />
+![TrashGo Logo]<img width="1500" height="524" alt="TrashGo" src="https://github.com/user-attachments/assets/30e9cb29-b85a-485e-96b4-e5fbe0aac703" />
+
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/yourusername/TrashGo)](https://github.com/yourusername/TrashGo/releases)
