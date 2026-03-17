@@ -4,8 +4,8 @@
 
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition/TrashGo)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
-[![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-brightgreen)]()
+[![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)]()
 
 ## 项目简介
 TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨在帮助用户快速识别图像、文字、语音等信息，并提供趣味互动体验。无论是垃圾分类、人脸识别，TrashGo 都能轻松应对。
