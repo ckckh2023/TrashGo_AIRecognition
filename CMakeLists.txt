@@ -5,13 +5,13 @@ configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
-set(COMPANY_NAME    "GitHub ckckh2023")
+set(COMPANY_NAME    "GitHub-ckckh2023")
 set(PRODUCT_NAME    "TrashGo")
 set(TARGET_NAME     "appTrashGo")
 set(FILE_DESCRIPTION "TrashGo信息识别")
-set(COPYRIGHT_NOTICE "版权所有 GitHub-ckckh2023")
+set(COPYRIGHT_NOTICE "版权所有@GitHub-ckckh2023")
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network)
 find_package(OpenCV REQUIRED COMPONENTS core imgproc objdetect dnn)
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -24,12 +24,15 @@ qt_add_qml_module(appTrashGo
     URI TrashGo
     QML_FILES
         Main.qml
-        SOURCES garbageclassifier.h garbageclassifier.cpp
-        SOURCES historyrecord.h historyrecord.cpp
-        SOURCES imageprocessor.h imageprocessor.cpp
-        SOURCES returnimage.h returnimage.cpp
-        SOURCES githubonline.h githubonline.cpp
-        QML_FILES Game.qml
+        SOURCES GarbageClassifier.h GarbageClassifier.cpp
+        SOURCES ImageProcessor.h ImageProcessor.cpp
+        SOURCES ReturnImage.h ReturnImage.cpp
+        SOURCES HistoryRecord.h HistoryRecord.cpp
+        SOURCES GitHubOnline.h GitHubOnline.cpp
+        QML_FILES
+        QML_FILES components/button/SideBarButton.qml
+        QML_FILES components/pages/HomePage.qml
+        QML_FILES components/animation/CustomizeRipple.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
@@ -43,10 +46,13 @@ qt6_add_resources(appTrashGo "app_icons"
 
 if(WIN32)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/version.rc @ONLY)
-    target_sources(appTrashGo PRIVATE
-            appicon.rc
-            ${CMAKE_CURRENT_BINARY_DIR}/version.rc
-        )
+    target_sources(appTrashGo
+        PRIVATE appicon.rc
+        ${CMAKE_CURRENT_BINARY_DIR}/version.rc
+    )
+    target_link_libraries(appTrashGo
+        PRIVATE dwmapi
+    )
 endif()
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -65,7 +71,6 @@ target_link_libraries(appTrashGo
     PRIVATE Qt6::Core
     PRIVATE Qt6::Sql
     PRIVATE Qt6::Network
-    PRIVATE Qt6::Multimedia
     ${OpenCV_LIBS}
 )
 
@@ -73,12 +78,13 @@ target_include_directories(appTrashGo PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 add_custom_command(
     TARGET appTrashGo POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:appTrashGo>/model
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/haarcascade_frontalface_default.xml
-        $<TARGET_FILE_DIR:appTrashGo>/haarcascade_frontalface_default.xml
+        $<TARGET_FILE_DIR:appTrashGo>/model/haarcascade_frontalface_default.xml
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/ResNet.onnx
-        $<TARGET_FILE_DIR:appTrashGo>/ResNet.onnx
+        $<TARGET_FILE_DIR:appTrashGo>/model/ResNet.onnx
 )
 
 include(GNUInstallDirs)
@@ -88,5 +94,3 @@ install(TARGETS appTrashGo
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
-
