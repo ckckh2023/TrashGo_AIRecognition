@@ -32,7 +32,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 ### 下载安装包
 - **Windows**：从 [Releases](https://github.com/ckckh2023/TrashGo_AIRecognition/releases) 下载最新zip文件解压到文件夹即可使用（安装包正在制作）
 - **MacOS**：暂不支持
-- **Linux**: 暂不支持
+- **Linux**：暂不支持
 
 <!-- ### 从源码编译
 1. 克隆仓库：`git clone https://github.com/yourusername/TrashGo.git`
