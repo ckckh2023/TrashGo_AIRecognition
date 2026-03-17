@@ -1,9 +1,10 @@
 # TrashGo-信息识别助手
-![TrashGo Logo]<img width="1500" height="524" alt="TrashGo" src="https://github.com/user-attachments/assets/30e9cb29-b85a-485e-96b4-e5fbe0aac703" />
+![TrashGo Logo]<img width="375" height="131" alt="TrashGo" src="https://github.com/user-attachments/assets/6f6b24e6-d62f-4ea6-9a77-030f98b35845" />
+
 
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/yourusername/TrashGo)](https://github.com/yourusername/TrashGo/releases)
+[![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition/TrashGo)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-brightgreen)]()
 
 ## 项目简介
@@ -46,7 +47,8 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 ## 贡献指南
 
-欢迎贡献代码、报告问题或提出新功能建议！<!--请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
+欢迎贡献代码、报告问题或提出新功能建议！
+<!-- 请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
 
 1. Fork 本仓库
 2. 创建您的特性分支 (`git checkout -b feature/AmazingFeature`)
