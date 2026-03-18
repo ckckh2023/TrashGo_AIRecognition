@@ -11,7 +11,7 @@ set(TARGET_NAME     "appTrashGo")
 set(FILE_DESCRIPTION "TrashGo信息识别")
 set(COPYRIGHT_NOTICE "版权所有@GitHub-ckckh2023")
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network Core5Compat)
 find_package(OpenCV REQUIRED COMPONENTS core imgproc objdetect dnn)
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -29,10 +29,11 @@ qt_add_qml_module(appTrashGo
         SOURCES ReturnImage.h ReturnImage.cpp
         SOURCES HistoryRecord.h HistoryRecord.cpp
         SOURCES GitHubOnline.h GitHubOnline.cpp
-        QML_FILES
+    QML_FILES
         QML_FILES components/button/SideBarButton.qml
         QML_FILES components/pages/HomePage.qml
         QML_FILES components/animation/CustomizeRipple.qml
+        QML_FILES components/button/StandardButton.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
@@ -42,6 +43,13 @@ qt6_add_resources(appTrashGo "app_icons"
         images/icon_32.png
         images/icon_64.png
         images/icon_128.png
+        images/home.png
+        images/classify.png
+        images/history.png
+        images/star.png
+        images/function.png
+        images/settings.png
+        images/TrashGo.png
 )
 
 if(WIN32)
@@ -71,6 +79,7 @@ target_link_libraries(appTrashGo
     PRIVATE Qt6::Core
     PRIVATE Qt6::Sql
     PRIVATE Qt6::Network
+    PUBLIC Qt6::Core5Compat
     ${OpenCV_LIBS}
 )
 
@@ -79,12 +88,16 @@ target_include_directories(appTrashGo PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 add_custom_command(
     TARGET appTrashGo POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:appTrashGo>/model
+    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:appTrashGo>/fonts
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/haarcascade_frontalface_default.xml
         $<TARGET_FILE_DIR:appTrashGo>/model/haarcascade_frontalface_default.xml
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/ResNet.onnx
         $<TARGET_FILE_DIR:appTrashGo>/model/ResNet.onnx
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/FZPinShangHei.ttf
+        $<TARGET_FILE_DIR:appTrashGo>/fonts/FZPinShangHei.ttf
 )
 
 include(GNUInstallDirs)
