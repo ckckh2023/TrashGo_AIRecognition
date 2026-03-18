@@ -27,6 +27,7 @@ private:
     void loadTables();
     QSqlDatabase m_HistoryDb;
 
+    static int s_refCount;
     static const QString ConnectionName;
 };
 
