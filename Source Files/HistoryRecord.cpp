@@ -8,19 +8,25 @@
 #include <QDir>
 
 const QString HistoryRecord::ConnectionName = "history_connection";
+int HistoryRecord::s_refCount = 0;
 
 HistoryRecord::HistoryRecord(QObject *parent) : QObject(parent) {
-    if (QSqlDatabase::contains(ConnectionName)) m_HistoryDb = QSqlDatabase::database(ConnectionName);
-    else m_HistoryDb = QSqlDatabase::addDatabase("QSQLITE", ConnectionName);
+    if (s_refCount == 0) {
+        if (QSqlDatabase::contains(ConnectionName)) m_HistoryDb = QSqlDatabase::database(ConnectionName);
+        else m_HistoryDb = QSqlDatabase::addDatabase("QSQLITE", ConnectionName);
 
-    QDir dir;
-    QString DataPath = QCoreApplication::applicationDirPath() + "/data";
-    QString ThumbPath = DataPath + "/thumbnails";
-    if (!dir.exists(DataPath)) dir.mkpath(DataPath);
-    if (!dir.exists(ThumbPath)) dir.mkpath(ThumbPath);
+        QDir dir;
+        QString DataPath = QCoreApplication::applicationDirPath() + "/data";
+        QString ThumbPath = DataPath + "/thumbnails";
+        if (!dir.exists(DataPath)) dir.mkpath(DataPath);
+        if (!dir.exists(ThumbPath)) dir.mkpath(ThumbPath);
 
-    openDb();
-    loadTables();
+        openDb();
+        loadTables();
+    }
+    else m_HistoryDb = QSqlDatabase::database(ConnectionName);
+
+    s_refCount++;
 }
 
 void HistoryRecord::loadTables() {
@@ -40,7 +46,8 @@ void HistoryRecord::loadTables() {
 }
 
 HistoryRecord::~HistoryRecord(){
-    closeDb();
+    s_refCount--;
+    if (s_refCount == 0) closeDb();
 }
 
 void HistoryRecord::openDb() {
