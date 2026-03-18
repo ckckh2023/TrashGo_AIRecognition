@@ -9,8 +9,8 @@ import "components/pages"
 
 ApplicationWindow {
     ListModel { id: historyModel }
-    width: 1080
-    height: 720
+    width: 1440
+    height: 1080
     visible: true
     title: qsTr("TrashGo信息识别")
 
@@ -32,9 +32,9 @@ ApplicationWindow {
 
             Rectangle {
                 id: sidebar
-                width: 200
+                width: 240
                 height: parent.height
-                color: "#f0f0f5"
+                color: "#f0f5f5"
 
                 Column {
                     anchors.fill: parent
@@ -43,59 +43,157 @@ ApplicationWindow {
 
                     Image {
                         id: logo
-                        width: 64
-                        height: 64
+                        width: 210
+                        height: 73
                         fillMode: Image.PreserveAspectFit
-                        source: "/icons/images/icon_64.png"
+                        source: "/icons/images/TrashGo.png"
                     }
 
                     SideBarButton {
                         text: "首页"
+                        icon.source: "/icons/images/home.png"
+                        icon.color: "transparent"
                         highlighted: currentTab === 0
                         onClicked: currentTab = 0
                     }
 
                     Rectangle {
                         width: parent.width
-                        height: 12
+                        height: 8
                         color: "transparent"
                     }
 
                     SideBarButton {
                         text: "垃圾分类"
+                        icon.source: "/icons/images/classify.png"
+                        icon.color: "transparent"
                         highlighted: currentTab === 1
                         onClicked: currentTab = 1
                     }
 
+                    Rectangle {
+                        width: parent.width
+                        height: 8
+                        color: "transparent"
+                    }
+
                     SideBarButton {
-                        text: "更多功能"
+                        text: "历史记录"
+                        icon.source: "/icons/images/history.png"
+                        icon.color: "transparent"
                         highlighted: currentTab === 2
                         onClicked: currentTab = 2
                     }
 
+                    Rectangle {
+                        width: parent.width
+                        height: 8
+                        color: "transparent"
+                    }
+
                     SideBarButton {
-                        text: "关于"
+                        text: "收藏夹"
+                        icon.source: "/icons/images/star.png"
+                        icon.color: "transparent"
                         highlighted: currentTab === 3
                         onClicked: currentTab = 3
                     }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 8
+                        color: "transparent"
+                    }
+
+
+                    SideBarButton {
+                        text: "更多功能"
+                        icon.source: "/icons/images/function.png"
+                        icon.color: "transparent"
+                        highlighted: currentTab === 4
+                        onClicked: currentTab = 4
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 8
+                        color: "transparent"
+                    }
+
+                    SideBarButton {
+                        text: "设置"
+                        icon.source: "/icons/images/settings.png"
+                        icon.color: "transparent"
+                        highlighted: currentTab === 5
+                        onClicked: currentTab = 5
+                    }
+                }
+
+                Rectangle {
+                    width: 1
+                    height: parent.height
+                    color: "#ececec"
+                    anchors.right: parent.right
                 }
             }
 
-            Loader {
-                id: pageLoader
-                width: parent.width - sidebar.width   // 填充剩余宽度
+            Rectangle {
+                width: parent.width
                 height: parent.height
-                source: {
-                    if (currentTab === 0) return "components/pages/HomePage.qml"
-                    // 后续可添加其他 tab 对应的页面
-                    // else if (currentTab === 1) return "components/pages/GarbagePage.qml"
-                    // else if (currentTab === 2) return "components/pages/MorePage.qml"
-                    // else if (currentTab === 3) return "components/pages/AboutPage.qml"
-                    else return ""   // 空字符串表示不加载任何组件
-                }
+                color: "transparent"
 
-                // 可选：启用异步加载，避免界面卡顿
-                asynchronous: true
+                Column {
+                    anchors.fill: parent
+
+                    Rectangle {
+                        id: topbar
+                        width: parent.width
+                        height: 80
+                        color: "#f0f5f5"
+
+                        Item {
+                            width: parent.width - 80
+                            height: parent.height - 36
+                            anchors.centerIn: parent
+
+                            Text {
+                                text: {
+                                    if (currentTab === 0) return "首页"
+                                    else if (currentTab === 1) return "垃圾分类"
+                                    else if (currentTab === 2) return "历史记录"
+                                    else if (currentTab === 3) return "收藏夹"
+                                    else if (currentTab === 4) return "更多功能"
+                                    else if (currentTab === 5) return "设置"
+                                    else return ""
+                                }
+                                color: "#030303"
+                                font.family: "Microsoft YaHei"
+                                font.pixelSize: 36
+                                font.weight: Font.DemiBold
+                                font.letterSpacing: 4
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+
+                    Loader {
+                        id: pageLoader
+                        width: parent.width - sidebar.width
+                        height: parent.height - topbar.height
+                        source: {
+                            if (currentTab === 0) return "components/pages/HomePage.qml"
+                            // 后续可添加其他 tab 对应的页面
+                            // else if (currentTab === 1) return "components/pages/GarbagePage.qml"
+                            // else if (currentTab === 2) return "components/pages/MorePage.qml"
+                            // else if (currentTab === 3) return "components/pages/AboutPage.qml"
+                            else return ""   // 空字符串表示不加载任何组件
+                        }
+
+                        // 可选：启用异步加载，避免界面卡顿
+                        asynchronous: true
+                    }
+                }
             }
         }
     }
