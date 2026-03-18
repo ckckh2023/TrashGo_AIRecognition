@@ -5,7 +5,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition?include_prereleases)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)]()
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-blue)]()
 [![Stars](https://img.shields.io/github/stars/ckckh2023/TrashGo_AIRecognition?style=social)]()
 
 ## 项目简介
