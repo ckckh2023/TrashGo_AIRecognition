@@ -63,8 +63,8 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 ## 联系我们
 
-- 作者：[ckckh2023](https://github.com/ckckh2023)
-- 邮箱：fightened2023@foxmail.com
+- 作者：[ckckh2023](https://github.com/ckckh2023) [TangibleDreams913](https://github.com/TangibleDream913)
+- 邮箱：fightened2023@foxmail.com 203295769@qq.com
 - 项目主页：[Github](https://github.com/ckckh2023/TrashGo_AIRecognition)
 
 ## 致谢
