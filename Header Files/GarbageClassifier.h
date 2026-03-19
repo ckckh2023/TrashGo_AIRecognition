@@ -2,11 +2,13 @@
 #define GARBAGECLASSIFIER_H
 
 #include "HistoryRecord.h"
+#include "IniFileHandler.h"
 
 #include <QObject>
 #include <QImage>
 #include <QString>
 #include <QStringList>
+#include <QNetworkAccessManager>
 #include <QMap>
 
 #include <opencv2/opencv.hpp>
@@ -40,6 +42,9 @@ signals:
     void messageSentError(const QString &error);
     void messageSentWarn(const QString &warn);
 
+private slots:
+    void onBaiduApiReplyFinished();
+
 private:
     void loadModel();
     QString mapToChineseType(int classId);
@@ -57,6 +62,8 @@ private:
     double m_confidence = 0.0;
 
     HistoryRecord *m_historyRecord = nullptr;
+    IniFileHandler *m_handler = nullptr;
+    QNetworkAccessManager *m_networkManager;
 
     QStringList Categories = {
         "Hazardous_waste_adhesive",
