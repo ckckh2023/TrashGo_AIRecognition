@@ -9,6 +9,7 @@
 #include "HistoryRecord.h"
 #include "ReturnImage.h"
 #include "GitHubOnline.h"
+#include "IniFileHandler.h"
 #include "version.h"
 
 int main(int argc, char *argv[]) {
@@ -19,6 +20,7 @@ int main(int argc, char *argv[]) {
     ImageProcessor ProcessorClass;
     GarbageClassifier GarbageClass;
     HistoryRecord HistoryClass;
+    IniFileHandler IniFileClass;
 
     QQmlApplicationEngine engine;
 
@@ -34,6 +36,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("garbageClassifier", &GarbageClass);
     engine.rootContext()->setContextProperty("imageProcessor", &ProcessorClass);
     engine.rootContext()->setContextProperty("historyRecord", &HistoryClass);
+    engine.rootContext()->setContextProperty("iniFileRecord", &IniFileClass);
     ProcessorClass.setHistoryRecord(&HistoryClass);
     GarbageClass.setHistoryRecord(&HistoryClass);
     engine.addImageProvider(QLatin1String("resultImage"), new ResultImageProvider(&ProcessorClass, &GarbageClass));
