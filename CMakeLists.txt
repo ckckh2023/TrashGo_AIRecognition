@@ -29,7 +29,7 @@ qt_add_qml_module(appTrashGo
         SOURCES ReturnImage.h ReturnImage.cpp
         SOURCES HistoryRecord.h HistoryRecord.cpp
         SOURCES GitHubOnline.h GitHubOnline.cpp
-    QML_FILES
+        SOURCES IniFileHandler.h IniFileHandler.cpp
         QML_FILES components/button/SideBarButton.qml
         QML_FILES components/pages/HomePage.qml
         QML_FILES components/animation/CustomizeRipple.qml
