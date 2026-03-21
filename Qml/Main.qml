@@ -183,8 +183,8 @@ ApplicationWindow {
                         height: parent.height - topbar.height
                         source: {
                             if (currentTab === 0) return "components/pages/HomePage.qml"
+                            else if (currentTab === 1) return "components/pages/GarbagePage.qml"
                             // 后续可添加其他 tab 对应的页面
-                            // else if (currentTab === 1) return "components/pages/GarbagePage.qml"
                             // else if (currentTab === 2) return "components/pages/MorePage.qml"
                             // else if (currentTab === 3) return "components/pages/AboutPage.qml"
                             else return ""   // 空字符串表示不加载任何组件

@@ -8,8 +8,8 @@ Button {
 
     background: Rectangle {
         border.width: 0
-        implicitWidth: parent ? parent.width : 0
-        implicitHeight: parent ? parent.height : 0
+        implicitWidth: parent.width
+        implicitHeight: parent.height
         radius: 12
         color: {
             if (root.hovered) return "#e5e5e5"
