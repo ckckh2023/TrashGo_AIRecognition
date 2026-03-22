@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QDebug>
 #include <QDir>
+#include <QImageReader>
+#include <QPainter>
 
 const QString HistoryRecord::ConnectionName = "history_connection";
 int HistoryRecord::s_refCount = 0;
@@ -73,19 +75,33 @@ void HistoryRecord::closeDb() {
 }
 
 void HistoryRecord::generateThumbnail(const QString &ImagePath, const QString &CurrentTime) {
-    QPixmap originalPixmap(ImagePath);
-    if (originalPixmap.isNull()) {
-        qDebug() << "无法加载缩略图(HistoryRecord-generateThumbnail)";
+    QImageReader reader(ImagePath);
+    if (!reader.canRead()) {
+        qDebug() << "无法读取图片：" << reader.errorString();
         return;
     }
 
-    QSize fixedSize(80, 80);
-    QPixmap thumbnail = originalPixmap.scaled(fixedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage originalImage = reader.read();
+    if (originalImage.isNull()) {
+        qDebug() << "无法加载缩略图" << reader.errorString() << "(HistoryRecord-generateThumbnail)";
+        return;
+    }
+
+    QImage thumbnail = originalImage.scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QString saveDir = QCoreApplication::applicationDirPath() + "/data/thumbnails";
+    QDir().mkpath(saveDir);
 
     QFileInfo fileInfo(ImagePath);
     QString thumbFileName = CurrentTime + "_thumb.jpg";
     QString thumbPath = saveDir + "/" + thumbFileName;
+
+    if (thumbnail.hasAlphaChannel()) {
+        QImage rgbImage(thumbnail.size(), QImage::Format_RGB32);
+        rgbImage.fill(Qt::white);
+        QPainter painter(&rgbImage);
+        painter.drawImage(0, 0, thumbnail);
+        thumbnail = rgbImage;
+    }
 
     if (!thumbnail.save(thumbPath, "JPG")) qDebug() << "保存缩略图失败：" << thumbPath << "(HistoryRecord-generateThumbnail)";
 }
