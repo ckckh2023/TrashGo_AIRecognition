@@ -43,7 +43,7 @@ signals:
     void messageSentWarn(const QString &warn);
 
 private slots:
-    void onBaiduApiReplyFinished();
+    void onBaiduApiReplyFinished(QNetworkReply* reply);
 
 private:
     void loadModel();
