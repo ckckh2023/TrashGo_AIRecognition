@@ -32,6 +32,7 @@ qt_add_qml_module(appTrashGo
         SOURCES IniFileHandler.h IniFileHandler.cpp
         QML_FILES components/button/SideBarButton.qml
         QML_FILES components/pages/HomePage.qml
+        QML_FILES components/pages/GarbagePage.qml
         QML_FILES components/animation/CustomizeRipple.qml
         QML_FILES components/button/StandardButton.qml
 )
