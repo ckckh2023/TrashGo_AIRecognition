@@ -100,18 +100,24 @@ void GarbageClassifier::classify() {
     if (m_handler->provider() == "baidu") {
         QUrlQuery postData;
         QFile ImageFile(ImagePath);
+        if (!ImageFile.open(QIODevice::ReadOnly)) {
+            emit messageSentError("无法打开图片文件: " + ImageFile.errorString());
+            return;
+        }
         QByteArray ImageData = ImageFile.readAll();
         ImageFile.close();
 
         QByteArray Base64Data = ImageData.toBase64();
-        postData.addQueryItem("image", QString::fromLatin1(Base64Data));
+        //postData.addQueryItem("image", QString::fromLatin1(Base64Data));
 
         QUrl url("https://znsb2ljfl.api.bdymkt.com/image/waste-sorting/execute");
         QNetworkRequest request(url);
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded; charset=utf-8");
-        request.setRawHeader("X-Bce-AppCode", m_handler->currentApiKey().toUtf8());
 
-        QByteArray requestBody = postData.toString(QUrl::FullyEncoded).toUtf8();
+        QString signature = "AppCode/" + m_handler->currentApiKey();
+        request.setRawHeader("X-Bce-Signature", signature.toUtf8());
+
+        QByteArray requestBody = "image=" + QUrl::toPercentEncoding(Base64Data);
         QNetworkReply *baiduReply = m_networkManager->post(request, requestBody);
 
         baiduReply->setProperty("timeout", 30000);
@@ -189,9 +195,11 @@ void GarbageClassifier::classify() {
     }
 }
 
-void GarbageClassifier::onBaiduApiReplyFinished() {
-    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-    if (!reply) return;
+void GarbageClassifier::onBaiduApiReplyFinished(QNetworkReply* reply) {
+    if (!reply) {
+        emit messageSentError("百度云没有返回信息！");
+        return;
+    }
 
     if (reply->error() != QNetworkReply::NoError) {
         emit messageSentError("网络请求失败: " + reply->errorString());
@@ -200,6 +208,7 @@ void GarbageClassifier::onBaiduApiReplyFinished() {
     }
 
     QByteArray responseData = reply->readAll();
+    qDebug() << "API返回原始数据:" << responseData;
     reply->deleteLater();
 
     QJsonParseError parseError;
@@ -210,7 +219,7 @@ void GarbageClassifier::onBaiduApiReplyFinished() {
     }
 
     if (!doc.isObject()) {
-        emit messageSentError("返回数据不是JSON对象");
+        emit messageSentError("返回数据不是JSON对象！");
         return;
     }
 
