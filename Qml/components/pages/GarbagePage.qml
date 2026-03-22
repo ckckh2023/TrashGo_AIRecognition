@@ -27,19 +27,19 @@ Item {
                 onEntered: (drag) => { if (drag.hasUrls) drag.accept() }
                 onExited: {}
                 onDropped: (drop) => {
-                               if (drop.hasUrls && drop.urls.length > 0) {
-                                   var url = drop.urls[0];
-                                   var filePath = url.toString();
+                    if (drop.hasUrls && drop.urls.length > 0) {
+                        var url = drop.urls[0];
+                        var filePath = url.toString();
 
-                                   if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
-                                   else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+                        if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
+                        else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
-                                   console.log("拖拽文件路径:", filePath);
-                                   garbageClassifier.loadPath(filePath);
-                                   garbageClassifier.loadImage();
-                               }
-                               drop.accept();
-                           }
+                        console.log("拖拽文件路径:", filePath);
+                        garbageClassifier.loadPath(filePath);
+                        garbageClassifier.loadImage();
+                    }
+                    drop.accept();
+                }
             }
 
             Image {
@@ -229,13 +229,6 @@ Item {
                     color: "white"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
-
-                /*Text {
-                            text: garbageClassifier.hasImage ? "置信度: " + (garbageClassifier.confidence * 10).toFixed(2) + "%" : ""
-                            font.pixelSize: 14
-                            color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }*/
             }
         }
 
@@ -245,7 +238,7 @@ Item {
     FileDialog {
         id: fileDialogTrash
         title: "选择图片"
-        nameFilters: ["图片文件 (*.png *.jpg *.jpeg *.bmp *.webp)"]
+        nameFilters: ["图片文件 (*.bmp *.jpg *.jpeg *.png *.webp *.tiff *.tif *.jp2 *.ppm *.pgm *.exr *.hdr)","所有文件 (*.*)"]
         onAccepted: {
             var filePath = selectedFile.toString();
             if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
@@ -264,4 +257,3 @@ Item {
         function onImageChanged() { imageRevisionTrash++; }
     }
 }
-
