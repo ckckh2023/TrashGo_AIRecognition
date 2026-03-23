@@ -1,4 +1,4 @@
-# TrashGo-信息识别助手
+# TrashGo-信息识别助手 (项目正在重构中)
 <img width="375" height="131" alt="TrashGo" src="https://github.com/user-attachments/assets/6f6b24e6-d62f-4ea6-9a77-030f98b35845" />
 
 
