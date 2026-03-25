@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("garbageClassifier", &GarbageClass);
     engine.rootContext()->setContextProperty("imageProcessor", &ProcessorClass);
     engine.rootContext()->setContextProperty("historyRecord", &HistoryClass);
-    engine.rootContext()->setContextProperty("iniFileRecord", &IniFileClass);
+    engine.rootContext()->setContextProperty("iniFileHandler", &IniFileClass);
     ProcessorClass.setHistoryRecord(&HistoryClass);
     GarbageClass.setHistoryRecord(&HistoryClass);
     engine.addImageProvider(QLatin1String("resultImage"), new ResultImageProvider(&ProcessorClass, &GarbageClass));
