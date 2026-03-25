@@ -13,7 +13,7 @@ Button {
         radius: 12
         color: {
             if (root.hovered) return "#e5e5e5"
-            return "#ffffff"
+            return "#b0ffffff"
         }
 
         Behavior on color {

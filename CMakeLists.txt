@@ -35,6 +35,8 @@ qt_add_qml_module(appTrashGo
         QML_FILES components/pages/GarbagePage.qml
         QML_FILES components/animation/CustomizeRipple.qml
         QML_FILES components/button/StandardButton.qml
+        QML_FILES components/pages/SettingPage.qml
+        QML_FILES components/settings/SettingItem.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
