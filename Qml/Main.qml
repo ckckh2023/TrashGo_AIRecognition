@@ -9,8 +9,8 @@ import "components/pages"
 
 ApplicationWindow {
     ListModel { id: historyModel }
-    width: 1440
-    height: 1080
+    width: 1280
+    height: 810
     visible: true
     title: qsTr("TrashGo信息识别")
 
@@ -20,7 +20,11 @@ ApplicationWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: "#ececec"
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#f0f4fe" }
+            GradientStop { position: 1.0; color: "#def0f7" }
+        }
+
     }
 
     Item {
@@ -34,7 +38,7 @@ ApplicationWindow {
                 id: sidebar
                 width: 240
                 height: parent.height
-                color: "#f0f5f5"
+                color: "#80ffffff"
 
                 Column {
                     anchors.fill: parent
@@ -47,6 +51,25 @@ ApplicationWindow {
                         height: 73
                         fillMode: Image.PreserveAspectFit
                         source: "/icons/images/TrashGo.png"
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 12
+                        color: "transparent"
+                    }
+
+                    Rectangle {
+                        width: parent.width - 30
+                        height: 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        color: "#cecece"
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 12
+                        color: "transparent"
                     }
 
                     SideBarButton {
@@ -149,7 +172,7 @@ ApplicationWindow {
                         id: topbar
                         width: parent.width
                         height: 80
-                        color: "#f0f5f5"
+                        color: "#80ffffff"
 
                         Item {
                             width: parent.width - 80
@@ -184,9 +207,10 @@ ApplicationWindow {
                         source: {
                             if (currentTab === 0) return "components/pages/HomePage.qml"
                             else if (currentTab === 1) return "components/pages/GarbagePage.qml"
-                            // 后续可添加其他 tab 对应的页面
-                            // else if (currentTab === 2) return "components/pages/MorePage.qml"
-                            // else if (currentTab === 3) return "components/pages/AboutPage.qml"
+                            // else if (currentTab === 2) return "components/pages/HistoryPage.qml"
+                            // else if (currentTab === 3) return "components/pages/StarPage.qml"
+                            // else if (currentTab === 4) return "components/pages/MorePage.qml"
+                            else if (currentTab === 5) return "components/pages/SettingPage.qml"
                             else return ""   // 空字符串表示不加载任何组件
                         }
 

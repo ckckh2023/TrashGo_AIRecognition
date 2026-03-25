@@ -28,9 +28,9 @@ Button {
         implicitHeight: parent ? parent.height : 0
         radius: 12
         color: {
-            if (root.highlighted) return "#d0e2f6"
-            if (root.pressed)     return "#dadada"
-            if (root.hovered)     return "#ebebeb"
+            if (root.highlighted) return "#c0d0e2f6"
+            if (root.pressed)     return "#c0dadada"
+            if (root.hovered)     return "#c0ebebeb"
             return "#00ffffff"
         }
 
