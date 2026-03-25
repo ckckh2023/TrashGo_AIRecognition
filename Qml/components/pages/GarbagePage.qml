@@ -10,63 +10,86 @@ Item {
         color: "transparent"
 
         Rectangle {
-            id: trashImagePreview
-            width: parent.parent.width / 2 + 30
-            height: parent.parent.height - 300
-            color: "white"
+            id: trashImagePreviewZone
+            width: parent.parent.width / 2 - 30
+            height: parent.parent.height - 210
             radius: 8
+            color: "#a0ffffff"
             border.color: "#d0d0d0"
             border.width: 1
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 60
-            anchors.topMargin: 150
+            anchors.leftMargin: 20
+            anchors.topMargin: 20
 
-            DropArea {
-                anchors.fill: parent
-                onEntered: (drag) => { if (drag.hasUrls) drag.accept() }
-                onExited: {}
-                onDropped: (drop) => {
-                    if (drop.hasUrls && drop.urls.length > 0) {
-                        var url = drop.urls[0];
-                        var filePath = url.toString();
+            Rectangle {
+                id: trashImagePreview
+                width: parent.width - 60
+                height: parent.height - 240
+                color: dragHover ? "#f0f8ff" : "#00ffffff"
+                radius: 8
+                border.color: dragHover ? "#0078d7" : "#d0d0d0"
+                border.width: 1
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 80
 
-                        if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
-                        else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+                property bool dragHover: false
 
-                        console.log("拖拽文件路径:", filePath);
-                        garbageClassifier.loadPath(filePath);
-                        garbageClassifier.loadImage();
+                DropArea {
+                    anchors.fill: parent
+                    onEntered: (drag) => {
+                                   if (drag.hasUrls) {
+                                       drag.accept()
+                                       trashImagePreview.dragHover = true
+                                   }
+                               }
+                    onExited: {
+                        trashImagePreview.dragHover = false
                     }
-                    drop.accept();
+
+                    onDropped: (drop) => {
+                        if (drop.hasUrls && drop.urls.length > 0) {
+                            var url = drop.urls[0];
+                            var filePath = url.toString();
+
+                            if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
+                            else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+
+                            console.log("拖拽文件路径:", filePath);
+                            garbageClassifier.loadPath(filePath);
+                            garbageClassifier.loadImage();
+                        }
+                        drop.accept();
+                        trashImagePreview.dragHover =  false
+                    }
                 }
-            }
 
-            Image {
-                id: trashImage
-                anchors.fill: parent
-                anchors.margins: 10
-                fillMode: Image.PreserveAspectFit
-                source: garbageClassifier.hasImage ? "image://resultimage/trash?" + imageRevisionTrash : ""
-                cache: false
-            }
+                Image {
+                    id: trashImage
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    fillMode: Image.PreserveAspectFit
+                    source: garbageClassifier.hasImage ? "image://resultimage/trash?" + imageRevisionTrash : ""
+                    cache: false
+                }
 
-            Text {
-                anchors.centerIn: parent
-                text: "请选择图片(拖拽至此或点击下方按钮)"
-                font.pixelSize: 15
-                color: "#090909"
-                visible: trashImage.status !== Image.Ready
+                Text {
+                    anchors.centerIn: parent
+                    text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
+                    font.pixelSize: trashImagePreview.dragHover ? 20 : 15
+                    color: "#090909"
+                    visible: trashImage.status !== Image.Ready
+                }
             }
         }
 
-
         Item {
             id: locater
-            width: parent.width - trashImagePreview.width - 60
-            height: trashImagePreview.height
-            anchors.left: trashImagePreview.right
-            anchors.top: trashImagePreview.top
+            width: parent.width - trashImagePreviewZone.width - 60
+            height: trashImagePreviewZone.height
+            anchors.left: trashImagePreviewZone.right
+            anchors.top: trashImagePreviewZone.top
         }
 
         Row {
@@ -208,6 +231,7 @@ Item {
                     else if (type.indexOf("有害") >= 0) return "#f44336"
                     else if (type.indexOf("厨余") >= 0) return "#4CAF50"
                     else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                    else return "#E0E0E0"
                 }
                 else return "#E0E0E0"
             }
