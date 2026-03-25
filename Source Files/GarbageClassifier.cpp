@@ -80,6 +80,7 @@ void GarbageClassifier::clearImage() {
     m_cvImage.release();
     m_resultImage = QImage();
     m_result.clear();
+    m_tips.clear();
     m_garbageType.clear();
     emit resultChanged();
     emit imageChanged();
@@ -89,6 +90,11 @@ void GarbageClassifier::clearImage() {
 QString GarbageClassifier::mapToChineseType(int classId) {
     if (MapToChinese.find(classId) != MapToChinese.end()) return MapToChinese[classId];
     else return "未知结果";
+}
+
+QString GarbageClassifier::mapToSuggestion(int classId) {
+    if (MapToSuggestion.find(classId) != MapToSuggestion.end()) return MapToSuggestion[classId];
+    else return "暂无投放建议";
 }
 
 void GarbageClassifier::classify() {
@@ -157,6 +163,7 @@ void GarbageClassifier::classify() {
             m_confidence = maxVal;
             m_garbageType = mapToChineseType(classId);
             m_result = QString("识别成功！种类：%1").arg(m_garbageType);
+            m_tips = mapToSuggestion(classId);
 
             cv::Mat resultImg = m_cvImage.clone();
             cv::rectangle(resultImg,
@@ -254,6 +261,7 @@ void GarbageClassifier::onBaiduApiReplyFinished(QNetworkReply* reply) {
     m_confidence = firstItem["trust"].toDouble();
     int lajitype = firstItem["lajitype"].toInt();
     QString name = firstItem["name"].toString();
+    m_tips = firstItem["lajitip"].toString();
 
     switch (lajitype) {
         case 0: { m_garbageType = "可回收垃圾"; break; }
