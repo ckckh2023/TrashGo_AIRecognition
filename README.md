@@ -43,7 +43,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 ## 技术栈
 
 - **前端**：Qt / Qml（跨平台）
-- **识别能力**：本地模型~~及集成第三方AI API（如百度AI、Google ML Kit、TensorFlow Lite 等）~~
+- **识别能力**：本地模型及集成第三方AI API（如百度AI~~Google ML Kit、TensorFlow Lite 等~~）
 - **数据库**：SQLite（本地存储历史记录）
 
 ## 贡献指南
