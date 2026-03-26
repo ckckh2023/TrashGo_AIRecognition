@@ -14,7 +14,7 @@ Item {
             width: parent.parent.width / 2 - 30
             height: parent.parent.height - 210
             radius: 8
-            color: "#a0ffffff"
+            color: "#80ffffff"
             border.color: "#d0d0d0"
             border.width: 1
             anchors.left: parent.left
@@ -22,10 +22,32 @@ Item {
             anchors.leftMargin: 20
             anchors.topMargin: 20
 
+            Image {
+                id: trashImagePreviewIcon
+                source: "qrc:/icons/images/imageImport.png"
+                width: 40
+                height: 40
+                anchors.left: trashImagePreview.left
+                anchors.top: parent.top
+                anchors.leftMargin: 0
+                anchors.topMargin: 20
+            }
+
+            Text {
+                id:trashImagePreviewTitle
+                text: "上传图片"
+                font.pixelSize: 24
+                font.bold: true
+                anchors.left: trashImagePreviewIcon.right
+                anchors.leftMargin: 20
+                anchors.verticalCenter: trashImagePreviewIcon.verticalCenter
+            }
+
+
             Rectangle {
                 id: trashImagePreview
                 width: parent.width - 60
-                height: parent.height - 240
+                height: parent.height - 180
                 color: dragHover ? "#f0f8ff" : "#00ffffff"
                 radius: 8
                 border.color: dragHover ? "#0078d7" : "#d0d0d0"
@@ -75,10 +97,44 @@ Item {
                 }
 
                 Text {
+                    id: trashImageTips
                     anchors.centerIn: parent
                     text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
-                    font.pixelSize: trashImagePreview.dragHover ? 20 : 15
+                    font.pixelSize: trashImagePreview.dragHover ? 22 : 18
                     color: "#090909"
+                    visible: trashImage.status !== Image.Ready
+                }
+
+                StandardButton {
+                    id: trashImageButton
+                    width: 100
+                    height: 40
+                    text: "选择图片"
+                    icon.name: "folder-open"
+                    anchors.horizontalCenter: trashImageTips.horizontalCenter
+                    anchors.top: trashImageTips.bottom
+                    anchors.topMargin: 5
+                    onClicked: fileDialogTrash.open()
+
+                    background: Rectangle {
+                        border.width: 1
+                        implicitWidth: parent.width
+                        implicitHeight: parent.height
+                        radius: 12
+                        border.color: "#a0a0a0"
+
+                        color: {
+                            if (trashImageButton.hovered) return "#e0e5e5e5"
+                            return "#e0ffffff"
+                        }
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 120
+                            }
+                        }
+                    }
+
                     visible: trashImage.status !== Image.Ready
                 }
             }
@@ -98,14 +154,6 @@ Item {
             anchors.horizontalCenter: locater.horizontalCenter
             anchors.verticalCenter: locater.verticalCenter
             anchors.verticalCenterOffset: -60
-
-            StandardButton {
-                width: 100
-                height: 40
-                text: "选择图片"
-                icon.name: "folder-open"
-                onClicked: fileDialogTrash.open()
-            }
 
             StandardButton {
                 width: 100
