@@ -37,7 +37,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 ### 从源码编译
 1. 克隆仓库：`git clone https://github.com/ckckh2023/TrashGo_AIRecognition.git`
 2. 打开项目（如使用 QtCreator ）
-4. 可直接使用配置好的 Cmake 构建并运行
+4. 可直接使用配置好的 [CMakeLists.txt](CMakeLists.txt) 构建并运行
 
 ## 技术栈
 
