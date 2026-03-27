@@ -34,11 +34,10 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 - **MacOS**：暂不支持
 - **Linux**：暂不支持
 
-<!-- ### 从源码编译
-1. 克隆仓库：`git clone https://github.com/yourusername/TrashGo.git`
-2. 打开项目（如使用 Android Studio 或 Xcode）。
-3. 配置必要的 API 密钥（如百度AI、腾讯云等，详见 `docs/API_CONFIG.md`）。
-4. 构建并运行。-->
+### 从源码编译
+1. 克隆仓库：`git clone https://github.com/ckckh2023/TrashGo_AIRecognition.git`
+2. 打开项目（如使用QtCreator）
+4. 可直接使用配置好的Cmake构建并运行
 
 ## 技术栈
 
