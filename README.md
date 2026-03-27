@@ -64,7 +64,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 - 作者：[ckckh2023](https://github.com/ckckh2023) [TangibleDreams913](https://github.com/TangibleDream913)
 - 邮箱：fightened2023@foxmail.com Tangibledreams@yeah.net
-- 项目主页：[Github](https://github.com/ckckh2023/TrashGo_AIRecognition) [Gitee](https://gitee.com/ckckh2023/TrashGo_AIRecognition) [GitCode](https://gitee.com/ckckh2023/TrashGo_AIRecognition)
+- 项目主页：[Github](https://github.com/ckckh2023/TrashGo_AIRecognition) [Gitee](https://gitee.com/ckckh2023/TrashGo_AIRecognition) [GitCode](https://gitcode.com/ckckh2023/TrashGo_AIRecognition)
 
 ## 致谢
 - 感谢 [Qt](https://www.qt.io/) 优秀的跨平台框架
