@@ -71,20 +71,20 @@ Item {
                     }
 
                     onDropped: (drop) => {
-                        if (drop.hasUrls && drop.urls.length > 0) {
-                            var url = drop.urls[0];
-                            var filePath = url.toString();
+                                   if (drop.hasUrls && drop.urls.length > 0) {
+                                       var url = drop.urls[0];
+                                       var filePath = url.toString();
 
-                            if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
-                            else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+                                       if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
+                                       else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
 
-                            console.log("拖拽文件路径:", filePath);
-                            garbageClassifier.loadPath(filePath);
-                            garbageClassifier.loadImage();
-                        }
-                        drop.accept();
-                        trashImagePreview.dragHover =  false
-                    }
+                                       console.log("拖拽文件路径:", filePath);
+                                       garbageClassifier.loadPath(filePath);
+                                       garbageClassifier.loadImage();
+                                   }
+                                   drop.accept();
+                                   trashImagePreview.dragHover =  false
+                               }
                 }
 
                 Image {
@@ -106,11 +106,10 @@ Item {
                 }
 
                 StandardButton {
-                    id: trashImageButton
+                    id: trashImagePickButton
                     width: 100
                     height: 40
                     text: "选择图片"
-                    icon.name: "folder-open"
                     anchors.horizontalCenter: trashImageTips.horizontalCenter
                     anchors.top: trashImageTips.bottom
                     anchors.topMargin: 5
@@ -124,7 +123,7 @@ Item {
                         border.color: "#a0a0a0"
 
                         color: {
-                            if (trashImageButton.hovered) return "#e0e5e5e5"
+                            if (trashImagePickButton.hovered) return "#e0e5e5e5"
                             return "#e0ffffff"
                         }
 
@@ -135,174 +134,228 @@ Item {
                         }
                     }
 
-                    visible: trashImage.status !== Image.Ready
+                    visible: trashImage.status !== Image.Ready && !trashImagePreview.dragHover
                 }
+
             }
-        }
-
-        Item {
-            id: locater
-            width: parent.width - trashImagePreviewZone.width - 60
-            height: trashImagePreviewZone.height
-            anchors.left: trashImagePreviewZone.right
-            anchors.top: trashImagePreviewZone.top
-        }
-
-        Row {
-            id: buttons
-            spacing: 15
-            anchors.horizontalCenter: locater.horizontalCenter
-            anchors.verticalCenter: locater.verticalCenter
-            anchors.verticalCenterOffset: -60
 
             StandardButton {
+                id: trashImageRecognizeButton
                 width: 100
                 height: 40
+                anchors.top: trashImagePreview.bottom
+                anchors.right: trashImagePreviewZone.horizontalCenter
+                anchors.topMargin: 20
+                anchors.rightMargin: 20
                 text: "开始识别"
                 highlighted: true
+
+                background: Rectangle {
+                    border.width: 1
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
+                    radius: 12
+                    border.color: "#a0a0a0"
+
+                    color: {
+                        if (trashImageRecognizeButton.hovered) return "#e0e5e5e5"
+                        return "#e0ffffff"
+                    }
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 120
+                        }
+                    }
+                }
+
                 onClicked: garbageClassifier.classify()
             }
 
             StandardButton {
+                id: trashImageClearButton
                 width: 100
                 height: 40
+                anchors.top: trashImagePreview.bottom
+                anchors.left: trashImagePreviewZone.horizontalCenter
+                anchors.topMargin: 20
+                anchors.leftMargin: 20
                 text: "清除图片"
                 highlighted: true
+
+                background: Rectangle {
+                    border.width: 1
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
+                    radius: 12
+                    border.color: "#a0a0a0"
+
+                    color: {
+                        if (trashImageClearButton.hovered) return "#e0e5e5e5"
+                        return "#e0ffffff"
+                    }
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 120
+                        }
+                    }
+                }
+
                 onClicked: garbageClassifier.clearImage()
             }
         }
 
-        Row {
-            id: indexOfTrash
-            spacing: 10
-            anchors.top: buttons.bottom
-            anchors.topMargin: 30
-            anchors.horizontalCenter: locater.horizontalCenter
+        Rectangle {
+            id: resultZone
+            width: parent.parent.width / 2 - 30
+            height: trashImagePreviewZone.height
+            radius: 8
+            color: "#80ffffff"
+            border.color: "#d0d0d0"
+            border.width: 1
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.rightMargin: 20
+            anchors.topMargin: 20
 
+            Row {
+                id: indexOfTrash
+                spacing: 10
+                anchors.bottom: result.top
+                anchors.bottomMargin: 0
+                anchors.horizontalCenter: resultZone.horizontalCenter
+
+
+                Rectangle {
+                    width: 80
+                    height: 30
+                    radius: 0
+                    color: {
+                        if (garbageClassifier.hasImage) {
+                            var type = garbageClassifier.garbageType
+                            if (type.indexOf("可回收") >= 0) return "#2196F3"
+                            else return "#6d8497"
+                        }
+                        else return "#6d8497"
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "可回收"
+                        color: "white"
+                        font.pixelSize: 12
+                    }
+                }
+
+                Rectangle {
+                    width: 80
+                    height: 30
+                    radius: 0
+                    color: {
+                        if (garbageClassifier.hasImage) {
+                            var type = garbageClassifier.garbageType
+                            if (type.indexOf("有害") >= 0) return "#f44336"
+                            else return "#977471"
+                        }
+                        else return "#977471"
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "有害"
+                        color: "white"
+                        font.pixelSize: 12
+                    }
+                }
+
+                Rectangle {
+                    width: 80
+                    height: 30
+                    radius: 0
+                    color: {
+                        if (garbageClassifier.hasImage) {
+                            var type = garbageClassifier.garbageType
+                            if (type.indexOf("厨余") >= 0) return "#4CAF50"
+                            else return "#768976"
+                        }
+                        else return "#768976"
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "厨余"
+                        color: "white"
+                        font.pixelSize: 12
+                    }
+                }
+
+                Rectangle {
+                    width: 80
+                    height: 30
+                    radius: 0
+                    color: {
+                        if (garbageClassifier.hasImage) {
+                            var type = garbageClassifier.garbageType
+                            if (type.indexOf("其他") >= 0) return "#9e9e9e"
+                            else return "#868686"
+                        }
+                        else return "#868686"
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "其他"
+                        color: "white"
+                        font.pixelSize: 12
+                    }
+                }
+            }
 
             Rectangle {
-                width: 80
-                height: 30
+                id: result
+                width: 350
+                height: 80
                 radius: 0
+                anchors.bottom: resultZone.bottom
+                anchors.bottomMargin: 30
+                anchors.horizontalCenter: resultZone.horizontalCenter
                 color: {
                     if (garbageClassifier.hasImage) {
                         var type = garbageClassifier.garbageType
                         if (type.indexOf("可回收") >= 0) return "#2196F3"
-                        else return "#6d8497"
+                        else if (type.indexOf("有害") >= 0) return "#f44336"
+                        else if (type.indexOf("厨余") >= 0) return "#4CAF50"
+                        else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                        else return "#E0E0E0"
                     }
-                    else return "#6d8497"
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "可回收"
-                    color: "white"
-                    font.pixelSize: 12
-                }
-            }
-
-            Rectangle {
-                width: 80
-                height: 30
-                radius: 0
-                color: {
-                    if (garbageClassifier.hasImage) {
-                        var type = garbageClassifier.garbageType
-                        if (type.indexOf("有害") >= 0) return "#f44336"
-                        else return "#977471"
-                    }
-                    else return "#977471"
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "有害"
-                    color: "white"
-                    font.pixelSize: 12
-                }
-            }
-
-            Rectangle {
-                width: 80
-                height: 30
-                radius: 0
-                color: {
-                    if (garbageClassifier.hasImage) {
-                        var type = garbageClassifier.garbageType
-                        if (type.indexOf("厨余") >= 0) return "#4CAF50"
-                        else return "#768976"
-                    }
-                    else return "#768976"
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "厨余"
-                    color: "white"
-                    font.pixelSize: 12
-                }
-            }
-
-            Rectangle {
-                width: 80
-                height: 30
-                radius: 0
-                color: {
-                    if (garbageClassifier.hasImage) {
-                        var type = garbageClassifier.garbageType
-                        if (type.indexOf("其他") >= 0) return "#9e9e9e"
-                        else return "#868686"
-                    }
-                    else return "#868686"
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "其他"
-                    color: "white"
-                    font.pixelSize: 12
-                }
-            }
-        }
-
-        Rectangle {
-            id: result
-            width: 350
-            height: 80
-            radius: 0
-            anchors.top: indexOfTrash.bottom
-            anchors.horizontalCenter: locater.horizontalCenter
-            color: {
-                if (garbageClassifier.hasImage) {
-                    var type = garbageClassifier.garbageType
-                    if (type.indexOf("可回收") >= 0) return "#2196F3"
-                    else if (type.indexOf("有害") >= 0) return "#f44336"
-                    else if (type.indexOf("厨余") >= 0) return "#4CAF50"
-                    else if (type.indexOf("其他") >= 0) return "#9E9E9E"
                     else return "#E0E0E0"
                 }
-                else return "#E0E0E0"
-            }
 
-            Column {
-                anchors.centerIn: parent
-                spacing: 5
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 5
 
-                Text {
-                    text: {
-                        if (garbageClassifier.hasImage) {
-                            if (garbageClassifier.garbageType) return garbageClassifier.garbageType
-                            else return "等待识别..."
+                    Text {
+                        text: {
+                            if (garbageClassifier.hasImage) {
+                                if (garbageClassifier.garbageType) return garbageClassifier.garbageType
+                                else return "等待识别..."
+                            }
+                            else return "等待添加图片..."
                         }
-                        else return "等待添加图片..."
+                        font.pixelSize: 18
+                        font.bold: true
+                        color: "white"
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
-                    font.pixelSize: 18
-                    font.bold: true
-                    color: "white"
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
+
+
         }
+
+
 
     }
 
