@@ -62,16 +62,20 @@ Button {
                                             })
     }
 
-    contentItem: RowLayout {
-        spacing: 12
+    contentItem: Item {
         anchors.fill: parent
         anchors.margins: 8
 
         Image {
+            id: icon
             source: root.icon.source
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 10
             width: 32
             height: 32
         }
+
         FontLoader {
             id: customFont
             source: "file:///" + appDirPath + "/fonts/FZPinShangHei.ttf"
@@ -83,9 +87,9 @@ Button {
             font.pixelSize: 18
             font.family: customFont.name
             font.letterSpacing: 1
-            Layout.fillHeight: true
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: icon.right
+            anchors.leftMargin: 25
         }
     }
 }
