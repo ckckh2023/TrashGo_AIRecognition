@@ -27,9 +27,9 @@ Item {
                 source: "qrc:/icons/images/imageImport.png"
                 width: 40
                 height: 40
-                anchors.left: trashImagePreview.left
+                anchors.left: trashImagePreviewZone.left
                 anchors.top: parent.top
-                anchors.leftMargin: 0
+                anchors.leftMargin: 20
                 anchors.topMargin: 20
             }
 
@@ -98,7 +98,9 @@ Item {
 
                 Text {
                     id: trashImageTips
-                    anchors.centerIn: parent
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -20
                     text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
                     font.pixelSize: trashImagePreview.dragHover ? 22 : 18
                     color: "#090909"
@@ -218,6 +220,27 @@ Item {
             anchors.top: parent.top
             anchors.rightMargin: 20
             anchors.topMargin: 20
+
+            Image {
+                id: resultIcon
+                source: "qrc:/icons/images/recognizeResult.png"
+                width: 40
+                height: 40
+                anchors.left: resultZone.left
+                anchors.top: parent.top
+                anchors.leftMargin: 20
+                anchors.topMargin: 20
+            }
+
+            Text {
+                id: resultTitle
+                text: "识别结果"
+                font.pixelSize: 24
+                font.bold: true
+                anchors.left: resultIcon.right
+                anchors.leftMargin: 20
+                anchors.verticalCenter: resultIcon.verticalCenter
+            }
 
             Row {
                 id: indexOfTrash
@@ -351,12 +374,7 @@ Item {
                     }
                 }
             }
-
-
         }
-
-
-
     }
 
 
