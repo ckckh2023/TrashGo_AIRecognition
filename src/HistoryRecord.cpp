@@ -38,13 +38,17 @@ void HistoryRecord::loadTables() {
                           "currentTime TEXT NOT NULL, "
                           "path TEXT NOT NULL, "
                           "result TEXT, "
-                          "label TEXT NOT NULL)";
+                          "label TEXT NOT NULL, "
+                          "star INTEGER DEFAULT 0)";
 
     QSqlQuery query(m_HistoryDb);
     if (!query.exec(createTable)) {
         qDebug() << "History_Table表格加载失败" << m_HistoryDb.lastError().text() << "(HistoryRecord-loadTables)";
         return;
     }
+
+    QSqlQuery indexQuery(m_HistoryDb);
+    indexQuery.exec("CREATE INDEX IF NOT EXISTS idx_time ON History_Table(currentTime)");
 }
 
 HistoryRecord::~HistoryRecord(){
@@ -111,10 +115,10 @@ void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
 
     QSqlQuery query(m_HistoryDb);
     QDateTime currentSystemTime = QDateTime::currentDateTime();
-    QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss");
+    QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss_zzz");
     QString label = "TrashClassify";
 
-    QString insertSql = "INSERT INTO History_Table (currentTime, path, result, label) VALUES (?, ?, ?, ?)";
+    QString insertSql = "INSERT INTO History_Table (currentTime, path, result, label, star) VALUES (?, ?, ?, ?, 0)";
     query.prepare(insertSql);
     query.addBindValue(currentTime);
     query.addBindValue(path);
@@ -134,10 +138,10 @@ void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
 
     QSqlQuery query(m_HistoryDb);
     QDateTime currentSystemTime = QDateTime::currentDateTime();
-    QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss");
+    QString currentTime = currentSystemTime.toString("yyyy_MM_dd_hh_mm_ss_zzz");
     QString label = "FaceRecognize";
 
-    QString insertSql = "INSERT INTO History_Table (currentTime, path, result, label) VALUES (?, ?, ?, ?)";
+    QString insertSql = "INSERT INTO History_Table (currentTime, path, result, label, star) VALUES (?, ?, ?, ?, 0)";
     query.prepare(insertSql);
     query.addBindValue(currentTime);
     query.addBindValue(path);
@@ -145,14 +149,49 @@ void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
     query.addBindValue(label);
 
     if (!query.exec()) {
-        qDebug() << "数据插入失败: " + m_HistoryDb.lastError().text() << "(HistoryRecord-addFaceTables)";
+        qDebug() << "数据插入失败: " << m_HistoryDb.lastError().text() << "(HistoryRecord-addFaceTables)";
         return;
     }
     generateThumbnail(path, currentTime);
     qDebug() << "数据插入成功(HistoryRecord-addFaceTables)";
 }
 
-QVariantList HistoryRecord::getAllRecords() {
+void HistoryRecord::deleteRecord(const QString &currentTime) {
+    if (!m_HistoryDb.isOpen()) openDb();
+    QString thumbPath = QCoreApplication::applicationDirPath() + "/data/thumbnails/" + currentTime + "_thumb.jpg";
+
+    QSqlQuery query(m_HistoryDb);
+    query.prepare("DELETE FROM History_Table WHERE currentTime = :time");
+    query.bindValue(":time", currentTime);
+
+    if (!query.exec()) {
+        qDebug() << "删除记录失败:" << query.lastError().text() << "(HistoryRecord-deleteRecord)";
+        emit messageSentError("删除失败！");
+        return;
+    }
+
+    if (query.numRowsAffected() > 0) {
+        if (QFile::exists(thumbPath)) {
+            if (!QFile::remove(thumbPath)) qDebug() << "缩略图删除失败：" << thumbPath << "(HistoryRecord-deleteRecord)";
+            return;
+        }
+    }
+}
+
+void HistoryRecord::setStar(const QString &currentTime, bool isStar) {
+    if (!m_HistoryDb.isOpen()) openDb();
+    QSqlQuery query(m_HistoryDb);
+    query.prepare("UPDATE History_Table SET star = :star WHERE currentTime = :time");
+    query.bindValue(":star", isStar ? 1 : 0);
+    query.bindValue(":time", currentTime);
+
+    if (!query.exec()) {
+        qDebug() << "更新星标失败:" << query.lastError().text() << "(HistoryRecord-setStar)";
+        return;
+    }
+}
+
+QVariantList HistoryRecord::getRecords(const QString &label) {
     QVariantList resultList;
 
     if (!m_HistoryDb.isOpen()) {
@@ -164,16 +203,66 @@ QVariantList HistoryRecord::getAllRecords() {
     }
 
     QSqlQuery getQuery(m_HistoryDb);
-    getQuery.exec("SELECT currentTime, path , result, label FROM History_Table");
-    if (!getQuery.isActive()) {
+    QString getSql = "SELECT currentTime, path, result, label, star FROM History_Table";
+
+    if (label != "all") {
+        getSql += " WHERE LOWER(label) = LOWER(:label)";
+        getQuery.prepare(getSql);
+        getQuery.bindValue(":label", label);
+    }
+    else getQuery.prepare(getSql);
+
+    if (!getQuery.exec()) {
         qDebug() << "数据查询失败:" << getQuery.lastError().text() << "(HistoryRecord-getAllRecords)";
         return resultList;
     }
 
     while (getQuery.next()) {
         QStringList rowStrings;
-        rowStrings << getQuery.value(0).toString() << getQuery.value(1).toString() << getQuery.value(2).toString() << getQuery.value(3).toString();
+        rowStrings << getQuery.value(0).toString()
+                   << getQuery.value(1).toString()
+                   << getQuery.value(2).toString()
+                   << getQuery.value(3).toString()
+                   << getQuery.value(4).toString();
         resultList.append(rowStrings);
     }
     return resultList;
+}
+
+QVariantList HistoryRecord::getStars(const QString &label) {
+    QVariantList starsList;
+
+    if (!m_HistoryDb.isOpen()) {
+        openDb();
+        if (!m_HistoryDb.isOpen()) {
+            qDebug() << "无法读取数据库(HistoryRecord-getStars)";
+            return starsList;
+        }
+    }
+
+    QSqlQuery getQuery(m_HistoryDb);
+    QString getSql = "SELECT currentTime, path, result, label, star FROM History_Table WHERE star = 1";
+
+    if (label != "all") {
+        getSql += " AND LOWER(label) = LOWER(:label)";
+        getQuery.prepare(getSql);
+        getQuery.bindValue(":label", label);
+    }
+    else getQuery.prepare(getSql);
+
+    if (!getQuery.exec()) {
+        qDebug() << "数据查询失败:" << getQuery.lastError().text() << "(HistoryRecord-getStars)";
+        return starsList;
+    }
+
+    while (getQuery.next()) {
+        QStringList rowStrings;
+        rowStrings << getQuery.value(0).toString()
+                   << getQuery.value(1).toString()
+                   << getQuery.value(2).toString()
+                   << getQuery.value(3).toString()
+                   << getQuery.value(4).toString();
+        starsList.append(rowStrings);
+    }
+    return starsList;
 }
