@@ -242,6 +242,80 @@ Item {
                 anchors.verticalCenter: resultIcon.verticalCenter
             }
 
+            Image {
+                id: indexIcon
+
+                source: {
+                    if (garbageClassifier.hasImage) {
+                        var type = garbageClassifier.garbageType
+                        if (type.indexOf("可回收") >= 0) return "qrc:/icons/images/classified_RecyclableWaste.png"
+                        else if (type.indexOf("厨余") >= 0) return "qrc:/icons/images/classified_FoodWaste.png"
+                        else if (type.indexOf("有害") >= 0) return "qrc:/icons/images/classified_HazardousWaste.png"
+                        else if (type.indexOf("其他") >= 0) return "qrc:/icons/images/classified_OtherWaste.png"
+                        else return "qrc:/icons/images/unclassified.png"
+                    }
+                    else return "qrc:/icons/images/unclassified.png"
+                }
+
+                width: 64
+                height: 64
+                anchors.left: resultZone.left
+                anchors.top: resultIcon.bottom
+                anchors.leftMargin: 30
+                anchors.topMargin: 15
+            }
+
+            Text {
+                id: resultText
+                text: {
+                    if (garbageClassifier.hasImage) {
+                        if (garbageClassifier.garbageType) return garbageClassifier.garbageType
+                        else return "等待识别..."
+                    }
+                    else return "等待添加图片..."
+                }
+                anchors.left: indexIcon.right
+                anchors.verticalCenter: indexIcon.verticalCenter
+                anchors.leftMargin: 40
+                font.pixelSize: 30
+                color: {
+                    if (garbageClassifier.hasImage) {
+                        var type = garbageClassifier.garbageType
+                        if (type.indexOf("可回收") >= 0) return "#2196F3"
+                        else if (type.indexOf("有害") >= 0) return "#f44336"
+                        else if (type.indexOf("厨余") >= 0) return "#4CAF50"
+                        else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                        else return "#0f0f0f"
+                    }
+                    else return "#0f0f0f"
+                }
+            }
+
+            Text {
+                id: resultTips
+                text: garbageClassifier.getTips
+                anchors.left: resultZone.left
+                anchors.top: indexIcon.bottom
+                anchors.leftMargin: 60
+                anchors.topMargin: 30
+                font.pixelSize: 18
+                visible: garbageClassifier.hasImage
+                color: {
+                    if (garbageClassifier.hasImage) {
+                        var type = garbageClassifier.garbageType
+                        if (type.indexOf("可回收") >= 0) return "#6d8497"
+                        else if (type.indexOf("有害") >= 0) return "#977471"
+                        else if (type.indexOf("厨余") >= 0) return "#768976"
+                        else if (type.indexOf("其他") >= 0) return "#868686"
+                        else return "#0f0f0f"
+                    }
+                    else return "#0f0f0f"
+                }
+
+                width: resultZone.width - 120
+                wrapMode: Text.WordWrap
+            }
+/*************************************************************************************
             Row {
                 id: indexOfTrash
                 spacing: 10
@@ -374,6 +448,7 @@ Item {
                     }
                 }
             }
+*************************************************************************************/
         }
     }
 
