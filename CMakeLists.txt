@@ -55,6 +55,7 @@ qt6_add_resources(appTrashGo "app_icons"
         images/settings.png
         images/TrashGo.png
         images/imageImport.png
+        images/recognizeResult.png
 )
 
 if(WIN32)
