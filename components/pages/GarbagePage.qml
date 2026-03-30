@@ -27,9 +27,9 @@ Item {
                 source: "qrc:/icons/images/imageImport.png"
                 width: 40
                 height: 40
-                anchors.left: trashImagePreview.left
+                anchors.left: trashImagePreviewZone.left
                 anchors.top: parent.top
-                anchors.leftMargin: 0
+                anchors.leftMargin: 20
                 anchors.topMargin: 20
             }
 
@@ -98,7 +98,9 @@ Item {
 
                 Text {
                     id: trashImageTips
-                    anchors.centerIn: parent
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -20
                     text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
                     font.pixelSize: trashImagePreview.dragHover ? 22 : 18
                     color: "#090909"
@@ -219,6 +221,101 @@ Item {
             anchors.rightMargin: 20
             anchors.topMargin: 20
 
+            Image {
+                id: resultIcon
+                source: "qrc:/icons/images/recognizeResult.png"
+                width: 40
+                height: 40
+                anchors.left: resultZone.left
+                anchors.top: parent.top
+                anchors.leftMargin: 20
+                anchors.topMargin: 20
+            }
+
+            Text {
+                id: resultTitle
+                text: "识别结果"
+                font.pixelSize: 24
+                font.bold: true
+                anchors.left: resultIcon.right
+                anchors.leftMargin: 20
+                anchors.verticalCenter: resultIcon.verticalCenter
+            }
+
+            Image {
+                id: indexIcon
+
+                source: {
+                    if (garbageClassifier.hasImage) {
+                        var type = garbageClassifier.garbageType
+                        if (type.indexOf("可回收") >= 0) return "qrc:/icons/images/classified_RecyclableWaste.png"
+                        else if (type.indexOf("厨余") >= 0) return "qrc:/icons/images/classified_FoodWaste.png"
+                        else if (type.indexOf("有害") >= 0) return "qrc:/icons/images/classified_HazardousWaste.png"
+                        else if (type.indexOf("其他") >= 0) return "qrc:/icons/images/classified_OtherWaste.png"
+                        else return "qrc:/icons/images/unclassified.png"
+                    }
+                    else return "qrc:/icons/images/unclassified.png"
+                }
+
+                width: 64
+                height: 64
+                anchors.left: resultZone.left
+                anchors.top: resultIcon.bottom
+                anchors.leftMargin: 30
+                anchors.topMargin: 15
+            }
+
+            Text {
+                id: resultText
+                text: {
+                    if (garbageClassifier.hasImage) {
+                        if (garbageClassifier.garbageType) return garbageClassifier.garbageType
+                        else return "等待识别..."
+                    }
+                    else return "等待添加图片..."
+                }
+                anchors.left: indexIcon.right
+                anchors.verticalCenter: indexIcon.verticalCenter
+                anchors.leftMargin: 40
+                font.pixelSize: 30
+                color: {
+                    if (garbageClassifier.hasImage) {
+                        var type = garbageClassifier.garbageType
+                        if (type.indexOf("可回收") >= 0) return "#2196F3"
+                        else if (type.indexOf("有害") >= 0) return "#f44336"
+                        else if (type.indexOf("厨余") >= 0) return "#4CAF50"
+                        else if (type.indexOf("其他") >= 0) return "#9E9E9E"
+                        else return "#0f0f0f"
+                    }
+                    else return "#0f0f0f"
+                }
+            }
+
+            Text {
+                id: resultTips
+                text: garbageClassifier.getTips
+                anchors.left: resultZone.left
+                anchors.top: indexIcon.bottom
+                anchors.leftMargin: 60
+                anchors.topMargin: 30
+                font.pixelSize: 18
+                visible: garbageClassifier.hasImage
+                color: {
+                    if (garbageClassifier.hasImage) {
+                        var type = garbageClassifier.garbageType
+                        if (type.indexOf("可回收") >= 0) return "#6d8497"
+                        else if (type.indexOf("有害") >= 0) return "#977471"
+                        else if (type.indexOf("厨余") >= 0) return "#768976"
+                        else if (type.indexOf("其他") >= 0) return "#868686"
+                        else return "#0f0f0f"
+                    }
+                    else return "#0f0f0f"
+                }
+
+                width: resultZone.width - 120
+                wrapMode: Text.WordWrap
+            }
+/*************************************************************************************
             Row {
                 id: indexOfTrash
                 spacing: 10
@@ -351,12 +448,8 @@ Item {
                     }
                 }
             }
-
-
+*************************************************************************************/
         }
-
-
-
     }
 
 

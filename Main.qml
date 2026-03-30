@@ -10,7 +10,9 @@ import "components/pages"
 ApplicationWindow {
     ListModel { id: historyModel }
     width: 1280
+    minimumWidth: 1080
     height: 810
+    minimumHeight: 680
     visible: true
     title: qsTr("TrashGo信息识别")
 
