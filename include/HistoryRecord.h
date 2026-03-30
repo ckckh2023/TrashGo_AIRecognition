@@ -16,7 +16,10 @@ public:
     void generateThumbnail(const QString &ImagePath, const QString &CurrentTime);
     void addTrashTables(const QString &path,const QString &result);
     void addFaceTables(const QString &path,const QString &result);
-    Q_INVOKABLE QVariantList getAllRecords();
+    Q_INVOKABLE QVariantList getRecords(const QString &label);
+    Q_INVOKABLE QVariantList getStars(const QString &label);
+    Q_INVOKABLE void deleteRecord(const QString &currentTime);
+    Q_INVOKABLE void setStar(const QString &currentTime, bool isStar);
 
 signals:
     void messageSentError(const QString &error);
