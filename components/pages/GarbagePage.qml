@@ -15,7 +15,7 @@ Item {
             height: parent.parent.height - 210
             radius: 8
             color: "#80ffffff"
-            border.color: "#d0d0d0"
+            border.color: "#ffffff"
             border.width: 1
             anchors.left: parent.left
             anchors.top: parent.top
@@ -214,7 +214,7 @@ Item {
             height: trashImagePreviewZone.height
             radius: 8
             color: "#80ffffff"
-            border.color: "#d0d0d0"
+            border.color: "#ffffff"
             border.width: 1
             anchors.right: parent.right
             anchors.top: parent.top
@@ -471,7 +471,17 @@ Item {
     Connections {
         target: garbageClassifier
 
-        function onMessageSent(msg) { messageDialog.show(msg) }
-        function onImageChanged() { imageRevisionTrash++; }
+        function onMessageSentInfo(msg) {
+            Qt.application.toastManager.showToast(msg, "info")
+        }
+        function onMessageSentError(error) {
+            Qt.application.toastManager.showToast(error, "error")
+        }
+        function onMessageSentWarn(warn) {
+            Qt.application.toastManager.showToast(warn, "warn")
+        }
+        function onImageChanged() {
+            imageRevisionTrash++
+        }
     }
 }
