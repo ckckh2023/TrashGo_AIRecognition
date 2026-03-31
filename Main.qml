@@ -6,7 +6,7 @@ import QtQuick.Dialogs
 
 import "components/button"
 import "components/pages"
-import "components/massage"
+import "components/message"
 
 ApplicationWindow {
     ListModel { id: historyModel }
@@ -258,4 +258,3 @@ ApplicationWindow {
         Qt.application.toastManager = toastManager
     }
 }
-
