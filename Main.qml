@@ -6,6 +6,7 @@ import QtQuick.Dialogs
 
 import "components/button"
 import "components/pages"
+import "components/massage"
 
 ApplicationWindow {
     ListModel { id: historyModel }
@@ -213,14 +214,48 @@ ApplicationWindow {
                             // else if (currentTab === 3) return "components/pages/StarPage.qml"
                             // else if (currentTab === 4) return "components/pages/MorePage.qml"
                             else if (currentTab === 5) return "components/pages/SettingPage.qml"
-                            else return ""   // 空字符串表示不加载任何组件
+                            else return ""
                         }
-
-                        // 可选：启用异步加载，避免界面卡顿
                         asynchronous: true
                     }
                 }
             }
         }
     }
+
+    Item {
+        id: toastManager
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.margins: 20
+        width: 300
+        height: parent.height
+
+        ListView {
+            id: toastListView
+            anchors.fill: parent
+            spacing: 8
+            model: ListModel { id: toastModel }
+            interactive: false
+            delegate: Toast {
+                text: model.text
+                type: model.type
+                onClosed: toastModel.remove(index)
+            }
+
+            onModelChanged: {
+                if (toastModel.count > 0)
+                    contentY = 0
+            }
+        }
+
+        function showToast(message, type) {
+            toastModel.insert(0, { "text": message, "type": type })
+        }
+    }
+
+    Component.onCompleted: {
+        Qt.application.toastManager = toastManager
+    }
 }
+
