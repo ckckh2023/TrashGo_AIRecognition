@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: root
@@ -37,8 +37,7 @@ Rectangle {
     }
 
     //代码顺序排列：进入动画-悬停-退出动画
-    Component.onCompleted:
-    {
+    Component.onCompleted: {
         enterAnim.start()
     }
 
