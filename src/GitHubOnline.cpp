@@ -6,6 +6,8 @@
 #include <QJsonArray>
 #include <QUrl>
 #include <QDebug>
+#include <QHash>
+#include <QDate>
 
 GitHubOnline::GitHubOnline(QObject *parent) : QObject(parent) {
     connect(&m_networkManager, &QNetworkAccessManager::finished, this, &GitHubOnline::onNetworkReplyFinished);
@@ -65,4 +67,11 @@ QString GitHubOnline::extractVersion(const QString &tag) {
     QRegularExpressionMatch match = re.match(tag);
     if (match.hasMatch()) return match.captured(1);
     return QString();
+}
+
+QString GitHubOnline::getDayTips() {
+    QDate today = QDate::currentDate();
+    uint hashValue = qHash(today);
+
+    return dayTips[hashValue % dayTips.size()];
 }

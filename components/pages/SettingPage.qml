@@ -11,6 +11,6 @@ Item {
         anchors.topMargin: 20
         text: "主题"
         ctrlType: "combobox"
-        model: ["默认","清新"]
+        model: ["默认", "清新"]
     }
 }

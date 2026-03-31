@@ -16,6 +16,7 @@ public:
     void generateThumbnail(const QString &ImagePath, const QString &CurrentTime);
     void addTrashTables(const QString &path,const QString &result);
     void addFaceTables(const QString &path,const QString &result);
+
     Q_INVOKABLE QVariantList getRecords(const QString &label);
     Q_INVOKABLE QVariantList getStars(const QString &label);
     Q_INVOKABLE void deleteRecord(const QString &currentTime);
