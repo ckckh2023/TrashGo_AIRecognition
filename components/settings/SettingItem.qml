@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
+import "../control"
+
 Rectangle {
     id: root
     width: parent.width - 40
@@ -9,6 +11,7 @@ Rectangle {
     color: "#80ffffff"
     border.width: 1
     border.color: "#d0d0d0"
+    radius: 5
 
     property string text
     property string ctrlType
@@ -43,7 +46,7 @@ Rectangle {
 
     Component {
         id:comboBoxComponent
-        ComboBox {
+        SettingComboBox {
             id: comboBox
             width: 120
             model: root.model

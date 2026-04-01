@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 
-import "../button"
+import "../control"
 
 Item {
     Rectangle {
@@ -100,21 +100,43 @@ Item {
                     id: trashImageTips
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -20
+                    anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -40
                     text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
                     font.pixelSize: trashImagePreview.dragHover ? 22 : 18
                     color: "#090909"
                     visible: trashImage.status !== Image.Ready
                 }
 
+                Text {
+                    id: trashImageTips2
+                    anchors.top: trashImageTips.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.topMargin: 10
+                    text:"支持.jpg/.jpeg/.png/.bmp/.webp格式图片"
+                    font.pixelSize: 14
+                    color: "#808080"
+                    visible: trashImage.status !== Image.Ready
+                }
+
+                Text {
+                    id: trashImageTips3
+                    anchors.top: trashImageTips2.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.topMargin: 10
+                    text: "建议选择清晰无遮挡图片，识别更准确"
+                    font.pixelSize: 14
+                    color: "#808080"
+                    visible: ( trashImage.status !== Image.Ready ) && !trashImagePreview.dragHover
+                }
+
                 StandardButton {
                     id: trashImagePickButton
-                    width: 100
+                    width: 120
                     height: 40
                     text: "选择图片"
                     anchors.horizontalCenter: trashImageTips.horizontalCenter
-                    anchors.top: trashImageTips.bottom
-                    anchors.topMargin: 5
+                    anchors.top: trashImageTips3.bottom
+                    anchors.topMargin: 10
                     onClicked: fileDialogTrash.open()
 
                     background: Rectangle {
@@ -126,7 +148,7 @@ Item {
 
                         color: {
                             if (trashImagePickButton.hovered) return "#e0e5e5e5"
-                            return "#e0ffffff"
+                            return "#67ade3"
                         }
 
                         Behavior on color {
@@ -134,6 +156,15 @@ Item {
                                 duration: 120
                             }
                         }
+                    }
+
+                    contentItem: Text {
+                        text: trashImagePickButton.text
+                        color: "#fafafa"
+                        font.pixelSize: 18
+                        font.letterSpacing: 1
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
                     }
 
                     visible: trashImage.status !== Image.Ready && !trashImagePreview.dragHover
@@ -293,13 +324,13 @@ Item {
 
             Text {
                 id: resultTips
-                text: garbageClassifier.getTips
+                text: "投放建议：" + garbageClassifier.getTips
                 anchors.left: resultZone.left
                 anchors.top: indexIcon.bottom
                 anchors.leftMargin: 60
                 anchors.topMargin: 30
                 font.pixelSize: 18
-                visible: garbageClassifier.hasImage
+                visible: garbageClassifier.hasImage && garbageClassifier.getTips !== ""
                 color: {
                     if (garbageClassifier.hasImage) {
                         var type = garbageClassifier.garbageType
@@ -311,10 +342,10 @@ Item {
                     }
                     else return "#0f0f0f"
                 }
-
                 width: resultZone.width - 120
                 wrapMode: Text.WordWrap
             }
+
 /*************************************************************************************
             Row {
                 id: indexOfTrash

@@ -31,14 +31,15 @@ qt_add_qml_module(appTrashGo
         SOURCES include/GitHubOnline.h src/GitHubOnline.cpp
         SOURCES include/IniFileHandler.h src/IniFileHandler.cpp
 
-        QML_FILES components/button/SideBarButton.qml
+        QML_FILES components/control/SideBarButton.qml
         QML_FILES components/pages/HomePage.qml
         QML_FILES components/pages/GarbagePage.qml
         QML_FILES components/animation/CustomizeRipple.qml
-        QML_FILES components/button/StandardButton.qml
+        QML_FILES components/control/StandardButton.qml
         QML_FILES components/pages/SettingPage.qml
         QML_FILES components/settings/SettingItem.qml
         QML_FILES components/message/Toast.qml
+        QML_FILES components/control/SettingComboBox.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
@@ -63,6 +64,7 @@ qt6_add_resources(appTrashGo "app_icons"
         images/classified_HazardousWaste.png
         images/classified_OtherWaste.png
         images/classified_RecyclableWaste.png
+        images/comboBoxArrow.png
 )
 
 if(WIN32)
