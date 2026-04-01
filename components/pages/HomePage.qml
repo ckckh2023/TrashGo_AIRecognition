@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import "../button"
+import "../control"
 
 Item {
     Rectangle {
