@@ -15,7 +15,7 @@ Item {
             height: parent.parent.height - 210
             radius: 8
             color: "#80ffffff"
-            border.color: "#ffffff"
+            border.color: "#F2F9FA"
             border.width: 1
             anchors.left: parent.left
             anchors.top: parent.top
@@ -144,7 +144,7 @@ Item {
                         implicitWidth: parent.width
                         implicitHeight: parent.height
                         radius: 12
-                        border.color: "#ffffff"
+                        border.color: "#F2F9FA"
 
                         color: {
                             if (trashImagePickButton.hovered) return "#e0e5e5e5"
@@ -245,7 +245,7 @@ Item {
             height: trashImagePreviewZone.height
             radius: 8
             color: "#80ffffff"
-            border.color: "#ffffff"
+            border.color: "#E5F2FA"
             border.width: 1
             anchors.right: parent.right
             anchors.top: parent.top
