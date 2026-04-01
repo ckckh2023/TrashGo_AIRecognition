@@ -4,7 +4,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Dialogs
 
-import "components/button"
+import "components/control"
 import "components/pages"
 import "components/message"
 
