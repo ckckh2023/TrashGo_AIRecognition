@@ -144,7 +144,7 @@ Item {
                         implicitWidth: parent.width
                         implicitHeight: parent.height
                         radius: 12
-                        border.color: "#a0a0a0"
+                        border.color: "#ffffff"
 
                         color: {
                             if (trashImagePickButton.hovered) return "#e0e5e5e5"
