@@ -114,7 +114,6 @@ void GarbageClassifier::classify() {
         ImageFile.close();
 
         QByteArray Base64Data = ImageData.toBase64();
-        //postData.addQueryItem("image", QString::fromLatin1(Base64Data));
 
         QUrl url("https://znsb2ljfl.api.bdymkt.com/image/waste-sorting/execute");
         QNetworkRequest request(url);
@@ -166,16 +165,6 @@ void GarbageClassifier::classify() {
             m_tips = mapToSuggestion(classId);
 
             cv::Mat resultImg = m_cvImage.clone();
-            cv::rectangle(resultImg,
-                        cv::Point(0,0),
-                        cv::Point(250,60),
-                        cv::Scalar(0,0,0),
-                        cv::FILLED);
-            cv::putText(resultImg,
-                        Categories[classId].toStdString(),
-                        cv::Point(10,40),
-                        cv::FONT_HERSHEY_SIMPLEX,
-                        1.0, cv::Scalar(0,255,0), 2);
 
             cv::Mat rgbImage;
             cv::cvtColor(resultImg, rgbImage, cv::COLOR_BGR2RGB);
