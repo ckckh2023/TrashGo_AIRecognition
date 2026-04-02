@@ -27,7 +27,6 @@ ApplicationWindow {
             GradientStop { position: 0.0; color: "#f0f4fe" }
             GradientStop { position: 1.0; color: "#def0f7" }
         }
-
     }
 
     Item {
