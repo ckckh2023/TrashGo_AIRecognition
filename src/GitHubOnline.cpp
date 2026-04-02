@@ -42,7 +42,7 @@ void GitHubOnline::onNetworkReplyFinished() {
 
             QString versionStr = extractVersion(tagName);
             if (versionStr.isEmpty()) {
-                emit errorOccurred("无法解析版本号: " + tagName);
+                emit messageSentError("无法解析版本号: " + tagName);
                 return;
             }
             QString currentVersion = QCoreApplication::applicationVersion();
@@ -54,9 +54,9 @@ void GitHubOnline::onNetworkReplyFinished() {
             qDebug() << isNewer << " " << versionStr << " " << releaseUrl;
             emit releaseChecked(isNewer, versionStr, releaseUrl);
         }
-        else emit errorOccurred("无效的JSON响应");
+        else emit messageSentError("无效的JSON响应！");
     }
-    else emit errorOccurred(m_currentReply->errorString());
+    else emit messageSentError("发生错误：" + m_currentReply->errorString());
 
     m_currentReply->deleteLater();
     m_currentReply = nullptr;
