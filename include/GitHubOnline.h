@@ -17,7 +17,7 @@ public:
 
 signals:
     void releaseChecked(bool hasNewVersion, const QString &lastestVersion, const QString &releaseUrl);
-    void errorOccurred(const QString &msg);
+    void messageSentError(const QString &error);
 
 private slots:
     void onNetworkReplyFinished();
