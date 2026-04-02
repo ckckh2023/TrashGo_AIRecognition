@@ -103,7 +103,7 @@ void GarbageClassifier::classify() {
         return;
     }
 
-    if (m_handler->provider() == "baidu") {
+    if (m_handler->provider() == "百度云") {
         QUrlQuery postData;
         QFile ImageFile(ImagePath);
         if (!ImageFile.open(QIODevice::ReadOnly)) {
@@ -129,7 +129,7 @@ void GarbageClassifier::classify() {
         QTimer::singleShot(30000, [baiduReply]() { if (baiduReply && baiduReply->isRunning()) baiduReply->abort(); });
         emit messageSentInfo("正在调用百度云API...");
     }
-    else if (m_handler->provider() == "local") {
+    else if (m_handler->provider() == "本地模型") {
         if (!m_modelLoaded) {
             qDebug() << "模型未加载(GarbageClassifier-classify)";
             emit messageSentError("模型未加载!");
