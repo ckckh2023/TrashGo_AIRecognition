@@ -9,6 +9,7 @@
 class IniFileHandler : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString theme READ theme WRITE setTheme NOTIFY themeChanged)
+    Q_PROPERTY(QString color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QString provider READ provider WRITE setProvider NOTIFY providerChanged)
     Q_PROPERTY(QString currentApiKey READ currentApiKey WRITE setCurrentApiKey NOTIFY currentApiKeyChanged)
 
@@ -17,15 +18,18 @@ public:
     ~IniFileHandler();
 
     QString theme() const;
+    QString color() const;
     QString provider() const;
     QString currentApiKey() const;
 
     void setTheme(const QString &theme);
+    void setColor(const QString &color);
     void setProvider(const QString &provider);
     void setCurrentApiKey(const QString &key);
 
 signals:
     void themeChanged();
+    void colorChanged();
     void providerChanged();
     void currentApiKeyChanged();
 
