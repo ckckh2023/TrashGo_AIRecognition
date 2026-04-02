@@ -12,6 +12,7 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
 
     if (!QFile::exists(IniPath)) {
         m_settings->setValue("Appearance/Theme", "system");
+        m_settings->setValue("Appearance/Color", "blue");
         m_settings->setValue("Model/Provider", "local");
         m_settings->setValue("Model/Baidu", "");
         m_settings->setValue("Model/Aliyun", "");
@@ -22,6 +23,8 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
 IniFileHandler::~IniFileHandler() { }
 
 QString IniFileHandler::theme() const { return m_settings->value("Appearance/Theme", "system").toString(); }
+
+QString IniFileHandler::color() const { return m_settings->value("Appearance/Color", "blue").toString(); }
 
 QString IniFileHandler::provider() const { return m_settings->value("Model/Provider", "local").toString(); }
 
@@ -40,6 +43,16 @@ void IniFileHandler::setTheme(const QString &theme) {
         m_settings->sync();
 
         emit themeChanged();
+    }
+}
+
+void IniFileHandler::setColor(const QString &color) {
+    if (color == this->color()) return;
+    else {
+        m_settings->setValue("Appearance/Color", color);
+        m_settings->sync();
+
+        emit colorChanged();
     }
 }
 
