@@ -6,32 +6,48 @@ import "../control"
 
 Rectangle {
     id: root
-    width: parent.width - 40
+    width: parent.width - 60
     height: 80
     color: "#80ffffff"
     border.width: 1
-    border.color: "#d0d0d0"
-    radius: 5
+    border.color: "#c0c0c0"
+    radius: 8
 
-    property string text
+    property string text1
+    property string text2
     property string ctrlType
-    property var model: []
-    property var value: null
+    property string iconSource
+
+    property var comboboxModel: []
+    property var value
 
     Text {
         id:settingText
-        text: root.text
+        text: root.text1
         anchors.left: root.left
         anchors.leftMargin: 40
-        anchors.verticalCenter: root.verticalCenter
+        anchors.bottom: root.verticalCenter
+        anchors.bottomMargin: -2
         font.pixelSize: 16
+        color: "#000000"
+    }
+
+    Text {
+        id:settingTextInfo
+        text: root.text2
+        anchors.left: root.left
+        anchors.leftMargin: 40
+        anchors.top: root.verticalCenter
+        anchors.topMargin: 4
+        font.pixelSize: 12
+        color: "#606060"
     }
 
     Item {
-        width: 120
+        width: 150
         height: root.height / 2
         anchors.right: root.right
-        anchors.rightMargin: 40
+        anchors.rightMargin: 50
         anchors.verticalCenter: root.verticalCenter
         Loader {
             id: dynamicLoader
@@ -49,16 +65,12 @@ Rectangle {
         SettingComboBox {
             id: comboBox
             width: 120
-            model: root.model
-            currentIndex: 0
-            onCurrentValueChanged: root.value = currentValue
-        }
-    }
-
-    Component.onCompleted: {
-        switch (root.ctrlType) {
-        case "combobox": value = model && model.length > 0 ? model[0] : ""
-            break
+            model: root.comboboxModel
+            currentIndex: root.comboboxModel.indexOf(root.value)
+            onCurrentValueChanged: {
+                if (currentValue !== root.value)
+                    root.value = currentValue
+            }
         }
     }
 }

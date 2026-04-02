@@ -93,7 +93,7 @@ target_link_libraries(appTrashGo
     PRIVATE Qt6::Core
     PRIVATE Qt6::Sql
     PRIVATE Qt6::Network
-    PUBLIC Qt6::Core5Compat
+    PRIVATE Qt6::Core5Compat
     ${OpenCV_LIBS}
 )
 
