@@ -33,6 +33,8 @@ signals:
     void providerChanged();
     void currentApiKeyChanged();
 
+    void messageSentInfo(const QString &msg);
+
 private:
     QSettings *m_settings;
 };
