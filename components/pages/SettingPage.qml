@@ -29,7 +29,7 @@ Item {
         id: settingsModel
 
         ListElement {
-            text1: "主题"
+            text1: "界面主题"
             text2: "更改应用程序主题"
             ctrlType: "combobox"
             modelValues: "跟随系统,明亮,黑暗"
@@ -37,7 +37,7 @@ Item {
         }
 
         ListElement {
-            text1: "颜色"
+            text1: "主题颜色"
             text2: "更改应用主题颜色，颜色会根据主题自动调整"
             ctrlType: "combobox"
             modelValues: "蓝色,绿色,黄色"

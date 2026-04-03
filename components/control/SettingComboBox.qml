@@ -91,7 +91,7 @@ ComboBox {
             color: "white"
             border.color: "#d0d0d0"
             border.width: 1
-            radius: 4
+            radius: 6
             layer.enabled: true
         }
 
