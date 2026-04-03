@@ -10,7 +10,7 @@ Rectangle {
     height: 80
     color: "#80ffffff"
     border.width: 1
-    border.color: "#c0c0c0"
+    border.color: "#F2F9FA"
     radius: 8
 
     property string text1
@@ -28,7 +28,7 @@ Rectangle {
         anchors.leftMargin: 40
         anchors.bottom: root.verticalCenter
         anchors.bottomMargin: -2
-        font.pixelSize: 16
+        font.pixelSize: 18
         color: "#000000"
     }
 
