@@ -11,7 +11,7 @@
 
 GitHubOnline::GitHubOnline(QObject *parent) : QObject(parent) {
     connect(&m_networkManager, &QNetworkAccessManager::finished, this, &GitHubOnline::onNetworkReplyFinished);
-    qDebug() << "GitHub网络组件加载完成(GitHubOnline::GitHubOnline)";
+    qDebug() << "GitHub网络组件加载完成(GitHubOnline-GitHubOnline)";
 }
 
 void GitHubOnline::checkNewVersion() {
