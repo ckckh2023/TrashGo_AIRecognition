@@ -163,6 +163,7 @@ void GarbageClassifier::classify() {
             m_garbageType = mapToChineseType(classId);
             m_result = QString("识别成功！种类：%1").arg(m_garbageType);
             m_tips = mapToSuggestion(classId);
+            m_details = Categories[classId];
 
             cv::Mat resultImg = m_cvImage.clone();
 
@@ -250,6 +251,7 @@ void GarbageClassifier::onBaiduApiReplyFinished(QNetworkReply* reply) {
     int lajitype = firstItem["lajitype"].toInt();
     QString name = firstItem["name"].toString();
     m_tips = firstItem["lajitip"].toString();
+    m_details = "baiduyun";
 
     switch (lajitype) {
         case 0: { m_garbageType = "可回收垃圾"; break; }
