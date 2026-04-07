@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
+#include <QProcess>
 
 IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
     QString IniPath = QCoreApplication::applicationDirPath() + "/config/config.ini";
@@ -96,4 +97,15 @@ void IniFileHandler::setTimeLimit(int interval) {
         emit timeLimitChanged();
         emit messageSentInfo("重复点击时间限制已变更为：" + QString::number(interval) + "ms");
     }
+}
+
+void IniFileHandler::restartApp(int exitCode) {
+    QString program = QCoreApplication::applicationFilePath();
+    QStringList arguments = QCoreApplication::arguments();
+    arguments.removeFirst();
+
+    qDebug() << "正在重启:" << program << arguments << "(IniFileHandler-restartApp)";
+
+    if (QProcess::startDetached(program, arguments)) qApp->exit(exitCode);
+    else qDebug() << "重启失败(IniFileHandler-restartApp)";
 }

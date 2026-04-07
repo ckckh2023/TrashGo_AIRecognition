@@ -30,6 +30,8 @@ public:
     void setCurrentApiKey(const QString &key);
     void setTimeLimit(int interval);
 
+    Q_INVOKABLE static void restartApp(int exitCode = 0);
+
 signals:
     void themeChanged();
     void colorChanged();
