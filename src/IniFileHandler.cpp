@@ -16,6 +16,7 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
         m_settings->setValue("Model/Provider", "本地模型");
         m_settings->setValue("Model/Baidu", "");
         m_settings->setValue("Model/Aliyun", "");
+        m_settings->setValue("Limit/Interval", "500");
         m_settings->sync();
     }
 }
@@ -35,6 +36,8 @@ QString IniFileHandler::currentApiKey() const {
     else if (currentProvider == "阿里云") return m_settings->value("Model/Aliyun", "").toString();
     else return "";
 }
+
+int IniFileHandler::timeLimit() const { return m_settings->value("Limit/Interval", "500").toInt(); }
 
 void IniFileHandler::setTheme(const QString &theme) {
     if (theme == this->theme()) return;
@@ -82,4 +85,15 @@ void IniFileHandler::setCurrentApiKey(const QString &key) {
 
     emit currentApiKeyChanged();
     emit messageSentInfo("模型密钥已变更为：" + key);
+}
+
+void IniFileHandler::setTimeLimit(int interval) {
+    if (interval == this->timeLimit()) return;
+    else {
+        m_settings->setValue("Limit/Interval", interval);
+        m_settings->sync();
+
+        emit timeLimitChanged();
+        emit messageSentInfo("重复点击时间限制已变更为：" + QString::number(interval) + "ms");
+    }
 }
