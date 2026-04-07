@@ -19,6 +19,7 @@ class GarbageClassifier : public QObject {
 
     Q_PROPERTY(QString getTips READ getTips NOTIFY resultChanged)
     Q_PROPERTY(QString result READ result NOTIFY resultChanged)
+    Q_PROPERTY(QString details READ details NOTIFY resultChanged)
     Q_PROPERTY(QString garbageType READ garbageType NOTIFY resultChanged)
     Q_PROPERTY(bool hasImage READ hasImage NOTIFY imageChanged)
 
@@ -35,6 +36,7 @@ public:
     bool hasImage() const { return m_hasImage; }
     QString getTips() const { return m_tips; }
     QString result() const { return m_result; }
+    QString details() const { return m_details; }
     QString garbageType() const { return m_garbageType; }
 
 signals:
@@ -63,6 +65,7 @@ private:
     QString m_tips;
     QString m_result;
     QString m_garbageType;
+    QString m_details;
     double m_confidence = 0.0;
 
     HistoryRecord *m_historyRecord = nullptr;
