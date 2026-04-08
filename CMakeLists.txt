@@ -40,6 +40,7 @@ qt_add_qml_module(appTrashGo
         QML_FILES components/settings/SettingItem.qml
         QML_FILES components/message/Toast.qml
         QML_FILES components/control/SettingComboBox.qml
+        QML_FILES components/pages/HistoryPage.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
