@@ -44,7 +44,6 @@ Rectangle {
     ScaleAnimator {
         id: enterAnim
         target: root
-        from: 0
         to: 1
         duration: 200
         easing.type: Easing.OutBack
@@ -63,7 +62,6 @@ Rectangle {
     ScaleAnimator {
         id: exitAnim
         target: root
-        from: root.ifHovered ? 1.05 : 1
         to: 0
         duration: root.ifHovered ? 150 : 200
         easing.type: Easing.InOutQuad
@@ -74,10 +72,8 @@ Rectangle {
     MouseArea {
         anchors.fill: root
         hoverEnabled: true
-
         onEntered: root.ifHovered = true
         onExited: root.ifHovered = false
-
         onClicked: exitAnim.start()
     }
 
@@ -85,7 +81,6 @@ Rectangle {
     ScaleAnimator {
         id: zoomInAnim
         target: root
-        from: 1
         to: 1.05
         duration: 200
         easing.type: Easing.OutBack
@@ -95,7 +90,6 @@ Rectangle {
     ScaleAnimator {
         id: zoomOutAnim
         target: root
-        from: 1.05
         to: 1
         duration: 200
         easing.type: Easing.OutBack
