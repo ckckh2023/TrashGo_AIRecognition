@@ -22,6 +22,8 @@ public:
     Q_INVOKABLE void deleteRecord(const QString &currentTime);
     Q_INVOKABLE void setStar(const QString &currentTime, bool isStar);
 
+    Q_INVOKABLE void openOriginFile(const QString &filePath);
+
 signals:
     void messageSentError(const QString &error);
 
