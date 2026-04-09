@@ -3,6 +3,8 @@
 #include <QQmlContext>
 #include <QScreen>
 #include <QIcon>
+#include <QQuickWindow>
+#include <QSGRendererInterface>
 #include <QWindow>
 #include "include/GarbageClassifier.h"
 #include "include/ImageProcessor.h"
@@ -24,6 +26,10 @@ int main(int argc, char *argv[]) {
     GitHubOnline GitHubClass;
 
     QQmlApplicationEngine engine;
+
+    if (IniFileClass.renderer() == "Direct3D") QQuickWindow::setGraphicsApi(QSGRendererInterface::Direct3D11);
+    else if (IniFileClass.renderer() == "OpenGL") QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+    else {}
 
     QScreen *screen = QGuiApplication::primaryScreen();
     int screenWidth = screen->geometry().width();
