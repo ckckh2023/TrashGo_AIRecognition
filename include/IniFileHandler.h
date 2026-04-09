@@ -23,12 +23,14 @@ public:
     QString provider() const;
     QString currentApiKey() const;
     int timeLimit() const;
+    QString renderer() const;
 
     void setTheme(const QString &theme);
     void setColor(const QString &color);
     void setProvider(const QString &provider);
     void setCurrentApiKey(const QString &key);
     void setTimeLimit(int interval);
+    void setRenderer(const QString &renderer);
 
     Q_INVOKABLE static void restartApp(int exitCode = 0);
 
@@ -38,6 +40,7 @@ signals:
     void providerChanged();
     void currentApiKeyChanged();
     void timeLimitChanged();
+    void rendererChanged();
 
     void messageSentInfo(const QString &msg);
 

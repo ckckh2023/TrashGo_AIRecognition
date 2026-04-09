@@ -18,6 +18,7 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
         m_settings->setValue("Model/Baidu", "");
         m_settings->setValue("Model/Aliyun", "");
         m_settings->setValue("Limit/Interval", "500");
+        m_settings->setValue("Graphics/Renderer", "Direct3D");
         m_settings->sync();
     }
 }
@@ -39,6 +40,8 @@ QString IniFileHandler::currentApiKey() const {
 }
 
 int IniFileHandler::timeLimit() const { return m_settings->value("Limit/Interval", "500").toInt(); }
+
+QString IniFileHandler::renderer() const { return m_settings->value("Graphics/Renderer", "Direct3D").toString(); }
 
 void IniFileHandler::setTheme(const QString &theme) {
     if (theme == this->theme()) return;
@@ -96,6 +99,17 @@ void IniFileHandler::setTimeLimit(int interval) {
 
         emit timeLimitChanged();
         emit messageSentInfo("重复点击时间限制已变更为：" + QString::number(interval) + "ms");
+    }
+}
+
+void IniFileHandler::setRenderer(const QString &renderer) {
+    if (renderer == this->renderer()) return;
+    else {
+        m_settings->setValue("Graphics/Renderer", renderer);
+        m_settings->sync();
+
+        emit rendererChanged();
+        emit messageSentInfo("渲染器已变更为：" + renderer);
     }
 }
 
