@@ -8,6 +8,9 @@
 #include <QDir>
 #include <QImageReader>
 #include <QPainter>
+#include <QFile>
+#include <QDesktopServices>
+#include <QUrl>
 
 const QString HistoryRecord::ConnectionName = "history_connection";
 int HistoryRecord::s_refCount = 0;
@@ -108,6 +111,14 @@ void HistoryRecord::generateThumbnail(const QString &ImagePath, const QString &C
     }
 
     if (!thumbnail.save(thumbPath, "JPG")) qDebug() << "保存缩略图失败：" << thumbPath << "(HistoryRecord-generateThumbnail)";
+}
+
+void HistoryRecord::openOriginFile(const QString &filePath) {
+    bool success = QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+    if (!success) {
+        emit messageSentError("源图片文件不存在！");
+        qDebug() << "源图片文件不存在(HistoryRecord-openOriginFile)";
+    }
 }
 
 void HistoryRecord::addTrashTables(const QString &path, const QString &result) {
