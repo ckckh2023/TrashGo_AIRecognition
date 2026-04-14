@@ -20,7 +20,7 @@ Rectangle {
     property string text
     property string type
 
-    property bool ifHovered : false
+    property bool isHovered : false
 
     signal closed
 
@@ -56,14 +56,14 @@ Rectangle {
         onTriggered: {
             exitAnim.start()
         }
-        running: !root.ifHovered
+        running: !root.isHovered
     }
 
     ScaleAnimator {
         id: exitAnim
         target: root
         to: 0
-        duration: root.ifHovered ? 150 : 200
+        duration: root.isHovered ? 150 : 200
         easing.type: Easing.InOutQuad
         onStopped: root.closed()
     }
@@ -72,8 +72,8 @@ Rectangle {
     MouseArea {
         anchors.fill: root
         hoverEnabled: true
-        onEntered: root.ifHovered = true
-        onExited: root.ifHovered = false
+        onEntered: root.isHovered = true
+        onExited: root.isHovered = false
         onClicked: exitAnim.start()
     }
 
@@ -84,7 +84,7 @@ Rectangle {
         to: 1.05
         duration: 200
         easing.type: Easing.OutBack
-        running: root.ifHovered
+        running: root.isHovered
     }
 
     ScaleAnimator {
@@ -93,6 +93,6 @@ Rectangle {
         to: 1
         duration: 200
         easing.type: Easing.OutBack
-        running: !root.ifHovered
+        running: !root.isHovered
     }
 }

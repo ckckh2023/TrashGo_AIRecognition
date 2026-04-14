@@ -1,4 +1,5 @@
 import QtQuick
+import Qt5Compat.GraphicalEffects
 
 Item {
     Rectangle {
@@ -11,57 +12,43 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         radius: 0
 
-        Row {
-            spacing: 0
-            anchors.fill: parent
+        Rectangle {
+            id: thumbnailPreviewTitleZone
+            color: "transparent"
+            height: parent.height
+            width: parent.width / 8
+            anchors.left: parent.left
 
-            Rectangle {
-                color: "transparent"
-                height: parent.height
-                width: parent.width / 6
-
-                Text {
-                    text: "缩略图"
-                    font.pixelSize: 14
-                    anchors.centerIn: parent
-                }
+            Text {
+                text: "缩略图"
+                font.pixelSize: 14
+                anchors.centerIn: parent
             }
+        }
 
-            Rectangle {
-                color: "transparent"
-                height: parent.height
-                width: parent.width / 3
+        Text {
+            id: sortText
+            text: "时间排序"
+            anchors.right: parent.right
+            anchors.rightMargin: 40
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: 14
+        }
 
-                Text {
-                    text: "识别时间"
-                    font.pixelSize: 14
-                    anchors.centerIn: parent
-                }
-            }
+        Text {
+            text: "▲"
+            anchors.left: sortText.right
+            anchors.leftMargin: 5
+            anchors.bottom: sortText.verticalCenter
+            font.pixelSize: 8
+        }
 
-            Rectangle {
-                color: "transparent"
-                height: parent.height
-                width: parent.width / 3
-
-                Text {
-                    text: "原图片路径"
-                    font.pixelSize: 14
-                    anchors.centerIn: parent
-                }
-            }
-
-            Rectangle {
-                color: "transparent"
-                height: parent.height
-                width: parent.width / 6
-
-                Text {
-                    text: "识别结果"
-                    font.pixelSize: 14
-                    anchors.centerIn: parent
-                }
-            }
+        Text {
+            text: "▼"
+            anchors.left: sortText.right
+            anchors.leftMargin: 5
+            anchors.top: sortText.verticalCenter
+            font.pixelSize: 8
         }
     }
 
@@ -94,75 +81,126 @@ Item {
                 radius: 5
                 anchors.horizontalCenter: listViewRoot.horizontalCenter
 
-                Row {
-                    anchors.fill: parent
+                Image {
+                    id: thumbnailPreview
+                    width: 80
+                    height: 80
+                    source: "file:///" + appDirPath + "/data/thumbnails/" + model.currentTime + "_thumb.jpg"
+                    anchors.left: parent.left
+                    anchors.leftMargin: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                    asynchronous: true
+                    fillMode: Image.PreserveAspectFit
 
-                    Rectangle {
-                        color: "transparent"
-                        height: parent.height
-                        width: parent.width / 6
+                    onStatusChanged: {
+                        if (status === Image.Error) source = "qrc:/fallback-thumbnail.png"
+                    }
+                }
 
+                Text {
+                    width: parent.width / 2.2
+                    text: formatTime(model.currentTime)
+                    font.pixelSize: 16
+                    color: "#030303"
+                    anchors.bottom: parent.verticalCenter
+                    anchors.bottomMargin: 0
+                    anchors.left: thumbnailPreview.right
+                    anchors.leftMargin: 20
+                    horizontalAlignment: Text.AlignLeft
+                    elide: Text.ElideMiddle
+                    wrapMode: Text.NoWrap
+                }
 
-                        Image {
-                            width: 80
-                            height: 80
-                            source: "file:///" + appDirPath + "/data/thumbnails/" + model.currentTime + "_thumb.jpg"
-                            anchors.centerIn: parent
-                            asynchronous: true
-                            fillMode: Image.PreserveAspectFit
+                Text {
+                    id: pathText
+                    width: parent.width / 2.2
+                    text: model.path
+                    font.pixelSize: 12
+                    color: "#757575"
+                    anchors.top: parent.verticalCenter
+                    anchors.topMargin: 0
+                    anchors.left: thumbnailPreview.right
+                    anchors.leftMargin: 20
+                    horizontalAlignment: Text.AlignLeft
+                    elide: Text.ElideMiddle
+                    wrapMode: Text.NoWrap
+                }
 
-                            onStatusChanged: {
-                                if (status === Image.Error) source = "qrc:/fallback-thumbnail.png"
-                            }
-                        }
+                Text {
+                    width: parent.width / 2.2
+                    text: model.result
+                    font.pixelSize: 22
+                    color: {
+                        if (/^可/.test(text)) return "#2196F3";
+                        if (/^厨/.test(text)) return "#4CAF50";
+                        if (/^有/.test(text)) return "#f44336";
+                        if (/^其/.test(text)) return "#9E9E9E";
+                        return "#eeeeee";
                     }
 
-                    Rectangle {
-                        color: "transparent"
-                        height: parent.height
-                        width: parent.width / 3
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: pathText.right
+                    anchors.leftMargin: 20
+                    horizontalAlignment: Text.AlignLeft
+                    elide: Text.ElideMiddle
+                    wrapMode: Text.NoWrap
+                }
 
-                        Text {
-                            width: parent.width
-                            text: formatTime(model.currentTime)
-                            font.pixelSize: 18
-                            anchors.verticalCenter: parent.verticalCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideMiddle
-                            wrapMode: Text.NoWrap
+                Image {
+                    id: starImage
+                    anchors.right: parent.right
+                    anchors.rightMargin: 80
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/icons/images/bookmarkHistory.png"
+
+                    property bool isHovered : false
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: starImage.isHovered = true
+                        onExited: starImage.isHovered = false
+                        onClicked:
+                        {
+                            setStar(model.currentTime, (model.star? 0 : 1))
+                            loadHistory()
                         }
                     }
+                }
 
-                    Rectangle {
-                        color: "transparent"
-                        height: parent.height
-                        width: parent.width / 3
+                Image {
+                    id: deleteImage
+                    anchors.right: parent.right
+                    anchors.rightMargin: 40
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/icons/images/deleteHistory.png"
 
-                        Text {
-                            width: parent.width
-                            text: model.path
-                            font.pixelSize: 18
-                            anchors.verticalCenter: parent.verticalCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideMiddle
-                            wrapMode: Text.NoWrap
-                        }
+                    property bool isHovered : false
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: parent.isHovered = true
+                        onExited: parent.isHovered = false
                     }
+                }
 
-                    Rectangle {
-                        color: "transparent"
-                        height: parent.height
-                        width: parent.width / 6
+                ColorOverlay {
+                    anchors.fill: starImage
+                    source: starImage
+                    color: {
+                        if (model.star) return "#ffe141"
+                        if (starImage.isHovered === true) return "#ffe141"
+                        else return "#aaaaaa"
+                    }
+                }
 
-                        Text {
-                            width: parent.width
-                            text: model.result
-                            font.pixelSize: 18
-                            anchors.verticalCenter: parent.verticalCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideMiddle
-                            wrapMode: Text.NoWrap
-                        }
+                ColorOverlay {
+                    anchors.fill: deleteImage
+                    source: deleteImage
+                    color: {
+                        if (deleteImage.isHovered === true) return "#ff3800"
+                        else return "#aaaaaa"
                     }
                 }
             }
@@ -182,9 +220,14 @@ Item {
                                         currentTime: row[0],
                                         path: row[1],
                                         result: row[2],
-                                        label: row[3]
+                                        label: row[3],
+                                        star: row[4] === "1"
                                     });
         }
+    }
+
+    function setStar(timeStr,isStar) {
+        historyRecord.setStar(timeStr,isStar);
     }
 
     function formatTime(timeStr) {
