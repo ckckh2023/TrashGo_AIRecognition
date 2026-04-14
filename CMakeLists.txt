@@ -68,6 +68,8 @@ qt6_add_resources(appTrashGo "app_icons"
         images/comboBoxArrow.png
         images/colorSetting.png
         images/themeSetting.png
+        images/bookmarkHistory.png
+        images/deleteHistory.png
 )
 
 if(WIN32)
