@@ -160,7 +160,11 @@ Item {
                         hoverEnabled: true
                         onEntered: starImage.isHovered = true
                         onExited: starImage.isHovered = false
-                        onClicked: setStar(model.currentTime,true)
+                        onClicked:
+                        {
+                            setStar(model.currentTime, (model.star? 0 : 1))
+                            loadHistory()
+                        }
                     }
                 }
 
@@ -185,6 +189,7 @@ Item {
                     anchors.fill: starImage
                     source: starImage
                     color: {
+                        if (model.star) return "#ffe141"
                         if (starImage.isHovered === true) return "#ffe141"
                         else return "#aaaaaa"
                     }
@@ -215,7 +220,8 @@ Item {
                                         currentTime: row[0],
                                         path: row[1],
                                         result: row[2],
-                                        label: row[3]
+                                        label: row[3],
+                                        star: row[4] === "1"
                                     });
         }
     }
