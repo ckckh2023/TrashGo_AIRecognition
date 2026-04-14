@@ -52,7 +52,7 @@ ComboBox {
 
         background: Rectangle {
 
-            //选中时的蓝条，模仿windows
+            //选中时的蓝条，模仿windows 11
             Rectangle {
                 width: 4
                 height: parent.height - 8
@@ -65,10 +65,22 @@ ComboBox {
             }
 
             border.width: 1
-            border.color: parent.hovered ? "#d0dae5" : "transparent"
+            border.color: parent.hovered ? "#d0dae5" : "#00ffffff"
             anchors.fill: parent
             radius: 4
-            color: (parent.hovered || isCurrent) ? "#eaecf1" : "transparent"
+            color: (parent.hovered || isCurrent) ? "#eaecf1" : "#00ffffff"
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 80
+                }
+            }
+
+            Behavior on border.color {
+                ColorAnimation {
+                    duration: 80
+                }
+            }
         }
     }
 
