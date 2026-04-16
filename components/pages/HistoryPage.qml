@@ -180,8 +180,13 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
-                        onEntered: parent.isHovered = true
-                        onExited: parent.isHovered = false
+                        onEntered: deleteImage.isHovered = true
+                        onExited: deleteImage.isHovered = false
+                        onClicked:
+                        {
+                            deleteHistory(model.currentTime)
+                            loadHistory()
+                        }
                     }
                 }
 
@@ -230,7 +235,25 @@ Item {
         historyRecord.setStar(timeStr,isStar);
     }
 
+    function deleteHistory(timeStr) {
+        historyRecord.deleteRecord(timeStr);
+    }
+
     function formatTime(timeStr) {
         return timeStr.replace(/(\d{4})_(\d{2})_(\d{2})_(\d{2})_(\d{2})_(\d{2})_(\d{3})/, '$1/$2/$3 $4:$5:$6');
+    }
+
+    Connections {
+        target: historyRecord
+
+        function onMessageSentInfo(msg) {
+            Qt.application.toastManager.showToast(msg, "info")
+        }
+        function onMessageSentError(error) {
+            Qt.application.toastManager.showToast(error, "error")
+        }
+        function onMessageSentWarn(warn) {
+            Qt.application.toastManager.showToast(warn, "warn")
+        }
     }
 }
