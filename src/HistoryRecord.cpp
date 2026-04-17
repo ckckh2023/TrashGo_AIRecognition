@@ -180,6 +180,7 @@ void HistoryRecord::deleteRecord(const QString &currentTime) {
         emit messageSentError("删除失败！");
         return;
     }
+    else emit messageSentInfo(currentTime + "：记录删除成功！");
 
     if (query.numRowsAffected() > 0) {
         if (QFile::exists(thumbPath)) {
@@ -187,6 +188,7 @@ void HistoryRecord::deleteRecord(const QString &currentTime) {
             return;
         }
     }
+
 }
 
 void HistoryRecord::setStar(const QString &currentTime, bool isStar) {

@@ -12,6 +12,7 @@ class IniFileHandler : public QObject {
     Q_PROPERTY(QString color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QString provider READ provider WRITE setProvider NOTIFY providerChanged)
     Q_PROPERTY(QString currentApiKey READ currentApiKey WRITE setCurrentApiKey NOTIFY currentApiKeyChanged)
+    Q_PROPERTY(QString renderer READ renderer WRITE setRenderer NOTIFY rendererChanged)
     Q_PROPERTY(int timeLimit READ timeLimit WRITE setTimeLimit NOTIFY timeLimitChanged)
 
 public:
