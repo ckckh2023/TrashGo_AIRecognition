@@ -19,13 +19,25 @@ Rectangle {
     property string iconSource
 
     property var comboboxModel: []
+    property string textFieldTips: ""
     property var value
+    property bool isEnabled: true
+
+    Image {
+        id: settingIcon
+        width: 64
+        height: 64
+        anchors.left: root.left
+        anchors.leftMargin: 20
+        anchors.verticalCenter: root.verticalCenter
+        source: root.iconSource
+    }
 
     Text {
         id:settingText
         text: root.text1
-        anchors.left: root.left
-        anchors.leftMargin: 40
+        anchors.left: settingIcon.right
+        anchors.leftMargin: 20
         anchors.bottom: root.verticalCenter
         anchors.bottomMargin: -2
         font.pixelSize: 18
@@ -35,8 +47,8 @@ Rectangle {
     Text {
         id:settingTextInfo
         text: root.text2
-        anchors.left: root.left
-        anchors.leftMargin: 40
+        anchors.left: settingIcon.right
+        anchors.leftMargin: 20
         anchors.top: root.verticalCenter
         anchors.topMargin: 4
         font.pixelSize: 12
@@ -44,7 +56,13 @@ Rectangle {
     }
 
     Item {
-        width: 150
+        width: {
+            switch (root.ctrlType) {
+            case "combobox": return 120
+            case "textField": return 300
+            default: return 150
+            }
+        }
         height: root.height / 2
         anchors.right: root.right
         anchors.rightMargin: 50
@@ -55,6 +73,7 @@ Rectangle {
             sourceComponent: {
                 switch (root.ctrlType) {
                     case "combobox": return comboBoxComponent
+                    case "textField": return textFieldComponent
                 }
             }
         }
@@ -64,12 +83,27 @@ Rectangle {
         id:comboBoxComponent
         SettingComboBox {
             id: comboBox
-            width: 120
             model: root.comboboxModel
+            enabled: root.isEnabled
             currentIndex: root.comboboxModel.indexOf(root.value)
             onCurrentValueChanged: {
                 if (currentValue !== root.value)
                     root.value = currentValue
+            }
+        }
+    }
+
+    Component {
+        id:textFieldComponent
+        SettingTextField {
+            id: comboBox
+            text: root.value
+            placeholderText: root.textFieldTips
+            enabled: root.isEnabled
+            onEditingFinished: {
+                if (!activeFocus) {
+                    root.value = text
+                }
             }
         }
     }
