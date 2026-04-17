@@ -25,8 +25,9 @@ public:
     Q_INVOKABLE void openOriginFile(const QString &filePath);
 
 signals:
+    void messageSentInfo(const QString &info);
     void messageSentError(const QString &error);
-
+    void messageSentWarn(const QString &warn);
 private:
     void openDb();
     void closeDb();

@@ -78,7 +78,7 @@ Item {
             text1: "模型提供商"
             text2: "更改模型提供商，支持本地模型和在线模型"
             ctrlType: "combobox"
-            modelValues: "本地模型,百度云,阿里云"
+            modelValues: "本地模型,百度云"
             configKey: "provider"
             //iconSource:
             enabled: true
@@ -90,6 +90,16 @@ Item {
             ctrlType: "textField"
             textFieldTips: "请在此粘贴/输入您的API key"
             configKey: "currentApiKey"
+            //iconSource:
+            enabled: true
+        }
+
+        ListElement {
+            text1: "程序渲染器"
+            text2: "选择更好的渲染器以支持更优性能"
+            ctrlType: "combobox"
+            modelValues: "Direct3D,OpenGL"
+            configKey: "renderer"
             //iconSource:
             enabled: true
         }
