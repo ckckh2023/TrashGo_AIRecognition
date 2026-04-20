@@ -8,7 +8,7 @@ set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
 set(COMPANY_NAME    "GitHub-ckckh2023")
 set(PRODUCT_NAME    "TrashGo")
 set(TARGET_NAME     "appTrashGo")
-set(FILE_DESCRIPTION "TrashGo智识助手别")
+set(FILE_DESCRIPTION "TrashGo智识助手")
 set(COPYRIGHT_NOTICE "版权所有@GitHub-ckckh2023")
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network Core5Compat)
