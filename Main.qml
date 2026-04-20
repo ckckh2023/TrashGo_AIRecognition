@@ -15,7 +15,7 @@ ApplicationWindow {
     height: 810
     minimumHeight: 680
     visible: true
-    title: qsTr("TrashGo信息识别")
+    title: qsTr("TrashGo智识助手")
 
     property int imageRevisionFaces: 0
     property int imageRevisionTrash: 0
