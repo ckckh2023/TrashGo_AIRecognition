@@ -15,11 +15,11 @@ ApplicationWindow {
     height: 810
     minimumHeight: 680
     visible: true
-    title: qsTr("TrashGo智识助手")
+    title: qsTr("TrashGo信息识别")
 
     property int imageRevisionFaces: 0
     property int imageRevisionTrash: 0
-    property int currentTab: 0
+    property int currentTab: 1
 
     Rectangle {
         anchors.fill: parent
@@ -73,7 +73,7 @@ ApplicationWindow {
                         height: 12
                         color: "transparent"
                     }
-
+/*
                     SideBarButton {
                         text: "首页"
                         icon.source: "/icons/images/home.png"
@@ -87,7 +87,7 @@ ApplicationWindow {
                         height: 8
                         color: "transparent"
                     }
-
+*/
                     SideBarButton {
                         text: "垃圾分类"
                         icon.source: "/icons/images/classify.png"
@@ -183,8 +183,8 @@ ApplicationWindow {
 
                             Text {
                                 text: {
-                                    if (currentTab === 0) return "首页"
-                                    else if (currentTab === 1) return "垃圾分类"
+                                    /*if (currentTab === 0) return "首页"
+                                    else*/ if (currentTab === 1) return "垃圾分类"
                                     else if (currentTab === 2) return "历史记录"
                                     else if (currentTab === 3) return "收藏夹"
                                     else if (currentTab === 4) return "更多功能"

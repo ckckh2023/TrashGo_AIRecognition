@@ -33,7 +33,7 @@ public:
     void setTimeLimit(int interval);
     void setRenderer(const QString &renderer);
 
-    Q_INVOKABLE static void restartApp(int exitCode = 0);
+    Q_INVOKABLE void restartApp(int exitCode = 0);
 
 signals:
     void themeChanged();
