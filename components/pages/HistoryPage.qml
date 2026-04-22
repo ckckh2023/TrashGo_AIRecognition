@@ -2,6 +2,10 @@ import QtQuick
 import Qt5Compat.GraphicalEffects
 
 Item {
+    id: root
+
+    property bool timeSortAO: true
+
     Rectangle {
         id: titleBar
         width: parent.width - 40
@@ -32,23 +36,48 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 40
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 14
+            font.pixelSize: 16
         }
 
         Text {
+            id: timeAO
             text: "▲"
             anchors.left: sortText.right
             anchors.leftMargin: 5
             anchors.bottom: sortText.verticalCenter
-            font.pixelSize: 8
+            anchors.bottomMargin: -1
+            font.pixelSize: 10
+            font.bold: true
+            color: root.timeSortAO ? "#1e90ff" : "#333333"
         }
 
         Text {
+            id: timeDO
             text: "▼"
             anchors.left: sortText.right
             anchors.leftMargin: 5
             anchors.top: sortText.verticalCenter
-            font.pixelSize: 8
+            anchors.topMargin: -2
+            font.pixelSize: 10
+            font.bold: true
+            color: root.timeSortAO ? "#333333" : "#1e90ff"
+        }
+
+        Rectangle {
+            id: changeTimeSort
+            anchors.top: timeAO.top
+            anchors.bottom: timeDO.bottom
+            anchors.left: sortText.left
+            anchors.right: timeDO.right
+            color: "transparent"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.timeSortAO = !root.timeSortAO
+                    loadHistory(root.timeSortAO)
+                }
+            }
         }
     }
 
@@ -163,7 +192,7 @@ Item {
                         onClicked:
                         {
                             setStar(model.currentTime, (model.star? 0 : 1))
-                            loadHistory()
+                            loadHistory(root.timeSort)
                         }
                     }
                 }
@@ -185,7 +214,7 @@ Item {
                         onClicked:
                         {
                             deleteHistory(model.currentTime)
-                            loadHistory()
+                            loadHistory(root.timeSort)
                         }
                     }
                 }
@@ -213,21 +242,35 @@ Item {
     }
 
     Component.onCompleted: {
-        loadHistory()
+        loadHistory(root.timeSortAO)
     }
 
-    function loadHistory() {
+    function loadHistory(timeSortAO) {
         historyListModel.clear();
         var records = historyRecord.getRecords("all");
-        for (var i = 0; i < records.length; i++) {
-            var row = records[i];
-            historyListModel.append({
-                                        currentTime: row[0],
-                                        path: row[1],
-                                        result: row[2],
-                                        label: row[3],
-                                        star: row[4] === "1"
-                                    });
+        if (timeSortAO) {
+            for (var i1 = 0; i1 < records.length; i1++) {
+                var row1 = records[i1];
+                historyListModel.append({
+                                            currentTime: row1[0],
+                                            path: row1[1],
+                                            result: row1[2],
+                                            label: row1[3],
+                                            star: row1[4] === "1"
+                                        });
+            }
+        }
+        else {
+            for (var i2 = records.length - 1; i2 != -1; i2--) {
+                var row2 = records[i2];
+                historyListModel.append({
+                                            currentTime: row2[0],
+                                            path: row2[1],
+                                            result: row2[2],
+                                            label: row2[3],
+                                            star: row2[4] === "1"
+                                        });
+            }
         }
     }
 
