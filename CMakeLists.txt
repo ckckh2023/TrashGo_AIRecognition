@@ -59,18 +59,26 @@ qt6_add_resources(appTrashGo "app_icons"
         images/settings.png
         images/TrashGo.png
         images/imageImport.png
-        images/imageImport.png
         images/recognizeResult.png
+
         images/unclassified.png
         images/classified_FoodWaste.png
         images/classified_HazardousWaste.png
         images/classified_OtherWaste.png
         images/classified_RecyclableWaste.png
+
         images/comboBoxArrow.png
+
         images/colorSetting.png
         images/themeSetting.png
+
         images/bookmarkHistory.png
         images/deleteHistory.png
+
+        images/img_cy.jpg
+        images/img_khs.jpg
+        images/img_qt.jpg
+        images/img_yh.jpg
 )
 
 if(WIN32)

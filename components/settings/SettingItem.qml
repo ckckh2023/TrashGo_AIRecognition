@@ -25,10 +25,10 @@ Rectangle {
 
     Image {
         id: settingIcon
-        width: 64
-        height: 64
+        width: 48
+        height: 48
         anchors.left: root.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 15
         anchors.verticalCenter: root.verticalCenter
         source: root.iconSource
     }
@@ -37,7 +37,7 @@ Rectangle {
         id:settingText
         text: root.text1
         anchors.left: settingIcon.right
-        anchors.leftMargin: 20
+        anchors.leftMargin: 15
         anchors.bottom: root.verticalCenter
         anchors.bottomMargin: -2
         font.pixelSize: 18
@@ -48,7 +48,7 @@ Rectangle {
         id:settingTextInfo
         text: root.text2
         anchors.left: settingIcon.right
-        anchors.leftMargin: 20
+        anchors.leftMargin: 15
         anchors.top: root.verticalCenter
         anchors.topMargin: 4
         font.pixelSize: 12
