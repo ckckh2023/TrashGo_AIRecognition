@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
+import Qt5Compat.GraphicalEffects
+
 
 import "../control"
 
@@ -11,8 +13,8 @@ Item {
 
         Rectangle {
             id: trashImagePreviewZone
-            width: parent.parent.width / 2 - 30
-            height: parent.parent.height - 210
+            width: parent.width / 2 - 30
+            height: parent.height - 210
             radius: 8
             color: "#80ffffff"
             border.color: "#F2F9FA"
@@ -74,16 +76,13 @@ Item {
                                    if (drop.hasUrls && drop.urls.length > 0) {
                                        var url = drop.urls[0];
                                        var filePath = url.toString();
-
                                        if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
                                        else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
-
-                                       console.log("拖拽文件路径:", filePath);
                                        garbageClassifier.loadPath(filePath);
                                        garbageClassifier.loadImage();
                                    }
                                    drop.accept();
-                                   trashImagePreview.dragHover =  false
+                                   trashImagePreview.dragHover = false
                                }
                 }
 
@@ -241,7 +240,7 @@ Item {
 
         Rectangle {
             id: resultZone
-            width: parent.parent.width / 2 - 30
+            width: parent.width / 2 - 30
             height: trashImagePreviewZone.height
             radius: 8
             color: "#80ffffff"
@@ -344,6 +343,97 @@ Item {
                 }
                 width: resultZone.width - 120
                 wrapMode: Text.WordWrap
+            }
+        }
+
+        Rectangle {
+            id: dailyTipsZone
+            width: parent.parent.width - 40
+            height: parent.parent.height - trashImagePreviewZone.height - 60
+            radius: 8
+            color: "#80ffffff"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: trashImagePreviewZone.bottom
+            anchors.topMargin: 20
+
+            //遮罩防一手下面的四个卡片溢出显示
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    width: dailyTipsZone.width
+                    height: dailyTipsZone.height
+                    radius: 12
+                }
+            }
+
+            FontLoader {
+                id: customFont
+                source: "file:///" + appDirPath + "/fonts/FZPinShangHei.ttf"
+            }
+
+            Text {
+                id: dayTips
+                anchors.top: parent.top
+                anchors.topMargin: 20
+                anchors.left: parent.left
+                anchors.leftMargin: 30
+                anchors.right: parent.right
+                anchors.rightMargin: 30
+                wrapMode: Text.NoWrap
+                elide: Text.ElideRight
+                font.pixelSize: 18
+                font.family: customFont.name
+                text: "垃圾分类小贴士：" + gitHubOnline.getDayTips()
+                horizontalAlignment: Text.AlignLeft
+            }
+
+            //垃圾分类示例，现在先写死通过初赛再说,以后再搞动态的
+
+            Row {
+                id: exampleZone
+                anchors.top: dayTips.bottom
+                anchors.topMargin: 20
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Repeater {
+                    model: ListModel {
+                        ListElement {color1: "#10e84040"; color2: "#e84040"; imageSource: "qrc:/icons/images/img_yh.jpg"; text1:"有害垃圾"}
+                        ListElement {color1: "#10b0e840"; color2: "#b0e840"; imageSource: "qrc:/icons/images/img_cy.jpg"; text1:"厨余垃圾"}
+                        ListElement {color1: "#1040b0e8"; color2: "#40b0e8"; imageSource: "qrc:/icons/images/img_khs.jpg"; text1:"可回收物"}
+                        ListElement {color1: "#10b0b0b0"; color2: "#b0b0b0"; imageSource: "qrc:/icons/images/img_qt.jpg"; text1:"其他垃圾"}
+                    }
+
+                    delegate: Rectangle {
+                        width: parent.width / 4
+                        height: parent.height
+                        color: model.color1
+
+                        Image {
+                            id: exampleImage
+                            source: model.imageSource
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            width: 64
+                            height: 64
+                            fillMode: Image.PreserveAspectFit
+                        }
+
+                        Text {
+                            id: exampleText
+                            text: model.text1
+                            color: model.color2
+                            anchors.right: parent.right
+                            anchors.rightMargin: 45
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.bold: false
+                            font.pixelSize: 24
+                            font.family: customFont.name
+                        }
+                    }
+                }
             }
         }
     }
