@@ -368,7 +368,7 @@ Item {
 
             FontLoader {
                 id: customFont
-                source: "file:///" + appDirPath + "/fonts/FZPinShangHei.ttf"
+                source: "file:///" + appDirPath + "/fonts/DingTalkJinBuTi.ttf"
             }
 
             Text {
