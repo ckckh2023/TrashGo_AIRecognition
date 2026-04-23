@@ -17,7 +17,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
-        radius: 0
+        radius: 4
 
         Rectangle {
             id: thumbnailPreviewTitleZone
