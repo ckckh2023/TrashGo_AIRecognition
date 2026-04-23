@@ -8,6 +8,7 @@ TextField {
     id: root
     focus: true
     placeholderTextColor: "#aaaaaa"
+    clip: false
 
     property string savedText: ""
     property bool isTextChanged: root.text !== root.savedText
@@ -40,18 +41,31 @@ TextField {
     rightPadding: 8
     verticalAlignment: Text.AlignVCenter
 
-    Button {
-        height: bg.height / 2
-        width: 30
-        text: "保存"
+    StandardButton {
+        height: bg.height / 1.5
+        width: height
+        text: "√"
         anchors.verticalCenter: bg.verticalCenter
-        anchors.right: bg.right
-        anchors.rightMargin: 20
+        anchors.left: bg.right
+        anchors.leftMargin: 10
         focusPolicy: Qt.StrongFocus
         visible: root.isTextChanged
+        radius: height / 2
+        bgcolor: "b5d8ee"
+
         onClicked: {
             root.savedText = root.text
         }
+    }
+
+    Keys.onReturnPressed: {
+        root.savedText = root.text
+        root.focus = false
+    }
+
+    Keys.onEnterPressed: {
+        root.savedText = root.text
+        root.focus = false
     }
 
     Component.onCompleted: {

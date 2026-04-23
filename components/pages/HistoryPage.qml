@@ -1,4 +1,7 @@
 import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Controls.Imagine
 import Qt5Compat.GraphicalEffects
 
 Item {
@@ -235,6 +238,26 @@ Item {
                     color: {
                         if (deleteImage.isHovered === true) return "#ff3800"
                         else return "#aaaaaa"
+                    }
+                }
+            }
+        }
+
+        ScrollBar.vertical: ScrollBar {
+            id: scrollBar
+            width: 8
+            policy: ScrollBar.AsNeeded
+            anchors.right: parent.right
+            anchors.rightMargin: 2
+
+            contentItem: Rectangle {
+                width: 8
+                color: parent.pressed ? "#b2b2b2" : "#d4d4d4"
+                radius: width / 2
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 50
                     }
                 }
             }

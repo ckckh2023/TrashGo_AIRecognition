@@ -6,14 +6,29 @@ Button {
     id: root
     clip: true
 
+    property double radius: 12
+    property string bgcolor: "efefef"
+
     background: Rectangle {
         border.width: 0
         implicitWidth: parent.width
         implicitHeight: parent.height
-        radius: 12
-        color: {
-            if (root.hovered) return "#e5e5e5"
-            return "#b0ffffff"
+        radius: root.radius
+        color: "#c0" + root.bgcolor
+
+        Rectangle {
+            anchors.fill: parent
+            radius: root.radius
+            color: {
+                if (root.hovered) return "#80808080"
+                else return "#00" + root.bgcolor
+            }
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 120
+                }
+            }
         }
 
         Behavior on color {
