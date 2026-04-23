@@ -124,6 +124,9 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/fonts/FZPinShangHei.ttf
         $<TARGET_FILE_DIR:appTrashGo>/fonts/FZPinShangHei.ttf
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/fonts/DingTalkJinBuTi.ttf
+        $<TARGET_FILE_DIR:appTrashGo>/fonts/DingTalkJinBuTi.ttf
 )
 
 include(GNUInstallDirs)
