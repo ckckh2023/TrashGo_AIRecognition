@@ -209,7 +209,7 @@ ApplicationWindow {
                             if (currentTab === 0) return "components/pages/HomePage.qml"
                             else if (currentTab === 1) return "components/pages/GarbagePage.qml"
                             else if (currentTab === 2) return "components/pages/HistoryPage.qml"
-                            // else if (currentTab === 3) return "components/pages/StarPage.qml"
+                            else if (currentTab === 3) return "components/pages/StarPage.qml"
                             // else if (currentTab === 4) return "components/pages/MorePage.qml"
                             else if (currentTab === 5) return "components/pages/SettingPage.qml"
                             else return ""

@@ -42,6 +42,7 @@ qt_add_qml_module(appTrashGo
         QML_FILES components/control/SettingComboBox.qml
         QML_FILES components/pages/HistoryPage.qml
         QML_FILES components/control/SettingTextField.qml
+        QML_FILES components/pages/StarPage.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
@@ -73,6 +74,7 @@ qt6_add_resources(appTrashGo "app_icons"
         images/themeSetting.png
 
         images/bookmarkHistory.png
+        images/bookmarkedHistory.png
         images/deleteHistory.png
 
         images/img_cy.jpg
