@@ -80,7 +80,7 @@ Item {
             ctrlType: "combobox"
             modelValues: "本地模型,百度云"
             configKey: "provider"
-            //iconSource:
+            iconSource: "qrc:/icons/images/apiProviderSetting.png"
             enabled: true
         }
 
@@ -90,7 +90,7 @@ Item {
             ctrlType: "textField"
             textFieldTips: "请在此粘贴/输入您的API key"
             configKey: "currentApiKey"
-            //iconSource:
+            iconSource: "qrc:/icons/images/apiKeySetting.png"
             enabled: true
         }
 
@@ -100,7 +100,7 @@ Item {
             ctrlType: "combobox"
             modelValues: "Direct3D,OpenGL"
             configKey: "renderer"
-            //iconSource:
+            iconSource: "qrc:/icons/images/rendererSetting.png"
             enabled: true
         }
     }

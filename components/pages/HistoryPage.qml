@@ -127,6 +127,13 @@ Item {
                     onStatusChanged: {
                         if (status === Image.Error) source = "qrc:/fallback-thumbnail.png"
                     }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            historyRecord.openOriginFile(model.path)
+                        }
+                    }
                 }
 
                 Text {
