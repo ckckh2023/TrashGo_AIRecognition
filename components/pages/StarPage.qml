@@ -188,6 +188,8 @@ Item {
                     property bool isHovered: false
                     property bool isFirstHovered: true
 
+
+
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
@@ -197,7 +199,7 @@ Item {
                         {
                             var newstar = model.star ? 0 : 1
                             setStar(model.currentTime, newstar)
-                            historyListModel.setProperty(index, "star", !model.star)
+                            historyListModel.remove(index)
                         }
                     }
 
@@ -241,7 +243,7 @@ Item {
                         else return "#00aaaaaa"
                     }
 
-                    Behavior on color { ColorAnimation { duration: 60 } }
+                    Behavior on color { ColorAnimation { duration: 50 } }
                 }
 
                 ColorOverlay {
@@ -282,7 +284,7 @@ Item {
 
     function loadHistory(timeSortAO) {
         historyListModel.clear();
-        var records = historyRecord.getRecords("all");
+        var records = historyRecord.getStars("all");
         if (timeSortAO) {
             for (var i1 = 0; i1 < records.length; i1++) {
                 var row1 = records[i1];
