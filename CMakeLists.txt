@@ -59,8 +59,11 @@ qt6_add_resources(appTrashGo "app_icons"
         images/function.png
         images/settings.png
         images/TrashGo.png
+
         images/imageImport.png
         images/recognizeResult.png
+        images/addImage.png
+        images/dragImage.png
 
         images/unclassified.png
         images/classified_FoodWaste.png
@@ -72,6 +75,9 @@ qt6_add_resources(appTrashGo "app_icons"
 
         images/colorSetting.png
         images/themeSetting.png
+        images/apiProviderSetting.png
+        images/apiKeySetting.png
+        images/rendererSetting.png
 
         images/bookmarkHistory.png
         images/bookmarkedHistory.png
