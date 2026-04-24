@@ -95,11 +95,20 @@ Item {
                     cache: false
                 }
 
+                Image {
+                    id: trashImageIcon
+                    anchors.bottom: trashImageTips.top
+                    anchors.bottomMargin: 10
+                    anchors.horizontalCenter: trashImagePreview.horizontalCenter
+                    source: "qrc:/icons/images/" + ( trashImagePreview.dragHover ? "dragImage.png" : "addImage.png")
+                    visible: trashImage.status !== Image.ready
+                }
+
                 Text {
                     id: trashImageTips
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -40
+                    anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -30
                     text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
                     font.pixelSize: trashImagePreview.dragHover ? 22 : 18
                     color: "#090909"
@@ -111,7 +120,7 @@ Item {
                     anchors.top: trashImageTips.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.topMargin: 10
-                    text:"支持.jpg/.jpeg/.png/.bmp/.webp格式图片"
+                    text:"支持.jpg/.jpeg/.png/.bmp/.webp等格式图片"
                     font.pixelSize: 14
                     color: "#808080"
                     visible: trashImage.status !== Image.Ready
