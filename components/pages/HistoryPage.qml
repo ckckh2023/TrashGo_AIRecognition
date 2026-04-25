@@ -76,6 +76,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     root.timeSortAO = !root.timeSortAO
                     loadHistory(root.timeSortAO)
@@ -130,6 +131,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
                         onClicked: {
                             historyRecord.openOriginFile(model.path)
                         }
@@ -197,6 +199,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
                         onEntered: starImage.isHovered = true
                         onExited: starImage.isHovered = false
@@ -228,6 +231,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
                         hoverEnabled: true
                         onEntered: deleteImage.isHovered = true
                         onExited: deleteImage.isHovered = false
