@@ -76,6 +76,7 @@ Item {
                                    if (drop.hasUrls && drop.urls.length > 0) {
                                        var url = drop.urls[0];
                                        var filePath = url.toString();
+                                       var cutLength = 8;
 
                                        if (Qt.platform.os === "windows") cutLength = 8
                                        else if (Qt.platform.os === "linux") cutLength = 7
