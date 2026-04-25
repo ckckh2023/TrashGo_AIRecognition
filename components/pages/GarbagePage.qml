@@ -76,8 +76,13 @@ Item {
                                    if (drop.hasUrls && drop.urls.length > 0) {
                                        var url = drop.urls[0];
                                        var filePath = url.toString();
-                                       if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
-                                       else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+
+                                       if (Qt.platform.os === "windows") cutLength = 8
+                                       else if (Qt.platform.os === "linux") cutLength = 7
+
+                                       if (filePath.startsWith("file:///")) filePath = filePath.substring(cutLength);
+                                       else if (filePath.startsWith("file://")) filePath = filePath.substring(cutLength - 1);
+
                                        garbageClassifier.loadPath(filePath);
                                        garbageClassifier.loadImage();
                                    }
@@ -101,7 +106,7 @@ Item {
                     anchors.bottomMargin: 10
                     anchors.horizontalCenter: trashImagePreview.horizontalCenter
                     source: "qrc:/icons/images/" + ( trashImagePreview.dragHover ? "dragImage.png" : "addImage.png")
-                    visible: trashImage.status !== Image.ready
+                    visible: trashImage.status !== Image.Ready
                 }
 
                 Text {
@@ -454,8 +459,13 @@ Item {
         nameFilters: ["图片文件 (*.bmp *.jpg *.jpeg *.png *.webp *.tiff *.tif *.jp2 *.ppm *.pgm *.exr *.hdr)","所有文件 (*.*)"]
         onAccepted: {
             var filePath = selectedFile.toString();
-            if (filePath.startsWith("file:///")) filePath = filePath.substring(8);
-            else if (filePath.startsWith("file://")) filePath = filePath.substring(7);
+            var cutLength = 8
+
+            if (Qt.platform.os === "windows") cutLength = 8
+            else if (Qt.platform.os === "linux") cutLength = 7
+
+            if (filePath.startsWith("file:///")) filePath = filePath.substring(cutLength);
+            else if (filePath.startsWith("file://")) filePath = filePath.substring(cutLength - 1);
 
             console.log("垃圾分类 - 文件路径:", filePath);
             garbageClassifier.loadPath(filePath);
