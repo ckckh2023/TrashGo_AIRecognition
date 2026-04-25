@@ -278,6 +278,15 @@ Item {
         }
     }
 
+    Text {
+        id: defaultText
+        anchors.centerIn: parent
+        font.bold: true
+        font.pixelSize: 24
+        text: "暂无收藏"
+        visible: historyView.model.count === 0
+    }
+
     Component.onCompleted: {
         loadHistory(root.timeSortAO)
     }
