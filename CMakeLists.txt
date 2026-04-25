@@ -4,7 +4,10 @@ project(TrashGo VERSION 2.0.0 LANGUAGES CXX)
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
+    set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
+endif()
+
 set(COMPANY_NAME    "GitHub-ckckh2023")
 set(PRODUCT_NAME    "TrashGo")
 set(TARGET_NAME     "appTrashGo")
