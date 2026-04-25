@@ -283,6 +283,16 @@ Item {
         }
     }
 
+    Text {
+        id: defaultText
+        anchors.centerIn: parent
+        font.bold: true
+        font.pixelSize: 24
+        text: "暂无历史记录"
+        visible: historyView.model.count === 0
+    }
+
+
     Component.onCompleted: {
         loadHistory(root.timeSortAO)
     }
