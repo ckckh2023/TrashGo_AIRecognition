@@ -4,8 +4,8 @@
 
 
 [![License](https://img.shields.io/badge/license-MIT-red.svg)](LICENSE.md)
-[![Qt](https://img.shields.io/badge/Qt-6.10.2-brightgreen)](https://www.qt.io/)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-blue)]()
+[![Qt](https://img.shields.io/badge/Qt-6.10.3-brightgreen)](https://www.qt.io/)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue)]()
 [![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition?include_prereleases)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
 [![Stars](https://img.shields.io/github/stars/ckckh2023/TrashGo_AIRecognition?style=social)]()
 
@@ -21,19 +21,17 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 - ~~**深色模式**：适配系统深色主题，夜间使用更舒适。~~
 - ~~**更多设置**：语言切换、识别精度调节、缓存清理等。~~
 
-<!-- ## 截图
+## 应用截图
 
-放几张应用截图，展示主要界面和功能
-| 垃圾分类识别 | 人脸识别 | 小游戏 |
+| 垃圾分类识别 | 历史记录 | 设置页面 |
 |:---:|:---:|:---:|
-| ![Screenshot1](screenshots/1.jpg) | ![Screenshot2](screenshots/2.jpg) | ![Screenshot3](screenshots/3.jpg) | -->
+| <img width="962" height="631" alt="垃圾分类识别" src="https://github.com/user-attachments/assets/a88edfd5-fdd8-4f0b-b11a-ed9e01667d40" /> | <img width="962" height="631" alt="历史记录" src="https://github.com/user-attachments/assets/21e278bc-9ded-40b7-bb8f-572688643310" /> | <img width="962" height="631" alt="2026-04-25 141308" src="https://github.com/user-attachments/assets/a203451f-59b3-4329-989e-cebc0198eefe" /> | 
 
 ## 安装指南
 
 ### 下载安装包
 - **Windows**：从 [Releases](https://github.com/ckckh2023/TrashGo_AIRecognition/releases) 下载最新zip文件解压到文件夹即可使用（安装包正在制作）
-- **MacOS**：暂不支持
-- **Linux**：暂不支持
+- **Linux**：正在制作
 
 ### 从源码编译
 1. 克隆仓库：`git clone https://github.com/ckckh2023/TrashGo_AIRecognition.git`
@@ -49,13 +47,6 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 ## 贡献指南
 
 欢迎贡献代码、报告问题或提出新功能建议！
-<!-- 请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
-
-1. Fork 本仓库
-2. 创建您的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交您的修改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开一个 Pull Request -->
 
 ## 许可证
 
