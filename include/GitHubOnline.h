@@ -6,6 +6,7 @@
 #include <QNetworkReply>
 #include <QVersionNumber>
 #include <QStringList>
+#include <QCoreApplication>
 
 class GitHubOnline : public QObject {
     Q_OBJECT
@@ -16,7 +17,7 @@ public:
     Q_INVOKABLE QString getDayTips();
 
 signals:
-    void releaseChecked(bool hasNewVersion, const QString &lastestVersion, const QString &releaseUrl);
+    void releaseChecked(bool hasNewVersion);
     void messageSentInfo(const QString &info);
     void messageSentError(const QString &error);
     void messageSentWarn(const QString &warn);
@@ -26,6 +27,9 @@ private slots:
 
 private:
     QString extractVersion(const QString &tag);
+    QString m_currentVersion = QCoreApplication::applicationVersion();
+    QString m_lastestVersion = "";
+    QString m_releaseUrl = "";
 
     QNetworkAccessManager m_networkManager;
     QNetworkReply *m_currentReply = nullptr;

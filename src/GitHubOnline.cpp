@@ -1,6 +1,5 @@
 #include "include/GitHubOnline.h"
 #include <QNetworkRequest>
-#include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -38,21 +37,23 @@ void GitHubOnline::onNetworkReplyFinished() {
             QJsonArray releases = doc.array();
             QJsonObject latestRelease = releases.first().toObject();
             QString tagName = latestRelease["tag_name"].toString();
-            QString releaseUrl = latestRelease["html_url"].toString();
 
-            QString versionStr = extractVersion(tagName);
-            if (versionStr.isEmpty()) {
+            m_releaseUrl = latestRelease["html_url"].toString();
+            m_lastestVersion = extractVersion(tagName);
+
+            if (m_lastestVersion.isEmpty()) {
                 emit messageSentError("无法解析版本号: " + tagName);
                 return;
             }
-            QString currentVersion = QCoreApplication::applicationVersion();
 
-            QVersionNumber currentVer = QVersionNumber::fromString(currentVersion);
-            QVersionNumber latestVer = QVersionNumber::fromString(versionStr);
+            QVersionNumber currentVer = QVersionNumber::fromString(m_currentVersion);
+            QVersionNumber latestVer = QVersionNumber::fromString(m_lastestVersion);
 
             bool isNewer = !latestVer.isNull() && latestVer > currentVer;
-            qDebug() << isNewer << " " << versionStr << " " << releaseUrl;
-            emit releaseChecked(isNewer, versionStr, releaseUrl);
+            qDebug() << isNewer << " " << m_lastestVersion << " " << m_releaseUrl << "(GitHubOnline-onNetworkReplyFinished";
+
+            emit releaseChecked(isNewer);
+            emit messageSentInfo("检测到新版本！最新版本：" + m_lastestVersion);
         }
         else emit messageSentError("无效的JSON响应！");
     }
