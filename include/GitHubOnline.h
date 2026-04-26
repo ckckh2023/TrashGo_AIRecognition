@@ -14,6 +14,8 @@ class GitHubOnline : public QObject {
 public:
     explicit GitHubOnline(QObject *parent = nullptr);
     Q_INVOKABLE void checkNewVersion();
+    Q_INVOKABLE void openReleasePage();
+
     Q_INVOKABLE QString getDayTips();
 
 signals:

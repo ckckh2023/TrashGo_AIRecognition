@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QHash>
 #include <QDate>
+#include <QDesktopServices>
 
 GitHubOnline::GitHubOnline(QObject *parent) : QObject(parent) {
     connect(&m_networkManager, &QNetworkAccessManager::finished, this, &GitHubOnline::onNetworkReplyFinished);
@@ -68,6 +69,17 @@ QString GitHubOnline::extractVersion(const QString &tag) {
     QRegularExpressionMatch match = re.match(tag);
     if (match.hasMatch()) return match.captured(1);
     return QString();
+}
+
+void GitHubOnline::openReleasePage() {
+    if (m_releaseUrl.isEmpty()) {
+        emit messageSentError("没有可用的发布页面，请先检查更新并确保检测到新版本。");
+        return;
+    }
+
+    bool success = QDesktopServices::openUrl(QUrl(m_releaseUrl));
+    if (success) emit messageSentInfo("已打开浏览器，请前往下载最新版本");
+    else emit messageSentError("无法打开浏览器，请手动访问：" + m_releaseUrl);
 }
 
 QString GitHubOnline::getDayTips() {
