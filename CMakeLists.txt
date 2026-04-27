@@ -15,7 +15,7 @@ set(FILE_DESCRIPTION "TrashGo智识助手")
 set(COPYRIGHT_NOTICE "版权所有@GitHub-ckckh2023")
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Core Sql Network Core5Compat)
-find_package(OpenCV REQUIRED COMPONENTS core imgproc objdetect dnn)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc imgcodecs objdetect dnn)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
