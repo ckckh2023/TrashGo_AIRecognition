@@ -189,8 +189,6 @@ Item {
                     property bool isHovered: false
                     property bool isFirstHovered: true
 
-
-
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
@@ -207,6 +205,10 @@ Item {
 
                     onSourceChanged: {
                         isFirstHovered = true
+                    }
+
+                    Component.onCompleted: {
+                        if (model.star === true) isFirstHovered = false
                     }
 
                     onIsHoveredChanged: {
@@ -243,10 +245,10 @@ Item {
                     color: {
                         if (model.star && starImage.isHovered && !starImage.isFirstHovered) return "#aaaaaa"
                         if (starImage.isHovered === true) return "#ffe141"
-                        else return "#00aaaaaa"
+                        return "#00ffe141"
                     }
 
-                    Behavior on color { ColorAnimation { duration: 50 } }
+                    Behavior on color { ColorAnimation { duration: 60 } }
                 }
 
                 ColorOverlay {

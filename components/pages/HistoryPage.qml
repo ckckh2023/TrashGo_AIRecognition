@@ -215,6 +215,10 @@ Item {
                         isFirstHovered = true
                     }
 
+                    Component.onCompleted: {
+                        if (model.star === true) isFirstHovered = false
+                    }
+
                     onIsHoveredChanged: {
                         if (isHovered === false && isFirstHovered === true) isFirstHovered = false
                     }
@@ -249,7 +253,7 @@ Item {
                     color: {
                         if (model.star && starImage.isHovered && !starImage.isFirstHovered) return "#aaaaaa"
                         if (starImage.isHovered === true) return "#ffe141"
-                        else return "#00aaaaaa"
+                        return "#00ffe141"
                     }
 
                     Behavior on color { ColorAnimation { duration: 60 } }
