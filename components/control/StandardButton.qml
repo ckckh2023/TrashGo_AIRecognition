@@ -2,12 +2,16 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
+import "../theme"
+
 Button {
     id: root
     clip: true
 
     property double radius: 12
-    property string bgcolor: "efefef"
+    property string bgcolor: root.theme.opaqueCard
+
+    property Theme theme : Theme {}
 
     background: Rectangle {
         border.width: 0
@@ -40,7 +44,7 @@ Button {
 
     contentItem: Text {
         text: root.text
-        color: "#030303"
+        color: root.theme.text
         font.pixelSize: 18
         font.letterSpacing: 1
         horizontalAlignment: Text.AlignHCenter

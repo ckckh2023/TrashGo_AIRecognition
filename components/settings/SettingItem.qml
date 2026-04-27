@@ -3,12 +3,13 @@ import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
 import "../control"
+import "../theme"
 
 Rectangle {
     id: root
     width: parent.width - 60
     height: 80
-    color: "#80ffffff"
+    color: root.theme.card
     border.width: 1
     border.color: "#F2F9FA"
     radius: 8
@@ -22,6 +23,8 @@ Rectangle {
     property string textFieldTips: ""
     property var value
     property bool isEnabled: true
+
+    property Theme theme : Theme {}
 
     Image {
         id: settingIcon
@@ -41,7 +44,7 @@ Rectangle {
         anchors.bottom: root.verticalCenter
         anchors.bottomMargin: -2
         font.pixelSize: 18
-        color: "#000000"
+        color: root.theme.text
     }
 
     Text {
@@ -52,7 +55,7 @@ Rectangle {
         anchors.top: root.verticalCenter
         anchors.topMargin: 4
         font.pixelSize: 12
-        color: "#606060"
+        color: root.theme.secondaryText
     }
 
     Item {

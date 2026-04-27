@@ -4,16 +4,21 @@ import QtQuick.Controls
 import QtQuick.Controls.Imagine
 import Qt5Compat.GraphicalEffects
 
+import "../theme"
+
 Item {
+
     id: root
 
     property bool timeSortAO: true
+
+    property Theme theme: Theme {}
 
     Rectangle {
         id: titleBar
         width: parent.width - 40
         height: 30
-        color: "#c0ffffff"
+        color: root.theme.highOpacityCard
         anchors.top: parent.top
         anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
@@ -21,13 +26,14 @@ Item {
 
         Rectangle {
             id: thumbnailPreviewTitleZone
-            color: "transparent"
+            color: root.theme.defaultTransparentColor
             height: parent.height
             width: parent.width / 8
             anchors.left: parent.left
 
             Text {
                 text: "缩略图"
+                color: root.theme.text
                 font.pixelSize: 14
                 anchors.centerIn: parent
             }
@@ -36,6 +42,7 @@ Item {
         Text {
             id: sortText
             text: "时间排序"
+            color: root.theme.text
             anchors.right: parent.right
             anchors.rightMargin: 40
             anchors.verticalCenter: parent.verticalCenter
@@ -51,7 +58,7 @@ Item {
             anchors.bottomMargin: -1
             font.pixelSize: 10
             font.bold: true
-            color: root.timeSortAO ? "#1e90ff" : "#333333"
+            color: root.timeSortAO ? root.theme.highlightedRectangle : root.theme.text
         }
 
         Text {
@@ -63,7 +70,7 @@ Item {
             anchors.topMargin: -2
             font.pixelSize: 10
             font.bold: true
-            color: root.timeSortAO ? "#333333" : "#1e90ff"
+            color: root.timeSortAO ? root.theme.text : root.theme.highlightedRectangle
         }
 
         Rectangle {
@@ -72,7 +79,7 @@ Item {
             anchors.bottom: timeDO.bottom
             anchors.left: sortText.left
             anchors.right: timeDO.right
-            color: "transparent"
+            color: root.theme.defaultTransparentColor
 
             MouseArea {
                 anchors.fill: parent
@@ -110,7 +117,7 @@ Item {
                 height: 100
                 border.width: 1
                 border.color: "#d4d4d4"
-                color: "#c0ffffff"
+                color: root.theme.card
                 radius: 5
                 anchors.horizontalCenter: listViewRoot.horizontalCenter
 
@@ -142,7 +149,7 @@ Item {
                     width: parent.width / 2.2
                     text: formatTime(model.currentTime)
                     font.pixelSize: 16
-                    color: "#030303"
+                    color: root.theme.text
                     anchors.bottom: parent.verticalCenter
                     anchors.bottomMargin: 0
                     anchors.left: thumbnailPreview.right
@@ -157,7 +164,7 @@ Item {
                     width: parent.width / 2.2
                     text: model.path
                     font.pixelSize: 12
-                    color: "#757575"
+                    color: root.theme.secondaryText
                     anchors.top: parent.verticalCenter
                     anchors.topMargin: 0
                     anchors.left: thumbnailPreview.right
@@ -176,7 +183,7 @@ Item {
                         if (/^厨/.test(text)) return "#4CAF50";
                         if (/^有/.test(text)) return "#f44336";
                         if (/^其/.test(text)) return "#9E9E9E";
-                        return "#eeeeee";
+                        return root.theme.text;
                     }
 
                     anchors.verticalCenter: parent.verticalCenter

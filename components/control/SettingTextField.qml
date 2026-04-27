@@ -3,15 +3,18 @@ import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
 import "../control"
+import "../theme"
 
 TextField {
     id: root
     focus: true
-    placeholderTextColor: "#aaaaaa"
+    placeholderTextColor: root.theme.secondaryText
     clip: false
 
     property string savedText: ""
     property bool isTextChanged: root.text !== root.savedText
+
+    property Theme theme : Theme {}
 
     onTextChanged: {
         if (!activeFocus) {
@@ -26,7 +29,7 @@ TextField {
         implicitWidth: root.width
         implicitHeight: root.height
         radius: 6
-        color: "#d0ffffff"
+        color: root.theme.card
 
         Behavior on border.color {
             ColorAnimation { duration: 100 }
@@ -34,9 +37,9 @@ TextField {
     }
 
     font.pixelSize: 15
-    color: "#030303"
+    color: root.theme.text
     selectionColor: "#3dabff"
-    selectedTextColor: "white"
+    selectedTextColor: root.theme.text
     leftPadding: 8
     rightPadding: 8
     verticalAlignment: Text.AlignVCenter
@@ -51,7 +54,7 @@ TextField {
         focusPolicy: Qt.StrongFocus
         visible: root.isTextChanged
         radius: height / 2
-        bgcolor: "b5d8ee"
+        bgcolor: "#b5d8ee"
 
         onClicked: {
             root.savedText = root.text
