@@ -84,7 +84,7 @@ ComboBox {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             radius: 4
-            color: root.theme.defaultTransparentColor
+            color: (parent.hovered || isCurrent) ? root.theme.comboBoxHighlighted : root.theme.defaultTransparentColor
 
             Behavior on color {
                 ColorAnimation {
