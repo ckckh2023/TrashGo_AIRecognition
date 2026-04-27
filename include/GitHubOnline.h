@@ -16,6 +16,10 @@ public:
     Q_INVOKABLE void checkNewVersion();
     Q_INVOKABLE void openReleasePage();
 
+    Q_INVOKABLE QString getCurrentVersion() const { return m_currentVersion; }
+    Q_INVOKABLE QString getLastestVersion() const { return m_lastestVersion; }
+    Q_INVOKABLE QString getReleaseUrl() const { return m_releaseUrl; }
+
     Q_INVOKABLE QString getDayTips();
 
 signals:
