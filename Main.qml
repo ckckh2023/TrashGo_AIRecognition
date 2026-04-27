@@ -7,8 +7,10 @@ import QtQuick.Dialogs
 import "components/control"
 import "components/pages"
 import "components/message"
+import "components/theme"
 
 ApplicationWindow {
+    id: root
     width: 1280
     minimumWidth: 1080
     height: 810
@@ -20,11 +22,13 @@ ApplicationWindow {
     property int imageRevisionTrash: 0
     property int currentTab: 1
 
+    property Theme theme : Theme {}
+
     Rectangle {
         anchors.fill: parent
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#f0f4fe" }
-            GradientStop { position: 1.0; color: "#def0f7" }
+            GradientStop { position: 0.0; color: root.theme.backgroundTop }
+            GradientStop { position: 1.0; color: root.theme.backgroundBottom }
         }
     }
 
@@ -39,7 +43,7 @@ ApplicationWindow {
                 id: sidebar
                 width: 240
                 height: parent.height
-                color: "#80ffffff"
+                color: root.theme.bar
 
                 Column {
                     anchors.fill: parent
@@ -173,7 +177,7 @@ ApplicationWindow {
                         id: topbar
                         width: parent.width
                         height: 80
-                        color: "#80ffffff"
+                        color: root.theme.bar
 
                         Item {
                             width: parent.width - 80
@@ -190,7 +194,7 @@ ApplicationWindow {
                                     else if (currentTab === 5) return "设置"
                                     else return ""
                                 }
-                                color: "#030303"
+                                color: root.theme.text
                                 font.family: "Microsoft YaHei"
                                 font.pixelSize: 36
                                 font.weight: Font.DemiBold

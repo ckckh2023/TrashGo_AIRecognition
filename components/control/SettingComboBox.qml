@@ -2,10 +2,13 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
+import "../theme"
+
 ComboBox {
     id: root
     anchors.fill: parent
 
+    property Theme theme : Theme {}
 
     background: Rectangle {
         border.width: 1
@@ -13,13 +16,13 @@ ComboBox {
         implicitWidth: parent.width
         implicitHeight: parent.height
         radius: 6
-        color: "#b0ffffff"
+        color: root.theme.card
     }
 
     contentItem: Text {
         text: root.displayText
         font.pixelSize: 15
-        color: "#030303"
+        color: root.theme.text
         verticalAlignment: Text.AlignVCenter
         leftPadding: 8
         rightPadding: root.indicator.width + 8
@@ -45,6 +48,7 @@ ComboBox {
         contentItem: Text {
             font.pixelSize: 14
             text: modelData
+            color: root.theme.text
             horizontalAlignment: Text.AlignLeft
             leftPadding: 15
             verticalAlignment: Text.AlignVCenter
@@ -52,11 +56,19 @@ ComboBox {
 
         background: Rectangle {
 
-            //选中时的蓝条，模仿windows 11
+            Rectangle {
+                anchors.fill: parent
+                color: {
+                    if (parent.hovered || isCurrent) return root.theme.comboBoxHighlighted
+                    return root.theme.defaultTransparentColor
+                }
+            }
+
+            //选中时的蓝/绿/黄条，模仿windows 11
             Rectangle {
                 width: 4
                 height: parent.height - 8
-                color: "#3dabff"
+                color: root.theme.highlightedRectangle
                 radius: 2
                 anchors.left: parent.left
                 anchors.leftMargin: 5
@@ -65,14 +77,14 @@ ComboBox {
             }
 
             border.width: 1
-            border.color: parent.hovered ? "#d0dae5" : "#00ffffff"
+            border.color: parent.hovered ? "#d0dae5" : root.theme.defaultTransparentColor
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.rightMargin: popupList.padding * 2
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             radius: 4
-            color: (parent.hovered || isCurrent) ? "#eaecf1" : "#00ffffff"
+            color: root.theme.defaultTransparentColor
 
             Behavior on color {
                 ColorAnimation {
@@ -104,7 +116,7 @@ ComboBox {
         }
 
         background: Rectangle {
-            color: "white"
+            color: root.theme.opaqueCard
             border.color: "#d0d0d0"
             border.width: 1
             radius: 6
