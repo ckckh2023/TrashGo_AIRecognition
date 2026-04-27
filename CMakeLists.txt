@@ -46,6 +46,8 @@ qt_add_qml_module(appTrashGo
         QML_FILES components/pages/HistoryPage.qml
         QML_FILES components/control/SettingTextField.qml
         QML_FILES components/pages/StarPage.qml
+        QML_FILES components/message/CustomDialog.qml
+        QML_FILES components/theme/Theme.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
@@ -69,6 +71,7 @@ qt6_add_resources(appTrashGo "app_icons"
         images/dragImage.png
 
         images/unclassified.png
+        images/unclassified_dark.png
         images/classified_FoodWaste.png
         images/classified_HazardousWaste.png
         images/classified_OtherWaste.png

@@ -3,20 +3,24 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import Qt5Compat.GraphicalEffects
 
-
 import "../control"
+import "../theme"
 
 Item {
+    id: root
+
+    property Theme theme : Theme {}
+
     Rectangle {
         anchors.fill: parent
-        color: "transparent"
+        color: root.theme.defaultTransparentColor
 
         Rectangle {
             id: trashImagePreviewZone
             width: parent.width / 2 - 30
             height: parent.height - 210
             radius: 8
-            color: "#80ffffff"
+            color: root.theme.card
             border.color: "#F2F9FA"
             border.width: 1
             anchors.left: parent.left
@@ -38,6 +42,7 @@ Item {
             Text {
                 id:trashImagePreviewTitle
                 text: "上传图片"
+                color: root.theme.text
                 font.pixelSize: 24
                 font.bold: true
                 anchors.left: trashImagePreviewIcon.right
@@ -50,7 +55,7 @@ Item {
                 id: trashImagePreview
                 width: parent.width - 60
                 height: parent.height - 180
-                color: dragHover ? "#f0f8ff" : "#00ffffff"
+                color: dragHover ? "#80c0c8ef" : root.theme.defaultTransparentColor
                 radius: 8
                 border.color: dragHover ? "#0078d7" : "#d0d0d0"
                 border.width: 1
@@ -117,7 +122,7 @@ Item {
                     anchors.verticalCenterOffset: trashImagePreview.dragHover ? 0 : -30
                     text: trashImagePreview.dragHover ? "松手以选中图片":"请选择图片(拖拽至此或点击下方按钮)"
                     font.pixelSize: trashImagePreview.dragHover ? 22 : 18
-                    color: "#090909"
+                    color: root.theme.text
                     visible: trashImage.status !== Image.Ready
                 }
 
@@ -206,7 +211,7 @@ Item {
 
                     color: {
                         if (trashImageRecognizeButton.hovered) return "#e0e5e5e5"
-                        return "#e0ffffff"
+                        return root.theme.highOpacityCard
                     }
 
                     Behavior on color {
@@ -239,7 +244,7 @@ Item {
 
                     color: {
                         if (trashImageClearButton.hovered) return "#e0e5e5e5"
-                        return "#e0ffffff"
+                        return root.theme.highOpacityCard
                     }
 
                     Behavior on color {
@@ -258,7 +263,7 @@ Item {
             width: parent.width / 2 - 30
             height: trashImagePreviewZone.height
             radius: 8
-            color: "#80ffffff"
+            color: root.theme.card
             border.color: "#E5F2FA"
             border.width: 1
             anchors.right: parent.right
@@ -280,6 +285,7 @@ Item {
             Text {
                 id: resultTitle
                 text: "识别结果"
+                color: root.theme.text
                 font.pixelSize: 24
                 font.bold: true
                 anchors.left: resultIcon.right
@@ -297,9 +303,9 @@ Item {
                         else if (type.indexOf("厨余") >= 0) return "qrc:/icons/images/classified_FoodWaste.png"
                         else if (type.indexOf("有害") >= 0) return "qrc:/icons/images/classified_HazardousWaste.png"
                         else if (type.indexOf("其他") >= 0) return "qrc:/icons/images/classified_OtherWaste.png"
-                        else return "qrc:/icons/images/unclassified.png"
+                        else return "qrc:/icons/images/unclassified" + ( iniFileHandler.theme === "明亮" ? "" : "_dark" ) + ".png"
                     }
-                    else return "qrc:/icons/images/unclassified.png"
+                    else return "qrc:/icons/images/unclassified" + ( iniFileHandler.theme === "明亮" ? "" : "_dark" ) + ".png"
                 }
 
                 width: 64
@@ -330,9 +336,9 @@ Item {
                         else if (type.indexOf("有害") >= 0) return "#f44336"
                         else if (type.indexOf("厨余") >= 0) return "#4CAF50"
                         else if (type.indexOf("其他") >= 0) return "#9E9E9E"
-                        else return "#0f0f0f"
+                        else return root.theme.text
                     }
-                    else return "#0f0f0f"
+                    else return root.theme.text
                 }
             }
 
@@ -352,9 +358,9 @@ Item {
                         else if (type.indexOf("有害") >= 0) return "#977471"
                         else if (type.indexOf("厨余") >= 0) return "#768976"
                         else if (type.indexOf("其他") >= 0) return "#868686"
-                        else return "#0f0f0f"
+                        else return root.theme.text
                     }
-                    else return "#0f0f0f"
+                    else return root.theme.text
                 }
                 width: resultZone.width - 120
                 wrapMode: Text.WordWrap
@@ -366,7 +372,7 @@ Item {
             width: parent.parent.width - 40
             height: parent.parent.height - trashImagePreviewZone.height - 60
             radius: 8
-            color: "#80ffffff"
+            color: root.theme.card
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: trashImagePreviewZone.bottom
             anchors.topMargin: 20
@@ -394,6 +400,7 @@ Item {
                 anchors.leftMargin: 30
                 anchors.right: parent.right
                 anchors.rightMargin: 30
+                color: root.theme.text
                 wrapMode: Text.NoWrap
                 elide: Text.ElideRight
                 font.pixelSize: 18
