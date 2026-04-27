@@ -66,7 +66,11 @@ ComboBox {
 
             border.width: 1
             border.color: parent.hovered ? "#d0dae5" : "#00ffffff"
-            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: popupList.padding * 2
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             radius: 4
             color: (parent.hovered || isCurrent) ? "#eaecf1" : "#00ffffff"
 
