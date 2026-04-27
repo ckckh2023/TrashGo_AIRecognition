@@ -5,6 +5,7 @@ import QtQuick.Controls.Imagine
 import Qt5Compat.GraphicalEffects
 
 import "../animation"
+import "../theme"
 
 Button {
     id: root
@@ -12,6 +13,8 @@ Button {
     width: parent ? parent.width - 20 : 0
     height: parent ? 48 : 0
     anchors.horizontalCenter: parent ? parent.horizontalCenter : undefined
+
+    property Theme theme : Theme {}
 
     layer.enabled: true
     layer.effect: OpacityMask {
@@ -28,10 +31,23 @@ Button {
         implicitHeight: parent ? parent.height : 0
         radius: 12
         color: {
-            if (root.highlighted) return "#c0d0e2f6"
-            if (root.pressed)     return "#c0dadada"
-            if (root.hovered)     return "#c0ebebeb"
-            return "#00ffffff"
+            if (root.highlighted) return root.theme.sideBarButton
+            return root.theme.defaultTransparentColor
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: {
+                if (root.pressed) return "#28808080"
+                if (root.hovered) return "#10808080"
+                return root.theme.defaultTransparentColor
+            }
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 120
+                }
+            }
         }
 
         Behavior on color {
@@ -83,7 +99,7 @@ Button {
 
         Text {
             text: root.text
-            color: "#030303"
+            color: root.theme.text
             font.pixelSize: 18
             font.family: customFont.name
             font.letterSpacing: 1
