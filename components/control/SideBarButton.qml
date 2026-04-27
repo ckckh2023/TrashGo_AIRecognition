@@ -38,9 +38,15 @@ Button {
         Rectangle {
             anchors.fill: parent
             color: {
-                if (root.pressed) return "#50808080"
-                if (root.hovered) return "#30808080"
+                if (root.pressed) return "#28808080"
+                if (root.hovered) return "#10808080"
                 return root.theme.defaultTransparentColor
+            }
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 120
+                }
             }
         }
 
