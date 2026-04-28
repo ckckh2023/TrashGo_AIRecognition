@@ -98,7 +98,7 @@ void IniFileHandler::setCurrentApiKey(const QString &key) {
     m_settings->sync();
 
     emit currentApiKeyChanged();
-    emit messageSentInfo("模型密钥已变更为：" + key);
+    emit messageSentInfo("模型密钥已变更!");
 }
 
 void IniFileHandler::setTimeLimit(int interval) {
@@ -108,7 +108,7 @@ void IniFileHandler::setTimeLimit(int interval) {
         m_settings->sync();
 
         emit timeLimitChanged();
-        emit messageSentInfo("重复点击时间限制已变更为：" + QString::number(interval) + "ms");
+        emit messageSentInfo("重复点击时间限制已变更为!");
     }
 }
 
