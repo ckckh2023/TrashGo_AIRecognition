@@ -303,6 +303,7 @@ Item {
         anchors.centerIn: parent
         font.bold: true
         font.pixelSize: 24
+        color: root.theme.text
         text: "暂无历史记录"
         visible: historyView.model.count === 0
     }
