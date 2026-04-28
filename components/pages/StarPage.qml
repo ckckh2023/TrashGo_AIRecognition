@@ -304,6 +304,7 @@ Item {
         anchors.centerIn: parent
         font.bold: true
         font.pixelSize: 24
+        color: root.theme.text
         text: "暂无收藏"
         visible: historyView.model.count === 0
     }
