@@ -180,7 +180,6 @@ void HistoryRecord::deleteRecord(const QString &currentTime) {
         emit messageSentError("删除失败！");
         return;
     }
-    else emit messageSentInfo(currentTime + "：记录删除成功！");
 
     if (query.numRowsAffected() > 0) {
         if (QFile::exists(thumbPath)) {
@@ -190,7 +189,6 @@ void HistoryRecord::deleteRecord(const QString &currentTime) {
             }
         }
     }
-
 }
 
 void HistoryRecord::setStar(const QString &currentTime, bool isStar) {
@@ -288,22 +286,20 @@ void HistoryRecord::deleteMultiRecord(const QStringList &currentTimeList) {
     QSqlQuery query(m_HistoryDb);
     query.prepare("DELETE FROM History_Table WHERE currentTime = :Time");
 
-    for (const QString &Time: currentTimeList) {
-
+    for (const QString &Time : currentTimeList) {
         if (Time.isEmpty()) continue;
         query.bindValue(":Time",Time);
 
         QString thumbPath = QCoreApplication::applicationDirPath() + "/data/thumbnails/" + Time + "_thumb.jpg";
 
-        if(!query.exec()) {
-            qDebug() << "删除失败" << Time << ":" << query.lastError().text();
+        if (!query.exec()) {
+            qDebug() << "删除失败" << Time << ":" << query.lastError().text() << "(HistoryRecord-deleteMultiRecord)";
             emit messageSentError("删除失败！");
             return;
         }
 
-        else if(query.numRowsAffected() > 0) {
+        if (query.numRowsAffected() > 0) {
             if (QFile::exists(thumbPath)) {
-                emit messageSentInfo("CurrentTime记录删除成功！");
                 if (!QFile::remove(thumbPath)) {
                     qDebug() << "缩略图删除失败：" << thumbPath << "(HistoryRecord-deleteMultiRecord)";
                     return;
