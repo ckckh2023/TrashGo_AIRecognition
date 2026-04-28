@@ -4,7 +4,7 @@ Item {
     id: root
 
     property point center: Qt.point(0, 0)
-    property color color: "#30808080"
+    property color color: "#40808080"
     property real maxScale: 2.0
     property int duration: 500
 

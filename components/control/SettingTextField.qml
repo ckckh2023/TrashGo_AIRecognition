@@ -54,7 +54,7 @@ TextField {
         focusPolicy: Qt.StrongFocus
         visible: root.isTextChanged
         radius: height / 2
-        bgcolor: "#b5d8ee"
+        bgcolor: String(root.theme.sideBarButton).slice(3,10)
 
         onClicked: {
             root.savedText = root.text

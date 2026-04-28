@@ -303,9 +303,9 @@ Item {
                         else if (type.indexOf("厨余") >= 0) return "qrc:/icons/images/classified_FoodWaste.png"
                         else if (type.indexOf("有害") >= 0) return "qrc:/icons/images/classified_HazardousWaste.png"
                         else if (type.indexOf("其他") >= 0) return "qrc:/icons/images/classified_OtherWaste.png"
-                        else return "qrc:/icons/images/unclassified" + ( iniFileHandler.theme === "明亮" ? "" : "_dark" ) + ".png"
+                        else return "qrc:/icons/images/unclassified" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                     }
-                    else return "qrc:/icons/images/unclassified" + ( iniFileHandler.theme === "明亮" ? "" : "_dark" ) + ".png"
+                    else return "qrc:/icons/images/unclassified" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                 }
 
                 width: 64
@@ -448,7 +448,7 @@ Item {
                             text: model.text1
                             color: model.color2
                             anchors.right: parent.right
-                            anchors.rightMargin: 45
+                            anchors.rightMargin: ( parent.width - exampleImage.width - exampleImage.anchors.leftMargin * 2 ) / 6
                             anchors.verticalCenter: parent.verticalCenter
                             font.bold: false
                             font.pixelSize: 24
