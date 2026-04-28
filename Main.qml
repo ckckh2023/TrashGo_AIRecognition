@@ -54,8 +54,8 @@ ApplicationWindow {
                         id: logo
                         width: 210
                         height: 73
-                        fillMode: Image.PreserveAspectFit
-                        source: "/icons/images/TrashGo.png"
+                        fillMode: Image.Pad
+                        source: "/icons/images/TrashGo" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                     }
 
                     Rectangle {
@@ -68,7 +68,7 @@ ApplicationWindow {
                         width: parent.width - 30
                         height: 1
                         anchors.horizontalCenter: parent.horizontalCenter
-                        color: "#cecece"
+                        color: root.theme.barBorderColor
                     }
 
                     Rectangle {
@@ -160,7 +160,7 @@ ApplicationWindow {
                 Rectangle {
                     width: 1
                     height: parent.height
-                    color: "#ececec"
+                    color: root.theme.barBorderColor
                     anchors.right: parent.right
                 }
             }

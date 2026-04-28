@@ -11,7 +11,7 @@ Rectangle {
     height: 80
     color: root.theme.card
     border.width: 1
-    border.color: "#F2F9FA"
+    border.color: root.theme.borderColor
     radius: 8
 
     property string text1
