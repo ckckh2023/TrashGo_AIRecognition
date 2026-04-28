@@ -98,7 +98,7 @@ Item {
             text1: "程序渲染器"
             text2: "选择更好的渲染器以支持更优性能"
             ctrlType: "combobox"
-            modelValues: "Direct3D,OpenGL"
+            modelValues: "Direct3D,OpenGL,Vulkan"
             configKey: "renderer"
             iconSource: "qrc:/icons/images/rendererSetting.png"
             enabled: true

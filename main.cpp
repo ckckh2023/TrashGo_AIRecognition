@@ -27,9 +27,14 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    if (IniFileClass.renderer() == "Direct3D") QQuickWindow::setGraphicsApi(QSGRendererInterface::Direct3D11);
-    else if (IniFileClass.renderer() == "OpenGL") QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
-    else {}
+    static const QHash<QString, QSGRendererInterface::GraphicsApi> apiMap = {
+        {"Direct3D", QSGRendererInterface::Direct3D11},
+        {"OpenGL", QSGRendererInterface::OpenGL},
+        {"Vulkan", QSGRendererInterface::Vulkan}
+    };
+    const QString renderer = IniFileClass.renderer();
+    auto it = apiMap.constFind(renderer);
+    if (it != apiMap.constEnd()) QQuickWindow::setGraphicsApi(it.value());
 
     QScreen *screen = QGuiApplication::primaryScreen();
     int screenWidth = screen->geometry().width();
