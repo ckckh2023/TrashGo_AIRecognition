@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 #include <QString>
 #include <QVariant>
+#include <QStringList>
 
 class HistoryRecord : public QObject{
     Q_OBJECT
@@ -21,6 +22,8 @@ public:
     Q_INVOKABLE QVariantList getStars(const QString &label);
     Q_INVOKABLE void deleteRecord(const QString &currentTime);
     Q_INVOKABLE void setStar(const QString &currentTime, bool isStar);
+
+    Q_INVOKABLE void deleteMultiRecord(const QStringList &currentTimeList);
 
     Q_INVOKABLE void openOriginFile(const QString &filePath);
 
