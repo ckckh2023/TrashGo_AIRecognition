@@ -15,7 +15,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 ## 功能特性
 
 - **垃圾分类识别**：拍照即可识别垃圾类别，获取正确的投放指引。
-- **人脸识别**：检测人脸并分析年龄、表情等属性。
+- ~~**人脸识别**：检测人脸并分析年龄、表情等属性。~~
 - ~~**趣味小游戏**：垃圾分类闯关、识图竞猜，边玩边学。~~
 - **历史记录**：保存所有识别记录，支持搜索、筛选和分享。
 - **深色模式**：适配系统深色主题，夜间使用更舒适。
@@ -31,7 +31,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 ### 下载安装包
 - **Windows**：从 [Releases](https://github.com/ckckh2023/TrashGo_AIRecognition/releases) 下载最新zip文件解压到文件夹即可使用（安装包正在制作）
-- **Linux**：正在制作
+- **Linux**：正在适配
 
 ### 从源码编译
 1. 克隆仓库：`git clone https://github.com/ckckh2023/TrashGo_AIRecognition.git`
@@ -54,7 +54,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 ## 联系我们
 
-- 作者：[ckckh2023](https://github.com/ckckh2023) | [TangibleDreams913](https://github.com/TangibleDreams913)
+- 作者：[ckckh2023](https://github.com/ckckh2023) | [TangibleDreams913](https://github.com/TangibleDreams913) | [cloudy-rhh](http://github.com/cloudy-rhh)
 - 邮箱：fightened2023@foxmail.com | Tangibledreams@yeah.net
 - 项目主页：[Github](https://github.com/ckckh2023/TrashGo_AIRecognition) | [Gitee](https://gitee.com/ckckh2023/TrashGo_AIRecognition) | [GitCode](https://gitcode.com/ckckh2023/TrashGo_AIRecognition)
 
