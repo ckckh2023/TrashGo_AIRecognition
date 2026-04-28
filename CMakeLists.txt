@@ -64,6 +64,7 @@ qt6_add_resources(appTrashGo "app_icons"
         images/function.png
         images/settings.png
         images/TrashGo.png
+        images/TrashGo_dark.png
 
         images/imageImport.png
         images/recognizeResult.png

@@ -54,8 +54,8 @@ ApplicationWindow {
                         id: logo
                         width: 210
                         height: 73
-                        fillMode: Image.PreserveAspectFit
-                        source: "/icons/images/TrashGo.png"
+                        fillMode: Image.Pad
+                        source: "/icons/images/TrashGo" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                     }
 
                     Rectangle {
