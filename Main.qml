@@ -68,7 +68,7 @@ ApplicationWindow {
                         width: parent.width - 30
                         height: 1
                         anchors.horizontalCenter: parent.horizontalCenter
-                        color: "#cecece"
+                        color: root.theme.barBorderColor
                     }
 
                     Rectangle {
@@ -160,7 +160,7 @@ ApplicationWindow {
                 Rectangle {
                     width: 1
                     height: parent.height
-                    color: "#ececec"
+                    color: root.theme.barBorderColor
                     anchors.right: parent.right
                 }
             }
