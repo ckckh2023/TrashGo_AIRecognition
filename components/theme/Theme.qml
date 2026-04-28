@@ -2,7 +2,9 @@ import QtQuick
 
 QtObject {
 
-    readonly property string themeSet: iniFileHandler.theme
+    property bool isDarkMode: (Qt.styleHints.colorScheme === Qt.Dark)
+
+    readonly property string themeSet: ( iniFileHandler.theme === "跟随系统" ? ( isDarkMode ? "黑暗" : "明亮" ) : iniFileHandler.theme )
     readonly property string colorSet: iniFileHandler.color
 
     readonly property color backgroundTop: {
