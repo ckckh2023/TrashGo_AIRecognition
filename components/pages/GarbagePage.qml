@@ -21,7 +21,7 @@ Item {
             height: parent.height - 210
             radius: 8
             color: root.theme.card
-            border.color: "#F2F9FA"
+            border.color: root.theme.borderColor
             border.width: 1
             anchors.left: parent.left
             anchors.top: parent.top
@@ -57,7 +57,7 @@ Item {
                 height: parent.height - 180
                 color: dragHover ? "#80c0c8ef" : root.theme.defaultTransparentColor
                 radius: 8
-                border.color: dragHover ? "#0078d7" : "#d0d0d0"
+                border.color: dragHover ? "#0078d7" : root.theme.borderColor
                 border.width: 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
@@ -163,7 +163,7 @@ Item {
                         implicitWidth: parent.width
                         implicitHeight: parent.height
                         radius: 12
-                        border.color: "#F2F9FA"
+                        border.color: root.theme.borderColor
 
                         color: {
                             if (trashImagePickButton.hovered) return "#e0e5e5e5"
@@ -264,7 +264,7 @@ Item {
             height: trashImagePreviewZone.height
             radius: 8
             color: root.theme.card
-            border.color: "#E5F2FA"
+            border.color: root.theme.borderColor
             border.width: 1
             anchors.right: parent.right
             anchors.top: parent.top
@@ -373,6 +373,7 @@ Item {
             height: parent.parent.height - trashImagePreviewZone.height - 60
             radius: 8
             color: root.theme.card
+            border.color: root.theme.borderColor
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: trashImagePreviewZone.bottom
             anchors.topMargin: 20
@@ -383,7 +384,7 @@ Item {
                 maskSource: Rectangle {
                     width: dailyTipsZone.width
                     height: dailyTipsZone.height
-                    radius: 12
+                    radius: dailyTipsZone.radius
                 }
             }
 
