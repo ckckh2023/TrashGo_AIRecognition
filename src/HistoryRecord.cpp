@@ -184,8 +184,10 @@ void HistoryRecord::deleteRecord(const QString &currentTime) {
 
     if (query.numRowsAffected() > 0) {
         if (QFile::exists(thumbPath)) {
-            if (!QFile::remove(thumbPath)) qDebug() << "缩略图删除失败：" << thumbPath << "(HistoryRecord-deleteRecord)";
-            return;
+            if (!QFile::remove(thumbPath)) {
+                qDebug() << "缩略图删除失败：" << thumbPath << "(HistoryRecord-deleteRecord)";
+                return;
+            }
         }
     }
 
@@ -278,4 +280,36 @@ QVariantList HistoryRecord::getStars(const QString &label) {
         starsList.append(rowStrings);
     }
     return starsList;
+}
+
+void HistoryRecord::deleteMultiRecord(const QStringList &currentTimeList) {
+    if (!m_HistoryDb.isOpen()) openDb();
+
+    QSqlQuery query(m_HistoryDb);
+    query.prepare("DELETE FROM History_Table WHERE currentTime = :Time");
+
+    for (const QString &Time: currentTimeList) {
+
+        if (Time.isEmpty()) continue;
+        query.bindValue(":Time",Time);
+
+        QString thumbPath = QCoreApplication::applicationDirPath() + "/data/thumbnails/" + Time + "_thumb.jpg";
+
+        if(!query.exec()) {
+            qDebug() << "删除失败" << Time << ":" << query.lastError().text();
+            emit messageSentError("删除失败！");
+            return;
+        }
+
+        else if(query.numRowsAffected() > 0) {
+            if (QFile::exists(thumbPath)) {
+                emit messageSentInfo("CurrentTime记录删除成功！");
+                if (!QFile::remove(thumbPath)) {
+                    qDebug() << "缩略图删除失败：" << thumbPath << "(HistoryRecord-deleteMultiRecord)";
+                    return;
+                }
+            }
+        }
+
+    }
 }
