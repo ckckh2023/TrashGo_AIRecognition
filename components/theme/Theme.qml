@@ -17,7 +17,6 @@ QtObject {
             if (colorSet === "绿色") return "#3f4341"
             if (colorSet === "黄色") return "#44433d"
         }
-        else return "#def0f7"
     }
 
     readonly property color backgroundBottom: {
@@ -30,7 +29,6 @@ QtObject {
             if (colorSet === "绿色") return "#383b39"
             if (colorSet === "黄色") return "#3c3b36"
         }
-        else return "#def0f7"
     }
 
     readonly property color sideBarButton: {
@@ -43,7 +41,6 @@ QtObject {
             if (colorSet === "绿色") return "#c04a5c4f"
             if (colorSet === "黄色") return "#c05c5c4a"
         }
-        else return "#def0f7"
     }
 
     readonly property color comboBoxHighlighted: {
@@ -56,12 +53,23 @@ QtObject {
             if (colorSet === "绿色") return "#4D6455"
             if (colorSet === "黄色") return "#655E4A"
         }
-        else return "#def0f7"
+    }
+
+    readonly property color borderColor: {
+        if (themeSet === "明亮") {
+            if (colorSet === "蓝色") return "#f2f9fa"
+            if (colorSet === "绿色") return "#f3faf2"
+            if (colorSet === "黄色") return "#faf8f2"
+        } else if (themeSet === "黑暗") {
+            if (colorSet === "蓝色") return "#33424a"
+            if (colorSet === "绿色") return "#334a42"
+            if (colorSet === "黄色") return "#4a4433"
+        }
     }
 
     readonly property color bar: {
         if (themeSet === "明亮") return "#80ffffff"
-        else if (themeSet === "黑暗") return "#80000000"
+        else if (themeSet === "黑暗") return "#60000000"
     }
 
     readonly property color text: {
@@ -94,9 +102,14 @@ QtObject {
         else if (themeSet === "黑暗") return "#00000000"
     }
 
+    readonly property color barBorderColor: {
+        if (themeSet === "明亮") return "#ececec"
+        else if (themeSet === "黑暗") return "#454545"
+    }
+
     readonly property color highlightedRectangle: {
         if (colorSet === "蓝色") return "#3dabff"
-        if (colorSet === "绿色") return "#abff3d"
+        if (colorSet === "绿色") return "#9fe63d"
         if (colorSet === "黄色") return "#ff913d"
     }
 }

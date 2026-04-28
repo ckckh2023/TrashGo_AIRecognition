@@ -117,7 +117,7 @@ Item {
                 width: listViewRoot.width
                 height: 100
                 border.width: 1
-                border.color: "#d4d4d4"
+                border.color: root.theme.borderColor
                 color: root.theme.card
                 radius: 5
                 anchors.horizontalCenter: listViewRoot.horizontalCenter
