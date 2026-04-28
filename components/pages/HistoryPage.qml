@@ -18,7 +18,7 @@ Item {
         id: titleBar
         width: parent.width - 40
         height: 30
-        color: root.theme.highOpacityCard
+        color: root.theme.card
         anchors.top: parent.top
         anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter

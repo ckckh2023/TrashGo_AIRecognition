@@ -4,7 +4,6 @@ import QtQuick.Controls
 import QtQuick.Controls.Imagine
 import Qt5Compat.GraphicalEffects
 
-
 import "../theme"
 
 Item {
@@ -19,7 +18,7 @@ Item {
         id: titleBar
         width: parent.width - 40
         height: 30
-        color: root.theme.highOpacityCard
+        color: root.theme.Card
         anchors.top: parent.top
         anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
