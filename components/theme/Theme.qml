@@ -37,11 +37,11 @@ QtObject {
         if (themeSet === "明亮") {
             if (colorSet === "蓝色") return "#c0d0e2f6"
             if (colorSet === "绿色") return "#c0d0f6e2"
-            if (colorSet === "黄色") return "#c0e6e6d0"
+            if (colorSet === "黄色") return "#c0fafac8"
         } else if (themeSet === "黑暗") {
-            if (colorSet === "蓝色") return "#c03d4043"
-            if (colorSet === "绿色") return "#c03d4340"
-            if (colorSet === "黄色") return "#c041413d"
+            if (colorSet === "蓝色") return "#c04a4f5c"
+            if (colorSet === "绿色") return "#c04a5c4f"
+            if (colorSet === "黄色") return "#c05c5c4a"
         }
         else return "#def0f7"
     }
@@ -52,9 +52,9 @@ QtObject {
             if (colorSet === "绿色") return "#eaf1eb"
             if (colorSet === "黄色") return "#f1efea"
         } else if (themeSet === "黑暗") {
-            if (colorSet === "蓝色") return "#707d9f"
-            if (colorSet === "绿色") return "#709f7a"
-            if (colorSet === "黄色") return "#9f9270"
+            if (colorSet === "蓝色") return "#464C66"
+            if (colorSet === "绿色") return "#4D6455"
+            if (colorSet === "黄色") return "#655E4A"
         }
         else return "#def0f7"
     }
@@ -76,7 +76,7 @@ QtObject {
 
     readonly property color card: {
         if (themeSet === "明亮") return "#80ffffff"
-        else if (themeSet === "黑暗") return "#80000000"
+        else if (themeSet === "黑暗") return "#60000000"
     }
 
     readonly property color highOpacityCard: {
@@ -85,8 +85,8 @@ QtObject {
     }
 
     readonly property color opaqueCard: {
-        if (themeSet === "明亮") return "#f3f3f3"
-        else if (themeSet === "黑暗") return "#0c0c0c"
+        if (themeSet === "明亮") return "#ffffff"
+        else if (themeSet === "黑暗") return "#000000"
     }
 
     readonly property color defaultTransparentColor: {

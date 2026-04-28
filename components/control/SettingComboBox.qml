@@ -56,14 +56,6 @@ ComboBox {
 
         background: Rectangle {
 
-            Rectangle {
-                anchors.fill: parent
-                color: {
-                    if (parent.hovered || isCurrent) return root.theme.comboBoxHighlighted
-                    return root.theme.defaultTransparentColor
-                }
-            }
-
             //选中时的蓝/绿/黄条，模仿windows 11
             Rectangle {
                 width: 4
