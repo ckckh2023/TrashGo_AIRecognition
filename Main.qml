@@ -158,6 +158,15 @@ ApplicationWindow {
                 }
 
                 Rectangle {
+                    width: 180
+                    height: 240
+                    color: "green"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: ( parent.width - width ) / 2
+                }
+
+                Rectangle {
                     width: 1
                     height: parent.height
                     color: root.theme.barBorderColor

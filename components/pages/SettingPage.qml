@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
 import "../settings"
+import "../message"
 
 Item {
     ListView {
@@ -24,8 +25,32 @@ Item {
             comboboxModel: model.modelValues.split(',')
             textFieldTips: model.textFieldTips
             value: iniFileHandler[model.configKey]
-            onValueChanged: iniFileHandler[model.configKey] = value
             isEnabled: model.enabled
+
+            onValueChanged: {
+                iniFileHandler[model.configKey] = value
+
+                if (model.configKey === "renderer") {
+                    customDialog.open()
+                }
+            }
+
+            CustomDialog {
+                id: customDialog
+                dialogTitle: "操作确认"
+                messageText: "您确定要执行这个操作吗？"
+                acceptText: "继续"
+                rejectText: "再想想"
+                showRejectButton: true
+
+                onAccepted: {
+                    console.log("用户点击了继续")
+                    // 执行后续业务逻辑
+                }
+                onRejected: {
+                    console.log("用户取消了操作")
+                }
+            }
 
             //针对本地模型时的特殊处理
             Binding {
