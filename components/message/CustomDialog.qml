@@ -7,7 +7,7 @@ Dialog {
 
     property string dialogTitle: ""
     property string messageText: ""
-    property string accaptText: ""
+    property string acceptText: ""
     property string rejectText: ""
     property bool showRejectButton : true
 
