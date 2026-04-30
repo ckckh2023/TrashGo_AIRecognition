@@ -23,7 +23,7 @@ QtObject {
         if (themeSet === "明亮") {
             if (colorSet === "蓝色") return "#def0f7"
             if (colorSet === "绿色") return "#def5ea"
-            if (colorSet === "黄色") return "#faf8d0"
+            if (colorSet === "黄色") return "#f3efc4"
         } else if (themeSet === "黑暗") {
             if (colorSet === "蓝色") return "#383a3b"
             if (colorSet === "绿色") return "#383b39"
