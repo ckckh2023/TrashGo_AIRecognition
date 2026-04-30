@@ -15,12 +15,12 @@ Item {
         header: Item { height: 20 }
 
         delegate: Item {
-            width: parent.width - 40
+            width: parent.width
             height: settingDelegate.height
 
             SettingItem {
                 id: settingDelegate
-                width: parent.width
+                width: parent.width - 40
                 anchors.horizontalCenter: parent.horizontalCenter
                 text1: model.text1
                 text2: model.text2
@@ -55,18 +55,15 @@ Item {
                 }
             }
 
-            //变更渲染器后的重启按钮，真难搞，貌似还有bug
+            //变更渲染器后的重启按钮
             StandardButton {
-                visible: {
-                    if ( ApplicationWindow.window.initialRenderer !== iniFileHandler.renderer && model.configKey === "renderer" ) return true
-                    else return false
-                }
+                visible: initialRenderer !== iniFileHandler.renderer && model.configKey === "renderer"
                 height: parent.height / 3
                 width: height
-                text: "↻"
+                text: "R"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                anchors.rightMargin: 14
+                anchors.rightMargin: 34
                 focusPolicy: Qt.StrongFocus
                 radius: height / 2
                 bgcolor: String(root.theme.sideBarButton).slice(3,10)

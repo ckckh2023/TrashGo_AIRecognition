@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 
     QString appDirPath = QCoreApplication::applicationDirPath();
     engine.rootContext()->setContextProperty("appDirPath", appDirPath);
+    engine.rootContext()->setContextProperty("initialRenderer", renderer);
 
     engine.rootContext()->setContextProperty("garbageClassifier", &GarbageClass);
     engine.rootContext()->setContextProperty("imageProcessor", &ProcessorClass);
