@@ -158,6 +158,15 @@ ApplicationWindow {
                 }
 
                 Rectangle {
+                    width: 180
+                    height: 240
+                    color: "green"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: ( parent.width - width ) / 2
+                }
+
+                Rectangle {
                     width: 1
                     height: parent.height
                     color: root.theme.barBorderColor
@@ -225,6 +234,7 @@ ApplicationWindow {
         }
     }
 
+    //吐司管理器
     Item {
         id: toastManager
         anchors.right: parent.right
@@ -256,7 +266,11 @@ ApplicationWindow {
         }
     }
 
+    //读取创建窗口时使用的渲染器，用于判断在设置页面显示重启按钮
+    property string initialRenderer : ""
+
     Component.onCompleted: {
         Qt.application.toastManager = toastManager
+        initialRenderer =  iniFileHandler.renderer
     }
 }
