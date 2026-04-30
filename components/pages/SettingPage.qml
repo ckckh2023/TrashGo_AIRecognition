@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Controls.Imagine
 
 import "../settings"
-import "../message"
+import "../control"
 
 Item {
     ListView {
@@ -14,64 +14,66 @@ Item {
 
         header: Item { height: 20 }
 
-        delegate: SettingItem {
-            id: settingDelegate
+        delegate: Item {
             width: parent.width - 40
-            anchors.horizontalCenter: parent.horizontalCenter
-            text1: model.text1
-            text2: model.text2
-            ctrlType: model.ctrlType
-            iconSource: model.iconSource
-            comboboxModel: model.modelValues.split(',')
-            textFieldTips: model.textFieldTips
-            value: iniFileHandler[model.configKey]
-            isEnabled: model.enabled
+            height: settingDelegate.height
 
-            onValueChanged: {
-                iniFileHandler[model.configKey] = value
+            SettingItem {
+                id: settingDelegate
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                text1: model.text1
+                text2: model.text2
+                ctrlType: model.ctrlType
+                iconSource: model.iconSource
+                comboboxModel: model.modelValues.split(',')
+                textFieldTips: model.textFieldTips
+                onValueChanged: iniFileHandler[model.configKey] = value
+                value: iniFileHandler[model.configKey]
+                isEnabled: model.enabled
 
-                if (model.configKey === "renderer") {
-                    customDialog.open()
+                //针对本地模型时的特殊处理
+                Binding {
+                    target: settingDelegate
+                    property: "textFieldTips"
+                    value: "模型提供商为本地模型时该项不可用"
+                    when: model.configKey === "currentApiKey" && iniFileHandler.provider === "本地模型"
+                }
+
+                Binding {
+                    target: settingDelegate
+                    property: "isEnabled"
+                    value: false
+                    when: model.configKey === "currentApiKey" && iniFileHandler.provider === "本地模型"
+                }
+
+                Binding {
+                    target: settingDelegate
+                    property: "value"
+                    value: ""
+                    when: model.configKey === "currentApiKey" && iniFileHandler.provider === "本地模型"
                 }
             }
 
-            CustomDialog {
-                id: customDialog
-                dialogTitle: "操作确认"
-                messageText: "您确定要执行这个操作吗？"
-                acceptText: "继续"
-                rejectText: "再想想"
-                showRejectButton: true
-
-                onAccepted: {
-                    console.log("用户点击了继续")
-                    // 执行后续业务逻辑
+            //变更渲染器后的重启按钮，真难搞，貌似还有bug
+            StandardButton {
+                visible: {
+                    if ( ApplicationWindow.window.initialRenderer !== iniFileHandler.renderer && model.configKey === "renderer" ) return true
+                    else return false
                 }
-                onRejected: {
-                    console.log("用户取消了操作")
+                height: parent.height / 3
+                width: height
+                text: "↻"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 14
+                focusPolicy: Qt.StrongFocus
+                radius: height / 2
+                bgcolor: String(root.theme.sideBarButton).slice(3,10)
+
+                onClicked: {
+                    iniFileHandler.restartApp()
                 }
-            }
-
-            //针对本地模型时的特殊处理
-            Binding {
-                target: settingDelegate
-                property: "textFieldTips"
-                value: "模型提供商为本地模型时该项不可用"
-                when: model.configKey === "currentApiKey" && iniFileHandler.provider === "本地模型"
-            }
-
-            Binding {
-                target: settingDelegate
-                property: "isEnabled"
-                value: false
-                when: model.configKey === "currentApiKey" && iniFileHandler.provider === "本地模型"
-            }
-
-            Binding {
-                target: settingDelegate
-                property: "value"
-                value: ""
-                when: model.configKey === "currentApiKey" && iniFileHandler.provider === "本地模型"
             }
         }
     }
@@ -138,6 +140,4 @@ Item {
             Qt.application.toastManager.showToast(msg, "info")
         }
     }
-
-
 }
