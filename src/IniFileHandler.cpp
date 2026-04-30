@@ -108,7 +108,7 @@ void IniFileHandler::setTimeLimit(int interval) {
         m_settings->sync();
 
         emit timeLimitChanged();
-        emit messageSentInfo("重复点击时间限制已变更为!");
+        emit messageSentInfo("重复点击时间限制已变更为" + QString::number(interval));
     }
 }
 
@@ -120,6 +120,7 @@ void IniFileHandler::setRenderer(const QString &renderer) {
 
         emit rendererChanged();
         emit messageSentInfo("渲染器已变更为：" + renderer);
+        emit messageSentInfo("此操作需要重启软件！点击设置项的右侧按钮重启");
     }
 }
 
