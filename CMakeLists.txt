@@ -4,8 +4,12 @@ project(TrashGo VERSION 2.0.1 LANGUAGES CXX)
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 请将OpenCV文件夹置于CMakeLists.txt同级目录
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
     set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
+elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/opencv/lib/cmake/opencv4")
+    set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/lib/cmake/opencv4")
 endif()
 
 set(COMPANY_NAME    "GitHub-ckckh2023")
