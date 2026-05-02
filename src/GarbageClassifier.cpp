@@ -104,6 +104,10 @@ void GarbageClassifier::classify() {
     }
 
     if (m_handler->provider() == "百度云") {
+        if (m_handler->currentApiKey().isEmpty()) {
+            emit messageSentError("API密钥为空！");
+            return;
+        }
         QUrlQuery postData;
         QFile ImageFile(ImagePath);
         if (!ImageFile.open(QIODevice::ReadOnly)) {
