@@ -13,8 +13,7 @@ ComboBox {
     background: Rectangle {
         border.width: 1
         border.color: "#d0d0d5"
-        implicitWidth: parent.width
-        implicitHeight: parent.height
+        anchors.fill: parent
         radius: 6
         color: root.theme.card
     }
