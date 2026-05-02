@@ -14,10 +14,10 @@ Rectangle {
     border.color: root.theme.borderColor
     radius: 8
 
-    property string text1
-    property string text2
-    property string ctrlType
-    property string iconSource
+    property string text1: ""
+    property string text2: ""
+    property string ctrlType: ""
+    property string iconSource: ""
 
     property var comboboxModel: []
     property string textFieldTips: ""
