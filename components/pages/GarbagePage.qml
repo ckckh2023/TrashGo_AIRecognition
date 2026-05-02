@@ -5,6 +5,7 @@ import Qt5Compat.GraphicalEffects
 
 import "../control"
 import "../theme"
+import "../settings"
 
 Item {
     id: root
@@ -40,7 +41,7 @@ Item {
             }
 
             Text {
-                id:trashImagePreviewTitle
+                id: trashImagePreviewTitle
                 text: "上传图片"
                 color: root.theme.text
                 font.pixelSize: 24
@@ -50,6 +51,22 @@ Item {
                 anchors.verticalCenter: trashImagePreviewIcon.verticalCenter
             }
 
+            Item {
+                id: fastProviderSetting
+                width: 120
+                height: 40
+                anchors.right: trashImagePreviewZone.right
+                anchors.rightMargin: 30
+                anchors.verticalCenter: trashImagePreviewIcon.verticalCenter
+                SettingComboBox {
+                    model: ["本地模型","百度云"]
+                    currentIndex: model.indexOf(iniFileHandler["provider"])
+                    onCurrentValueChanged: {
+                        if (currentValue !== iniFileHandler["provider"])
+                            iniFileHandler["provider"] = currentValue
+                    }
+                }
+            }
 
             Rectangle {
                 id: trashImagePreview
