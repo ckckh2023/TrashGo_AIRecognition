@@ -515,4 +515,12 @@ Item {
             imageRevisionTrash++
         }
     }
+
+    Connections {
+        target: iniFileHandler
+
+        function onMessageSentInfo(msg) {
+            Qt.application.toastManager.showToast(msg, "info")
+        }
+    }
 }
