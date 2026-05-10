@@ -25,7 +25,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 | 垃圾分类识别 | 历史记录 | 设置页面 |
 |:---:|:---:|:---:|
-| <img width="962" height="631" alt="垃圾分类识别" src="https://github.com/user-attachments/assets/a88edfd5-fdd8-4f0b-b11a-ed9e01667d40" /> | <img width="962" height="631" alt="历史记录" src="https://github.com/user-attachments/assets/21e278bc-9ded-40b7-bb8f-572688643310" /> | <img width="962" height="631" alt="2026-04-25 141308" src="https://github.com/user-attachments/assets/a203451f-59b3-4329-989e-cebc0198eefe" /> | 
+| <img width="962" height="631" alt="垃圾分类识别" src="https://github.com/user-attachments/assets/a88edfd5-fdd8-4f0b-b11a-ed9e01667d40" /> | <img width="962" height="631" alt="历史记录" src="https://github.com/user-attachments/assets/21e278bc-9ded-40b7-bb8f-572688643310" /> | <img width="962" height="631" alt="设置页面" src="https://github.com/user-attachments/assets/a203451f-59b3-4329-989e-cebc0198eefe" /> | 
 
 ## 安装指南
 
@@ -50,7 +50,7 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 ## 许可证
 
-本项目采用 MIT 许可证 - 详情请查看 [LICENSE](LICENSE.md) 文件。
+本项目采用 MIT 许可证 - 详情请查看 [LICENSE](LICENSE) 文件。
 
 ## 联系我们
 
