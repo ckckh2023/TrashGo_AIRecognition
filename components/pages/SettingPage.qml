@@ -84,7 +84,7 @@ Item {
             ctrlType: "combobox"
             modelValues: "跟随系统,明亮,黑暗"
             configKey: "theme"
-            iconSource: "qrc:/icons/images/themeSetting.png"
+            iconSource: "qrc:/icons/assets/images/themeSetting.png"
             enabled: true
         }
 
@@ -94,7 +94,7 @@ Item {
             ctrlType: "combobox"
             modelValues: "蓝色,绿色,黄色"
             configKey: "color"
-            iconSource: "qrc:/icons/images/colorSetting.png"
+            iconSource: "qrc:/icons/assets/images/colorSetting.png"
             enabled: true
         }
 
@@ -104,7 +104,7 @@ Item {
             ctrlType: "combobox"
             modelValues: "本地模型,百度云"
             configKey: "provider"
-            iconSource: "qrc:/icons/images/apiProviderSetting.png"
+            iconSource: "qrc:/icons/assets/images/apiProviderSetting.png"
             enabled: true
         }
 
@@ -114,7 +114,7 @@ Item {
             ctrlType: "textField"
             textFieldTips: "请在此粘贴/输入您的API key"
             configKey: "currentApiKey"
-            iconSource: "qrc:/icons/images/apiKeySetting.png"
+            iconSource: "qrc:/icons/assets/images/apiKeySetting.png"
             enabled: true
         }
 
@@ -124,7 +124,7 @@ Item {
             ctrlType: "combobox"
             modelValues: "Direct3D,OpenGL,Vulkan"
             configKey: "renderer"
-            iconSource: "qrc:/icons/images/rendererSetting.png"
+            iconSource: "qrc:/icons/assets/images/rendererSetting.png"
             enabled: true
         }
     }

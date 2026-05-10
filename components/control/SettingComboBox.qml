@@ -29,7 +29,7 @@ ComboBox {
     }
 
     indicator: Image {
-        source: "qrc:/icons/images/comboBoxArrow.png"
+        source: "qrc:/icons/assets/images/comboBoxArrow.png"
         rotation: root.popup.visible ? 180 : 0
         Behavior on rotation { NumberAnimation { duration: 120 } }
         anchors.right: parent.right

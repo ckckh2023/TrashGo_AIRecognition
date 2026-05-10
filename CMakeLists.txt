@@ -56,47 +56,47 @@ qt_add_qml_module(appTrashGo
 qt6_add_resources(appTrashGo "app_icons"
     PREFIX "/icons"
     FILES
-        images/icon_16.png
-        images/icon_32.png
-        images/icon_64.png
-        images/icon_128.png
-        images/home.png
-        images/classify.png
-        images/history.png
-        images/star.png
-        images/function.png
-        images/settings.png
-        images/TrashGo.png
-        images/TrashGo_dark.png
+        assets/images/icon_16.png
+        assets/images/icon_32.png
+        assets/images/icon_64.png
+        assets/images/icon_128.png
+        assets/images/home.png
+        assets/images/classify.png
+        assets/images/history.png
+        assets/images/star.png
+        assets/images/function.png
+        assets/images/settings.png
+        assets/images/TrashGo.png
+        assets/images/TrashGo_dark.png
 
-        images/imageImport.png
-        images/recognizeResult.png
-        images/addImage.png
-        images/dragImage.png
+        assets/images/imageImport.png
+        assets/images/recognizeResult.png
+        assets/images/addImage.png
+        assets/images/dragImage.png
 
-        images/unclassified.png
-        images/unclassified_dark.png
-        images/classified_FoodWaste.png
-        images/classified_HazardousWaste.png
-        images/classified_OtherWaste.png
-        images/classified_RecyclableWaste.png
+        assets/images/unclassified.png
+        assets/images/unclassified_dark.png
+        assets/images/classified_FoodWaste.png
+        assets/images/classified_HazardousWaste.png
+        assets/images/classified_OtherWaste.png
+        assets/images/classified_RecyclableWaste.png
 
-        images/comboBoxArrow.png
+        assets/images/comboBoxArrow.png
 
-        images/colorSetting.png
-        images/themeSetting.png
-        images/apiProviderSetting.png
-        images/apiKeySetting.png
-        images/rendererSetting.png
+        assets/images/colorSetting.png
+        assets/images/themeSetting.png
+        assets/images/apiProviderSetting.png
+        assets/images/apiKeySetting.png
+        assets/images/rendererSetting.png
 
-        images/bookmarkHistory.png
-        images/bookmarkedHistory.png
-        images/deleteHistory.png
+        assets/images/bookmarkHistory.png
+        assets/images/bookmarkedHistory.png
+        assets/images/deleteHistory.png
 
-        images/img_cy.jpg
-        images/img_khs.jpg
-        images/img_qt.jpg
-        images/img_yh.jpg
+        assets/images/img_cy.jpg
+        assets/images/img_khs.jpg
+        assets/images/img_qt.jpg
+        assets/images/img_yh.jpg
 )
 
 if(WIN32)
@@ -132,7 +132,7 @@ target_include_directories(appTrashGo PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 add_custom_command(
     TARGET appTrashGo POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:appTrashGo>/model
-    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:appTrashGo>/fonts
+    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:appTrashGo>/assets/fonts
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/model/haarcascade_frontalface_default.xml
         $<TARGET_FILE_DIR:appTrashGo>/model/haarcascade_frontalface_default.xml
@@ -140,11 +140,11 @@ add_custom_command(
         ${CMAKE_CURRENT_SOURCE_DIR}/model/ResNet.onnx
         $<TARGET_FILE_DIR:appTrashGo>/model/ResNet.onnx
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_CURRENT_SOURCE_DIR}/fonts/FZPinShangHei.ttf
-        $<TARGET_FILE_DIR:appTrashGo>/fonts/FZPinShangHei.ttf
+        ${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts/FZPinShangHei.ttf
+        $<TARGET_FILE_DIR:appTrashGo>/assets/fonts/FZPinShangHei.ttf
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_CURRENT_SOURCE_DIR}/fonts/DingTalkJinBuTi.ttf
-        $<TARGET_FILE_DIR:appTrashGo>/fonts/DingTalkJinBuTi.ttf
+        ${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts/DingTalkJinBuTi.ttf
+        $<TARGET_FILE_DIR:appTrashGo>/assets/fonts/DingTalkJinBuTi.ttf
 )
 
 include(GNUInstallDirs)

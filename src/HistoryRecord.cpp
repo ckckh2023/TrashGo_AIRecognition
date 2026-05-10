@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QStandardPaths>
 
 const QString HistoryRecord::ConnectionName = "history_connection";
 int HistoryRecord::s_refCount = 0;
@@ -21,7 +22,7 @@ HistoryRecord::HistoryRecord(QObject *parent) : QObject(parent) {
         else m_HistoryDb = QSqlDatabase::addDatabase("QSQLITE", ConnectionName);
 
         QDir dir;
-        QString DataPath = QCoreApplication::applicationDirPath() + "/data";
+        QString DataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/data";
         QString ThumbPath = DataPath + "/thumbnails";
         if (!dir.exists(DataPath)) dir.mkpath(DataPath);
         if (!dir.exists(ThumbPath)) dir.mkpath(ThumbPath);
@@ -62,7 +63,7 @@ HistoryRecord::~HistoryRecord(){
 void HistoryRecord::openDb() {
     if (m_HistoryDb.isOpen()) return;
 
-    QString DbPath = QCoreApplication::applicationDirPath() + "/data/TrashGo_History.db";
+    QString DbPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/data/TrashGo_History.db";
 
     m_HistoryDb.setDatabaseName(DbPath);
     if (!m_HistoryDb.open()) {
@@ -95,7 +96,7 @@ void HistoryRecord::generateThumbnail(const QString &ImagePath, const QString &C
     }
 
     QImage thumbnail = originalImage.scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    QString saveDir = QCoreApplication::applicationDirPath() + "/data/thumbnails";
+    QString saveDir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/data/thumbnails";
     QDir().mkpath(saveDir);
 
     QFileInfo fileInfo(ImagePath);
@@ -169,7 +170,7 @@ void HistoryRecord::addFaceTables(const QString &path, const QString &result) {
 
 void HistoryRecord::deleteRecord(const QString &currentTime) {
     if (!m_HistoryDb.isOpen()) openDb();
-    QString thumbPath = QCoreApplication::applicationDirPath() + "/data/thumbnails/" + currentTime + "_thumb.jpg";
+    QString thumbPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/data/thumbnails/" + currentTime + "_thumb.jpg";
 
     QSqlQuery query(m_HistoryDb);
     query.prepare("DELETE FROM History_Table WHERE currentTime = :time");
@@ -290,7 +291,7 @@ void HistoryRecord::deleteMultiRecord(const QStringList &currentTimeList) {
         if (Time.isEmpty()) continue;
         query.bindValue(":Time",Time);
 
-        QString thumbPath = QCoreApplication::applicationDirPath() + "/data/thumbnails/" + Time + "_thumb.jpg";
+        QString thumbPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/data/thumbnails/" + Time + "_thumb.jpg";
 
         if (!query.exec()) {
             qDebug() << "删除失败" << Time << ":" << query.lastError().text() << "(HistoryRecord-deleteMultiRecord)";
