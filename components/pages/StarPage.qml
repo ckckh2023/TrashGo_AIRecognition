@@ -125,7 +125,7 @@ Item {
                     id: thumbnailPreview
                     width: 80
                     height: 80
-                    source: "file:///" + appDirPath + "/data/thumbnails/" + model.currentTime + "_thumb.jpg"
+                    source: "file:///" + writablePath + "/data/thumbnails/" + model.currentTime + "_thumb.jpg"
                     anchors.left: parent.left
                     anchors.leftMargin: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -199,7 +199,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 80
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/icons/images/bookmark" + ( model.star ? "ed" : "" ) + "History.png"
+                    source: "qrc:/icons/assets/images/bookmark" + ( model.star ? "ed" : "" ) + "History.png"
 
                     property bool isHovered: false
                     property bool isFirstHovered: true
@@ -236,7 +236,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 40
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/icons/images/deleteHistory.png"
+                    source: "qrc:/icons/assets/images/deleteHistory.png"
 
                     property bool isHovered : false
 

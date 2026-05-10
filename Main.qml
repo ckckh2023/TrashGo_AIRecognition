@@ -55,7 +55,7 @@ ApplicationWindow {
                         width: 210
                         height: 73
                         fillMode: Image.Pad
-                        source: "/icons/images/TrashGo" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
+                        source: "/icons/assets/images/TrashGo" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                     }
 
                     Rectangle {
@@ -93,7 +93,7 @@ ApplicationWindow {
 */
                     SideBarButton {
                         text: "垃圾分类"
-                        icon.source: "/icons/images/classify.png"
+                        icon.source: "/icons/assets/images/classify.png"
                         icon.color: "transparent"
                         highlighted: currentTab === 1
                         onClicked: currentTab = 1
@@ -107,7 +107,7 @@ ApplicationWindow {
 
                     SideBarButton {
                         text: "历史记录"
-                        icon.source: "/icons/images/history.png"
+                        icon.source: "/icons/assets/images/history.png"
                         icon.color: "transparent"
                         highlighted: currentTab === 2
                         onClicked: currentTab = 2
@@ -121,7 +121,7 @@ ApplicationWindow {
 
                     SideBarButton {
                         text: "收藏夹"
-                        icon.source: "/icons/images/star.png"
+                        icon.source: "/icons/assets/images/star.png"
                         icon.color: "transparent"
                         highlighted: currentTab === 3
                         onClicked: currentTab = 3
@@ -136,7 +136,7 @@ ApplicationWindow {
 
                     SideBarButton {
                         text: "更多功能"
-                        icon.source: "/icons/images/function.png"
+                        icon.source: "/icons/assets/images/function.png"
                         icon.color: "transparent"
                         highlighted: currentTab === 4
                         onClicked: currentTab = 4
@@ -150,7 +150,7 @@ ApplicationWindow {
 
                     SideBarButton {
                         text: "设置"
-                        icon.source: "/icons/images/settings.png"
+                        icon.source: "/icons/assets/images/settings.png"
                         icon.color: "transparent"
                         highlighted: currentTab === 5
                         onClicked: currentTab = 5

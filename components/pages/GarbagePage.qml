@@ -31,7 +31,7 @@ Item {
 
             Image {
                 id: trashImagePreviewIcon
-                source: "qrc:/icons/images/imageImport.png"
+                source: "qrc:/icons/assets/images/imageImport.png"
                 width: 40
                 height: 40
                 anchors.left: trashImagePreviewZone.left
@@ -128,7 +128,7 @@ Item {
                     anchors.bottom: trashImageTips.top
                     anchors.bottomMargin: 10
                     anchors.horizontalCenter: trashImagePreview.horizontalCenter
-                    source: "qrc:/icons/images/" + ( trashImagePreview.dragHover ? "dragImage.png" : "addImage.png")
+                    source: "qrc:/icons/assets/images/" + ( trashImagePreview.dragHover ? "dragImage.png" : "addImage.png")
                     visible: trashImage.status !== Image.Ready
                 }
 
@@ -290,7 +290,7 @@ Item {
 
             Image {
                 id: resultIcon
-                source: "qrc:/icons/images/recognizeResult.png"
+                source: "qrc:/icons/assets/images/recognizeResult.png"
                 width: 40
                 height: 40
                 anchors.left: resultZone.left
@@ -316,13 +316,13 @@ Item {
                 source: {
                     if (garbageClassifier.hasImage) {
                         var type = garbageClassifier.garbageType
-                        if (type.indexOf("可回收") >= 0) return "qrc:/icons/images/classified_RecyclableWaste.png"
-                        else if (type.indexOf("厨余") >= 0) return "qrc:/icons/images/classified_FoodWaste.png"
-                        else if (type.indexOf("有害") >= 0) return "qrc:/icons/images/classified_HazardousWaste.png"
-                        else if (type.indexOf("其他") >= 0) return "qrc:/icons/images/classified_OtherWaste.png"
-                        else return "qrc:/icons/images/unclassified" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
+                        if (type.indexOf("可回收") >= 0) return "qrc:/icons/assets/images/classified_RecyclableWaste.png"
+                        else if (type.indexOf("厨余") >= 0) return "qrc:/icons/assets/images/classified_FoodWaste.png"
+                        else if (type.indexOf("有害") >= 0) return "qrc:/icons/assets/images/classified_HazardousWaste.png"
+                        else if (type.indexOf("其他") >= 0) return "qrc:/icons/assets/images/classified_OtherWaste.png"
+                        else return "qrc:/icons/assets/images/unclassified" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                     }
-                    else return "qrc:/icons/images/unclassified" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
+                    else return "qrc:/icons/assets/images/unclassified" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
                 }
 
                 width: 64
@@ -407,7 +407,7 @@ Item {
 
             FontLoader {
                 id: customFont
-                source: "file:///" + appDirPath + "/fonts/DingTalkJinBuTi.ttf"
+                source: "file:///" + appDirPath + "/assets/fonts/DingTalkJinBuTi.ttf"
             }
 
             Text {
@@ -439,10 +439,10 @@ Item {
 
                 Repeater {
                     model: ListModel {
-                        ListElement {color1: "#10e84040"; color2: "#e84040"; imageSource: "qrc:/icons/images/img_yh.jpg"; text1:"有害垃圾"}
-                        ListElement {color1: "#10b0e840"; color2: "#b0e840"; imageSource: "qrc:/icons/images/img_cy.jpg"; text1:"厨余垃圾"}
-                        ListElement {color1: "#1040b0e8"; color2: "#40b0e8"; imageSource: "qrc:/icons/images/img_khs.jpg"; text1:"可回收物"}
-                        ListElement {color1: "#10b0b0b0"; color2: "#b0b0b0"; imageSource: "qrc:/icons/images/img_qt.jpg"; text1:"其他垃圾"}
+                        ListElement {color1: "#10e84040"; color2: "#e84040"; imageSource: "qrc:/icons/assets/images/img_yh.jpg"; text1:"有害垃圾"}
+                        ListElement {color1: "#10b0e840"; color2: "#b0e840"; imageSource: "qrc:/icons/assets/images/img_cy.jpg"; text1:"厨余垃圾"}
+                        ListElement {color1: "#1040b0e8"; color2: "#40b0e8"; imageSource: "qrc:/icons/assets/images/img_khs.jpg"; text1:"可回收物"}
+                        ListElement {color1: "#10b0b0b0"; color2: "#b0b0b0"; imageSource: "qrc:/icons/assets/images/img_qt.jpg"; text1:"其他垃圾"}
                     }
 
                     delegate: Rectangle {

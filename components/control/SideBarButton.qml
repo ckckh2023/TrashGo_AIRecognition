@@ -94,7 +94,7 @@ Button {
 
         FontLoader {
             id: customFont
-            source: "file:///" + appDirPath + "/fonts/FZPinShangHei.ttf"
+            source: "file:///" + appDirPath + "/assets/fonts/FZPinShangHei.ttf"
         }
 
         Text {

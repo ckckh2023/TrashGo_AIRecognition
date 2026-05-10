@@ -3,9 +3,10 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QProcess>
+#include <QStandardPaths>
 
 IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
-    QString IniPath = QCoreApplication::applicationDirPath() + "/config/config.ini";
+    QString IniPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/config/config.ini";
     QDir dir;
     if (!dir.exists(QFileInfo(IniPath).path())) dir.mkpath(QFileInfo(IniPath).path());
 

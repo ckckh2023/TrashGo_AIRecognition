@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QStandardPaths>
 #include <QScreen>
 #include <QIcon>
 #include <QQuickWindow>
@@ -43,7 +44,9 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("screenHeight", screenHeight);
 
     QString appDirPath = QCoreApplication::applicationDirPath();
+    QString writablePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
     engine.rootContext()->setContextProperty("appDirPath", appDirPath);
+    engine.rootContext()->setContextProperty("writablePath", writablePath);
     engine.rootContext()->setContextProperty("initialRenderer", renderer);
 
     engine.rootContext()->setContextProperty("garbageClassifier", &GarbageClass);
@@ -63,6 +66,6 @@ int main(int argc, char *argv[]) {
         Qt::QueuedConnection);
     engine.loadFromModule("TrashGo", "Main");
 
-    app.setWindowIcon(QIcon(":/icons/images/icon_64.png"));
+    app.setWindowIcon(QIcon(":/icons/assets/images/icon_64.png"));
     return app.exec();
 }
