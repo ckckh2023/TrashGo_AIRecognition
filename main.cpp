@@ -34,8 +34,10 @@ int main(int argc, char *argv[]) {
         {"Vulkan", QSGRendererInterface::Vulkan}
     };
     const QString renderer = IniFileClass.renderer();
-    auto it = apiMap.constFind(renderer);
-    if (it != apiMap.constEnd()) QQuickWindow::setGraphicsApi(it.value());
+    if (renderer != "自动选择") {
+        auto it = apiMap.constFind(renderer);
+        if (it != apiMap.constEnd()) QQuickWindow::setGraphicsApi(it.value());
+    }
 
     QScreen *screen = QGuiApplication::primaryScreen();
     int screenWidth = screen->geometry().width();

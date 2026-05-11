@@ -20,9 +20,9 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
         m_settings->setValue("Model/Aliyun", "");
         m_settings->setValue("Limit/Interval", "500");
         #ifdef Q_OS_WIN
-            m_settings->setValue("Graphics/Renderer", "Direct3D");
+            m_settings->setValue("Graphics/Renderer", "自动选择");
         #else
-            m_settings->setValue("Graphics/Renderer", "OpenGL");
+            m_settings->setValue("Graphics/Renderer", "自动选择");
         #endif
         m_settings->sync();
     }
@@ -48,9 +48,9 @@ int IniFileHandler::timeLimit() const { return m_settings->value("Limit/Interval
 
 QString IniFileHandler::renderer() const {
     #ifdef Q_OS_WIN
-        return m_settings->value("Graphics/Renderer", "Direct3D").toString();
+        return m_settings->value("Graphics/Renderer", "自动选择").toString();
     #else
-        return m_settings->value("Graphics/Renderer", "OpenGL").toString();
+        return m_settings->value("Graphics/Renderer", "自动选择").toString();
     #endif
 }
 
