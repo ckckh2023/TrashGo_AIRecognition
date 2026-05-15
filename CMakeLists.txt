@@ -37,20 +37,23 @@ qt_add_qml_module(appTrashGo
         SOURCES include/HistoryRecord.h src/HistoryRecord.cpp
         SOURCES include/GitHubOnline.h src/GitHubOnline.cpp
         SOURCES include/IniFileHandler.h src/IniFileHandler.cpp
+        SOURCES include/GarbageData.h src/GarbageData.cpp
 
-        QML_FILES components/control/SideBarButton.qml
-        QML_FILES components/pages/HomePage.qml
-        QML_FILES components/pages/GarbagePage.qml
         QML_FILES components/animation/CustomizeRipple.qml
         QML_FILES components/control/StandardButton.qml
-        QML_FILES components/pages/SettingPage.qml
-        QML_FILES components/settings/SettingItem.qml
-        QML_FILES components/message/Toast.qml
+        QML_FILES components/control/SideBarButton.qml
         QML_FILES components/control/SettingComboBox.qml
-        QML_FILES components/pages/HistoryPage.qml
         QML_FILES components/control/SettingTextField.qml
+        QML_FILES components/message/Toast.qml
+        QML_FILES components/pages/HomePage.qml
+        QML_FILES components/pages/GarbagePage.qml
+        QML_FILES components/pages/SettingPage.qml
+        QML_FILES components/pages/HistoryPage.qml
         QML_FILES components/pages/StarPage.qml
+        QML_FILES components/pages/AboutDialog.qml
+        QML_FILES components/settings/SettingItem.qml
         QML_FILES components/theme/Theme.qml
+        QML_FILES components/pages/AboutDialog.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"

@@ -1,7 +1,7 @@
 #ifndef IMAGEPROCESSOR_H
 #define IMAGEPROCESSOR_H
 
-#include "include/HistoryRecord.h"
+#include "HistoryRecord.h"
 
 #include <QObject>
 #include <QImage>

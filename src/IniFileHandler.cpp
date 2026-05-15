@@ -1,4 +1,4 @@
-#include "include/IniFileHandler.h"
+#include "../include/IniFileHandler.h"
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
