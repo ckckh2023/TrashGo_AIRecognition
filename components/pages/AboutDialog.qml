@@ -14,6 +14,13 @@ Popup {
     anchors.centerIn: parent
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
+    enter: Transition {
+        NumberAnimation { property: "scale"; from: 0; to: 1; duration: 250; easing.type: Easing.OutBack }
+    }
+    exit: Transition {
+        NumberAnimation { property: "scale"; to: 0; duration: 150; easing.type: Easing.OutCubic }
+    }
+
     property Theme theme: Theme {}
 
     background: Rectangle {
@@ -104,7 +111,6 @@ Popup {
             }
         }
 
-
         Connections {
             target: gitHubOnline
             function onReleaseChecked(hasNew) {
@@ -119,6 +125,8 @@ Popup {
             }
         }
     }
+
+
 }
 
 

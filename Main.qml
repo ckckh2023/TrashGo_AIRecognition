@@ -64,7 +64,7 @@ ApplicationWindow {
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                     aboutLoader.active = true
-                                }
+                            }
                         }
 
                         Loader {
@@ -74,6 +74,9 @@ ApplicationWindow {
                             active: false
                             onLoaded: {
                                 item.open()
+                                item.closed.connect(function() {
+                                    aboutLoader.active = false;
+                                });
                             }
                         }
                     }
