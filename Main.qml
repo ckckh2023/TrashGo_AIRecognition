@@ -56,6 +56,12 @@ ApplicationWindow {
                         height: 73
                         fillMode: Image.Pad
                         source: "/icons/assets/images/TrashGo" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: aboutDialog.show()
+                        }
                     }
 
                     Rectangle {
@@ -259,5 +265,9 @@ ApplicationWindow {
 
     Component.onCompleted: {
         Qt.application.toastManager = toastManager
+    }
+
+    AboutDialog {
+        id: aboutDialog
     }
 }

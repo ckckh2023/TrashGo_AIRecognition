@@ -1,4 +1,5 @@
-#include "include/GarbageClassifier.h"
+#include "../include/GarbageClassifier.h"
+#include "../include/GarbageData.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
@@ -87,16 +88,6 @@ void GarbageClassifier::clearImage() {
     emit messageSentInfo("图片清除成功");
 }
 
-QString GarbageClassifier::mapToChineseType(int classId) {
-    if (MapToChinese.find(classId) != MapToChinese.end()) return MapToChinese[classId];
-    else return "未知结果";
-}
-
-QString GarbageClassifier::mapToSuggestion(int classId) {
-    if (MapToSuggestion.find(classId) != MapToSuggestion.end()) return MapToSuggestion[classId];
-    else return "暂无投放建议";
-}
-
 void GarbageClassifier::classify() {
     if (!m_hasImage || m_cvImage.empty()) {
         emit messageSentError("请先选择图片!");
@@ -154,20 +145,20 @@ void GarbageClassifier::classify() {
             double maxVal;
             cv::minMaxLoc(output.reshape(1,1), nullptr, &maxVal, nullptr, &maxLoc);
 
-            qDebug() << "分类ID:" << maxLoc.x << ", 置信度:" << maxVal << ", 分类数量:" << Categories.size() << "(GarbageClassifier-classify)";
+            qDebug() << "分类ID:" << maxLoc.x << ", 置信度:" << maxVal << ", 分类数量:" << GarbageData::categories().size() << "(GarbageClassifier-classify)";
 
             int classId = maxLoc.x;
-            if (classId < 0 || classId >= Categories.size()) {
+            if (classId < 0 || classId >= GarbageData::categories().size()) {
                 qDebug() << "分类结果无效(GarbageClassifier-classify)";
                 emit messageSentError("分类结果无效！");
                 return;
             }
 
             m_confidence = maxVal;
-            m_garbageType = mapToChineseType(classId);
+            m_garbageType = GarbageData::chineseNames().value(classId, "未知结果");
             m_result = QString("识别成功！种类：%1").arg(m_garbageType);
-            m_tips = mapToSuggestion(classId);
-            m_details = Categories[classId];
+            m_tips = GarbageData::suggestions().value(classId, "暂无投放建议");
+            m_details = GarbageData::categories().value(classId);
 
             cv::Mat resultImg = m_cvImage.clone();
 

@@ -1,4 +1,4 @@
-#include "include/GitHubOnline.h"
+#include "../include/GitHubOnline.h"
 #include <QNetworkRequest>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -51,10 +51,9 @@ void GitHubOnline::onNetworkReplyFinished() {
             QVersionNumber latestVer = QVersionNumber::fromString(m_lastestVersion);
 
             bool isNewer = !latestVer.isNull() && latestVer > currentVer;
-            qDebug() << isNewer << " " << m_lastestVersion << " " << m_releaseUrl << "(GitHubOnline-onNetworkReplyFinished";
+            qDebug() << isNewer << " " << m_lastestVersion << " " << m_releaseUrl << "(GitHubOnline-onNetworkReplyFinished)";
 
             emit releaseChecked(isNewer);
-            emit messageSentInfo("检测到新版本！最新版本：" + m_lastestVersion);
         }
         else emit messageSentError("无效的JSON响应！");
     }
