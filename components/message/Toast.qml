@@ -75,6 +75,7 @@ Rectangle {
         onEntered: root.isHovered = true
         onExited: root.isHovered = false
         onClicked: exitAnim.start()
+        cursorShape: Qt.PointingHandCursor
     }
 
     //悬停时略微放大，退出时恢复原状
