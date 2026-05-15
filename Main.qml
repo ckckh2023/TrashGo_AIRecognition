@@ -57,10 +57,26 @@ ApplicationWindow {
                         fillMode: Image.Pad
                         source: "/icons/assets/images/TrashGo" + ( root.theme.themeSet === "明亮" ? "" : "_dark" ) + ".png"
 
+                        property bool showAbout: false
+
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
-                            onClicked: aboutDialog.show()
+                            onClicked: {
+                                    aboutLoader.active = true
+                                    var popup = aboutLoader.item
+                                    if (popup) popup.open()
+                                }
+                        }
+
+                        Loader {
+                            id: aboutLoader
+                            source: "components/pages/AboutDialog.qml"
+                            asynchronous: true
+                            active: false
+                            onLoaded: {
+                                item.open()
+                            }
                         }
                     }
 

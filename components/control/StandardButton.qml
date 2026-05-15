@@ -21,6 +21,8 @@ Button {
         color: "#c0" + root.bgcolor
 
         Rectangle {
+            border.width: 1
+            border.color: root.theme.borderColor
             anchors.fill: parent
             radius: root.radius
             color: {
@@ -40,6 +42,10 @@ Button {
                 duration: 120
             }
         }
+    }
+
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
     }
 
     contentItem: Text {
