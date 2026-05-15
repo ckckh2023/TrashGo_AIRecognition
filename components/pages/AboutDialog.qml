@@ -105,12 +105,11 @@ Popup {
         }
 
 
-        // ── 更新检查结果 ──
         Connections {
             target: gitHubOnline
             function onReleaseChecked(hasNew) {
                 if (hasNew) Qt.application.toastManager.showToast("发现新版本: " + gitHubOnline.getLastestVersion(), "info")
-                else Qt.application.toastManager.showToast("已是最新版本", "info")
+                else Qt.application.toastManager.showToast("已是最新版本！", "info")
             }
             function onMessageSentInfo(msg) {
                 Qt.application.toastManager.showToast(msg, "info")

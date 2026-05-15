@@ -64,8 +64,6 @@ ApplicationWindow {
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                     aboutLoader.active = true
-                                    var popup = aboutLoader.item
-                                    if (popup) popup.open()
                                 }
                         }
 
@@ -281,9 +279,5 @@ ApplicationWindow {
 
     Component.onCompleted: {
         Qt.application.toastManager = toastManager
-    }
-
-    AboutDialog {
-        id: aboutDialog
     }
 }
