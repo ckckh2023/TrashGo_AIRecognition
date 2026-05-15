@@ -16,6 +16,10 @@ ComboBox {
         anchors.fill: parent
         radius: 6
         color: root.theme.card
+
+        HoverHandler {
+            cursorShape: Qt.PointingHandCursor
+        }
     }
 
     contentItem: Text {
@@ -87,6 +91,10 @@ ComboBox {
                 ColorAnimation {
                     duration: 80
                 }
+            }
+
+            HoverHandler {
+                cursorShape: Qt.PointingHandCursor
             }
         }
     }

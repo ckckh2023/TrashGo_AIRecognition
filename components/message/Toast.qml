@@ -64,7 +64,7 @@ Rectangle {
         target: root
         to: 0
         duration: root.isHovered ? 150 : 200
-        easing.type: Easing.InOutQuad
+        easing.type: Easing.OutCubic
         onStopped: root.closed()
     }
 
