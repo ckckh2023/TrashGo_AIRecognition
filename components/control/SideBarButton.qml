@@ -67,6 +67,10 @@ Button {
         }
     }
 
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
+    }
+
     function createRipple(point) {
         var component = Qt.createComponent("../animation/CustomizeRipple.qml")
         var diagonal = Math.sqrt(root.width * root.width + root.height * root.height)
