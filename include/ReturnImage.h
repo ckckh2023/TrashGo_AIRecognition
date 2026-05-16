@@ -3,8 +3,8 @@
 
 #include <QQuickImageProvider>
 #include <QImage>
-#include "GarbageClassifier.h"
-#include "ImageProcessor.h"
+#include "include/GarbageClassifier.h"
+#include "include/ImageProcessor.h"
 
 class ResultImageProvider : public QQuickImageProvider {
 public:

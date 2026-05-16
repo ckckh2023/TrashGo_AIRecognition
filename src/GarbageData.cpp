@@ -1,4 +1,4 @@
-#include "../include/GarbageData.h"
+#include "include/GarbageData.h"
 
 const QStringList& GarbageData::categories() {
     static const QStringList Categories = {

@@ -1,4 +1,4 @@
-#include "../include/ImageProcessor.h"
+#include "include/ImageProcessor.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>

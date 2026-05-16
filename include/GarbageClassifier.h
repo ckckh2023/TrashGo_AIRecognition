@@ -1,8 +1,8 @@
 #ifndef GARBAGECLASSIFIER_H
 #define GARBAGECLASSIFIER_H
 
-#include "HistoryRecord.h"
-#include "IniFileHandler.h"
+#include "include/HistoryRecord.h"
+#include "include/IniFileHandler.h"
 
 #include <QObject>
 #include <QImage>
@@ -26,6 +26,7 @@ class GarbageClassifier : public QObject {
 public:
     explicit GarbageClassifier(QObject *parent = nullptr);
     void setHistoryRecord(HistoryRecord *record) { m_historyRecord = record; }
+    void setIniFileHandler(IniFileHandler *handler) { m_iniHandler = handler; }
 
     Q_INVOKABLE void loadImage();
     Q_INVOKABLE void clearImage();
@@ -67,7 +68,7 @@ private:
     double m_confidence = 0.0;
 
     HistoryRecord *m_historyRecord = nullptr;
-    IniFileHandler *m_handler = nullptr;
+    IniFileHandler *m_iniHandler = nullptr;
     QNetworkAccessManager *m_networkManager;
 };
 

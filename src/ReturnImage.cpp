@@ -1,4 +1,4 @@
-#include "../include/ReturnImage.h"
+#include "include/ReturnImage.h"
 #include <QDebug>
 
 ResultImageProvider::ResultImageProvider(ImageProcessor* processor, GarbageClassifier *classifier) : QQuickImageProvider(QQuickImageProvider::Image), m_processor(processor), m_classifier(classifier) {
