@@ -1,4 +1,4 @@
-#include "../include/GitHubOnline.h"
+#include "include/GitHubOnline.h"
 #include <QNetworkRequest>
 #include <QJsonDocument>
 #include <QJsonObject>

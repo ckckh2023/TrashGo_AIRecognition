@@ -1,4 +1,4 @@
-#include "../include/HistoryRecord.h"
+#include "include/HistoryRecord.h"
 #include <QDateTime>
 #include <QCoreApplication>
 #include <QSqlError>

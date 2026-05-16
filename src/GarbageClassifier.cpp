@@ -1,5 +1,5 @@
-#include "../include/GarbageClassifier.h"
-#include "../include/GarbageData.h"
+#include "include/GarbageClassifier.h"
+#include "include/GarbageData.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFile>
@@ -16,7 +16,6 @@
 
 GarbageClassifier::GarbageClassifier(QObject *parent) : QObject(parent) {
     loadModel();
-    m_handler = new IniFileHandler(this);
     m_networkManager = new QNetworkAccessManager(this);
     connect(m_networkManager, &QNetworkAccessManager::finished, this, &GarbageClassifier::onBaiduApiReplyFinished);
 
@@ -94,8 +93,8 @@ void GarbageClassifier::classify() {
         return;
     }
 
-    if (m_handler->provider() == "百度云") {
-        if (m_handler->currentApiKey().isEmpty()) {
+    if (m_iniHandler->provider() == "百度云") {
+        if (m_iniHandler->currentApiKey().isEmpty()) {
             emit messageSentError("API密钥为空！");
             return;
         }
@@ -114,7 +113,7 @@ void GarbageClassifier::classify() {
         QNetworkRequest request(url);
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded; charset=utf-8");
 
-        QString signature = "AppCode/" + m_handler->currentApiKey();
+        QString signature = "AppCode/" + m_iniHandler->currentApiKey();
         request.setRawHeader("X-Bce-Signature", signature.toUtf8());
 
         QByteArray requestBody = "image=" + QUrl::toPercentEncoding(Base64Data);
@@ -124,7 +123,7 @@ void GarbageClassifier::classify() {
         QTimer::singleShot(30000, [baiduReply]() { if (baiduReply && baiduReply->isRunning()) baiduReply->abort(); });
         emit messageSentInfo("正在调用百度云API...");
     }
-    else if (m_handler->provider() == "本地模型") {
+    else if (m_iniHandler->provider() == "本地模型") {
         if (!m_modelLoaded) {
             qDebug() << "模型未加载(GarbageClassifier-classify)";
             emit messageSentError("模型未加载!");

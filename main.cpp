@@ -56,6 +56,8 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("historyRecord", &HistoryClass);
     engine.rootContext()->setContextProperty("iniFileHandler", &IniFileClass);
     engine.rootContext()->setContextProperty("gitHubOnline", &GitHubClass);
+
+    GarbageClass.setIniFileHandler(&IniFileClass);
     ProcessorClass.setHistoryRecord(&HistoryClass);
     GarbageClass.setHistoryRecord(&HistoryClass);
     engine.addImageProvider(QLatin1String("resultImage"), new ResultImageProvider(&ProcessorClass, &GarbageClass));
