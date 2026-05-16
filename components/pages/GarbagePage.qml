@@ -12,6 +12,15 @@ Item {
 
     property Theme theme : Theme {}
 
+    property bool canClassify: true
+
+    Timer {
+        id: classifyCooldown
+        interval: iniFileHandler.timeLimit
+        repeat: false
+        onTriggered: canClassify = true
+    }
+
     Rectangle {
         anchors.fill: parent
         color: root.theme.defaultTransparentColor
@@ -238,7 +247,13 @@ Item {
                     }
                 }
 
-                onClicked: garbageClassifier.classify()
+                onClicked: {
+                    if (canClassify) {
+                        canClassify = false
+                        garbageClassifier.classify()
+                        classifyCooldown.restart()
+                    }
+                }
             }
 
             StandardButton {

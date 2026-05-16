@@ -19,7 +19,6 @@ class GarbageClassifier : public QObject {
 
     Q_PROPERTY(QString getTips READ getTips NOTIFY resultChanged)
     Q_PROPERTY(QString result READ result NOTIFY resultChanged)
-    Q_PROPERTY(QString details READ details NOTIFY resultChanged)
     Q_PROPERTY(QString garbageType READ garbageType NOTIFY resultChanged)
     Q_PROPERTY(bool hasImage READ hasImage NOTIFY imageChanged)
 
