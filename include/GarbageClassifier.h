@@ -37,7 +37,6 @@ public:
     bool hasImage() const { return m_hasImage; }
     QString getTips() const { return m_tips; }
     QString result() const { return m_result; }
-    QString details() const { return m_details; }
     QString garbageType() const { return m_garbageType; }
 
 signals:
@@ -64,7 +63,6 @@ private:
     QString m_tips;
     QString m_result;
     QString m_garbageType;
-    QString m_details;
     double m_confidence = 0.0;
 
     HistoryRecord *m_historyRecord = nullptr;

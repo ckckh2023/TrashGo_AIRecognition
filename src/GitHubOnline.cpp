@@ -25,7 +25,8 @@ void GitHubOnline::checkNewVersion() {
         m_currentReply->abort();
         m_currentReply->deleteLater();
     }
-    else m_currentReply = m_networkManager.get(request);
+
+    m_currentReply = m_networkManager.get(request);
 }
 
 void GitHubOnline::onNetworkReplyFinished() {

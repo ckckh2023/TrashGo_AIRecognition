@@ -19,11 +19,7 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
         m_settings->setValue("Model/Baidu", "");
         m_settings->setValue("Model/Aliyun", "");
         m_settings->setValue("Limit/Interval", "500");
-        #ifdef Q_OS_WIN
-            m_settings->setValue("Graphics/Renderer", "自动选择");
-        #else
-            m_settings->setValue("Graphics/Renderer", "自动选择");
-        #endif
+        m_settings->setValue("Graphics/Renderer", "自动选择");
         m_settings->sync();
     }
 }
