@@ -82,6 +82,25 @@ void GitHubOnline::openReleasePage() {
     else emit messageSentError("无法打开浏览器，请手动访问：" + m_releaseUrl);
 }
 
+void GitHubOnline::openOfficalPage(const QString &offical) {
+    if (offical == "GitHub") {
+        bool success = QDesktopServices::openUrl(QUrl("https://github.com/ckckh2023/TrashGo_AIRecognition"));
+        if (!success) emit messageSentError("无法打开浏览器，请手动访问：https://github.com/ckckh2023/TrashGo_AIRecognition");
+    }
+    else if (offical == "GitLab") {
+        bool success = QDesktopServices::openUrl(QUrl("https://jihulab.com/ckckh2023/TrashGo_AIRecognition"));
+        if (!success) emit messageSentError("无法打开浏览器，请手动访问：https://jihulab.com/ckckh2023/TrashGo_AIRecognition");
+    }
+    else if (offical == "Gitee") {
+        bool success = QDesktopServices::openUrl(QUrl("https://gitee.com/ckckh2023/TrashGo_AIRecognition"));
+        if (!success) emit messageSentError("无法打开浏览器，请手动访问：https://gitee.com/ckckh2023/TrashGo_AIRecognition");
+    }
+    else if (offical == "GitCode") {
+        bool success = QDesktopServices::openUrl(QUrl("https://gitcode.com/ckckh2023/TrashGo_AIRecognition"));
+        if (!success) emit messageSentError("无法打开浏览器，请手动访问：https://gitcode.com/ckckh2023/TrashGo_AIRecognition");
+    }
+}
+
 QString GitHubOnline::getDayTips() {
     QDate today = QDate::currentDate();
     uint hashValue = qHash(today);
