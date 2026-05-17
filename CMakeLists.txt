@@ -101,6 +101,14 @@ qt6_add_resources(appTrashGo "app_icons"
         assets/images/img_qt.jpg
         assets/images/img_yh.jpg
 )
+qt6_add_resources(appTrashGo "app_about"
+    PREFIX "/about"
+    FILES
+        assets/images/GitHubicon.svg
+        assets/images/Giteeicon.svg
+        assets/images/Qticon.png
+        assets/images/OpenCVicon.png
+)
 
 if(WIN32)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/version.rc @ONLY)

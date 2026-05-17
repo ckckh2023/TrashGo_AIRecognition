@@ -15,6 +15,7 @@ public:
     explicit GitHubOnline(QObject *parent = nullptr);
     Q_INVOKABLE void checkNewVersion();
     Q_INVOKABLE void openReleasePage();
+    Q_INVOKABLE void openOfficalPage(const QString &offical);
 
     Q_INVOKABLE QString getCurrentVersion() const { return m_currentVersion; }
     Q_INVOKABLE QString getLastestVersion() const { return m_lastestVersion; }
