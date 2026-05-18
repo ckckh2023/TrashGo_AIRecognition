@@ -9,6 +9,8 @@
 [![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition?include_prereleases)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
 [![Stars](https://img.shields.io/github/stars/ckckh2023/TrashGo_AIRecognition?style=social)]()
 
+**其他语言:** [English](README.en.md)
+
 ## 项目简介
 TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨在帮助用户快速识别图像、文字、语音等信息，并提供趣味互动体验。无论是垃圾分类、人脸识别，TrashGo 都能轻松应对。
 
@@ -58,5 +60,6 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 - 项目主页：[Github](https://github.com/ckckh2023/TrashGo_AIRecognition) | [GitLab](https://jihulab.com/ckckh2023/TrashGo_AIRecognition) | [Gitee](https://gitee.com/ckckh2023/TrashGo_AIRecognition) | [GitCode](https://gitcode.com/ckckh2023/TrashGo_AIRecognition)
 
 ## 致谢
-- 感谢 [Qt](https://www.qt.io/) 优秀的跨平台框架
-- 所有贡献者和支持者
+- 感谢 [Qt](https://www.qt.io/) 提供的优秀跨平台框架
+- 感谢 [OpenCV](https://opencv.org/) 提供的强大计算机视觉处理技术
+- 感谢所有贡献者与支持者的热情帮助
