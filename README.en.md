@@ -57,7 +57,7 @@ This project is licensed under the MIT License – see the [LICENSE](LICENSE) fi
 
 - **Authors**: [ckckh2023](https://github.com/ckckh2023) | [TangibleDreams913](https://github.com/TangibleDreams913) | [cloudy-rhh](http://github.com/cloudy-rhh)
 - **Email**: fightened2023@foxmail.com | Tangibledreams@yeah.net
-- **Project Homepages**: [Github](https://github.com/ckckh2023/TrashGo_AIRecognition) | [GitLab](https://jihulab.com/ckckh2023/TrashGo_AIRecognition) | [Gitee](https://gitee.com/ckckh2023/TrashGo_AIRecognition) | [GitCode](https://gitcode.com/ckckh2023/TrashGo_AIRecognition)
+- **Project Homepages**: [Github](https://github.com/ckckh2023/TrashGo_AIRecognition) | [Gitee](https://gitee.com/ckckh2023/TrashGo_AIRecognition) | [GitCode](https://gitcode.com/ckckh2023/TrashGo_AIRecognition)
 
 ## Acknowledgements
 
