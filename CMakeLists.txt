@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(TrashGo VERSION 2.2.2 LANGUAGES CXX)
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 请将OpenCV文件夹置于CMakeLists.txt同级目录
@@ -29,31 +30,30 @@ qt_add_executable(appTrashGo
 
 qt_add_qml_module(appTrashGo
     URI TrashGo
-    QML_FILES
-        Main.qml
-        SOURCES include/GarbageClassifier.h src/GarbageClassifier.cpp
-        SOURCES include/ImageProcessor.h src/ImageProcessor.cpp
-        SOURCES include/ReturnImage.h src/ReturnImage.cpp
-        SOURCES include/HistoryRecord.h src/HistoryRecord.cpp
-        SOURCES include/GitHubOnline.h src/GitHubOnline.cpp
-        SOURCES include/IniFileHandler.h src/IniFileHandler.cpp
-        SOURCES include/GarbageData.h src/GarbageData.cpp
+    SOURCES include/GarbageClassifier.h src/GarbageClassifier.cpp
+    SOURCES include/ImageProcessor.h src/ImageProcessor.cpp
+    SOURCES include/ReturnImage.h src/ReturnImage.cpp
+    SOURCES include/HistoryRecord.h src/HistoryRecord.cpp
+    SOURCES include/GitHubOnline.h src/GitHubOnline.cpp
+    SOURCES include/IniFileHandler.h src/IniFileHandler.cpp
+    SOURCES include/GarbageData.h src/GarbageData.cpp
 
-        QML_FILES components/animation/CustomizeRipple.qml
-        QML_FILES components/control/StandardButton.qml
-        QML_FILES components/control/SideBarButton.qml
-        QML_FILES components/control/SettingComboBox.qml
-        QML_FILES components/control/SettingTextField.qml
-        QML_FILES components/message/Toast.qml
-        QML_FILES components/pages/HomePage.qml
-        QML_FILES components/pages/GarbagePage.qml
-        QML_FILES components/pages/SettingPage.qml
-        QML_FILES components/pages/HistoryPage.qml
-        QML_FILES components/pages/StarPage.qml
-        QML_FILES components/pages/AboutDialog.qml
-        QML_FILES components/settings/SettingItem.qml
-        QML_FILES components/theme/Theme.qml
-        QML_FILES components/pages/AboutDialog.qml
+    QML_FILES Main.qml
+    QML_FILES components/animation/CustomizeRipple.qml
+    QML_FILES components/control/StandardButton.qml
+    QML_FILES components/control/SideBarButton.qml
+    QML_FILES components/control/SettingComboBox.qml
+    QML_FILES components/control/SettingTextField.qml
+    QML_FILES components/message/Toast.qml
+    QML_FILES components/pages/HomePage.qml
+    QML_FILES components/pages/GarbagePage.qml
+    QML_FILES components/pages/SettingPage.qml
+    QML_FILES components/pages/HistoryPage.qml
+    QML_FILES components/pages/StarPage.qml
+    QML_FILES components/pages/AboutDialog.qml
+    QML_FILES components/settings/SettingItem.qml
+    QML_FILES components/theme/Theme.qml
+    QML_FILES components/pages/AboutDialog.qml
 )
 
 qt6_add_resources(appTrashGo "app_icons"
