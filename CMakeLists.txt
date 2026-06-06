@@ -6,7 +6,8 @@ configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 请将OpenCV文件夹置于CMakeLists.txt同级目录
+# 请将 OpenCV 文件夹放在与 CMakeLists.txt 相同的目录下（建议 OpenCV 版本不低于 4.12.0）
+# Place the OpenCV folder in the same directory as CMakeLists.txt (OpenCV version 4.12.0 or higher is recommended)
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
     set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
 elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/opencv/lib/cmake/opencv4")
