@@ -63,3 +63,13 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 - 感谢 [Qt](https://www.qt.io/) 提供的优秀跨平台框架
 - 感谢 [OpenCV](https://opencv.org/) 提供的强大计算机视觉处理技术
 - 感谢所有贡献者与支持者的热情帮助
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=ckckh2023%2FTrashGo_AIRecognition&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=top-left" />
+ </picture>
+</a>
