@@ -64,3 +64,13 @@ This project is licensed under the MIT License – see the [LICENSE](LICENSE) fi
 - Thanks to [Qt](https://www.qt.io/) for its excellent cross-platform framework.
 - Thanks to [OpenCV](https://opencv.org/) for its powerful computer vision processing technology.
 - Thanks to all contributors and supporters for their enthusiastic assistance.
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=ckckh2023%2FTrashGo_AIRecognition&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=top-left" />
+ </picture>
+</a>
