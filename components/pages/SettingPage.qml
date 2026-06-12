@@ -55,6 +55,23 @@ Item {
                 }
             }
 
+            StandardButton {
+                visible: initialLocalModel !== iniFileHandler.localProvider && model.configKey === "localProvider"
+                height: parent.height / 3
+                width: height
+                text: "R"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 34
+                focusPolicy: Qt.StrongFocus
+                radius: height / 2
+                bgcolor: String(root.theme.sideBarButton).slice(3,10)
+
+                onClicked: {
+                    iniFileHandler.restartApp()
+                }
+            }
+
             //变更渲染器后的重启按钮
             StandardButton {
                 visible: initialRenderer !== iniFileHandler.renderer && model.configKey === "renderer"
@@ -115,6 +132,16 @@ Item {
             textFieldTips: "请在此粘贴/输入您的API key"
             configKey: "currentApiKey"
             iconSource: "qrc:/icons/assets/images/apiKeySetting.png"
+            enabled: true
+        }
+
+        ListElement {
+            text1: "本地模型"
+            text2: "选择更适合的本地模型以提高精确度"
+            ctrlType: "combobox"
+            modelValues: "ResNet,MobileNet"
+            configKey: "localProvider"
+            iconSource: "qrc:/icons/assets/images/localModel.png"
             enabled: true
         }
 

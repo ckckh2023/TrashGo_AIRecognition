@@ -91,6 +91,7 @@ qt6_add_resources(appTrashGo "app_icons"
         assets/images/themeSetting.png
         assets/images/apiProviderSetting.png
         assets/images/apiKeySetting.png
+        assets/images/localModel.png
         assets/images/rendererSetting.png
 
         assets/images/bookmarkHistory.png
@@ -151,6 +152,9 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/model/ResNet.onnx
         $<TARGET_FILE_DIR:appTrashGo>/model/ResNet.onnx
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_SOURCE_DIR}/model/MobileNet.onnx
+        $<TARGET_FILE_DIR:appTrashGo>/model/MobileNet.onnx
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts/FZPinShangHei.ttf
         $<TARGET_FILE_DIR:appTrashGo>/assets/fonts/FZPinShangHei.ttf

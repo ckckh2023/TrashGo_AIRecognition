@@ -20,10 +20,17 @@ int main(int argc, char *argv[]) {
     app.setApplicationName(APP_NAME);
     app.setApplicationVersion(APP_VERSION);
 
-    ImageProcessor ProcessorClass;
-    GarbageClassifier GarbageClass;
-    HistoryRecord HistoryClass;
     IniFileHandler IniFileClass;
+    HistoryRecord HistoryClass;
+
+    ImageProcessor ProcessorClass;
+    ProcessorClass.setHistoryRecord(&HistoryClass);
+
+    GarbageClassifier GarbageClass;
+    GarbageClass.setIniFileHandler(&IniFileClass);
+    GarbageClass.setHistoryRecord(&HistoryClass);
+    GarbageClass.init();
+
     GitHubOnline GitHubClass;
 
     QQmlApplicationEngine engine;
@@ -38,6 +45,7 @@ int main(int argc, char *argv[]) {
         auto it = apiMap.constFind(renderer);
         if (it != apiMap.constEnd()) QQuickWindow::setGraphicsApi(it.value());
     }
+    const QString localModel = IniFileClass.localProvider();
 
     QScreen *screen = QGuiApplication::primaryScreen();
     int screenWidth = screen->geometry().width();
@@ -50,6 +58,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("appDirPath", appDirPath);
     engine.rootContext()->setContextProperty("writablePath", writablePath);
     engine.rootContext()->setContextProperty("initialRenderer", renderer);
+    engine.rootContext()->setContextProperty("initialLocalModel", localModel);
 
     engine.rootContext()->setContextProperty("garbageClassifier", &GarbageClass);
     engine.rootContext()->setContextProperty("imageProcessor", &ProcessorClass);
@@ -57,9 +66,6 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("iniFileHandler", &IniFileClass);
     engine.rootContext()->setContextProperty("gitHubOnline", &GitHubClass);
 
-    GarbageClass.setIniFileHandler(&IniFileClass);
-    ProcessorClass.setHistoryRecord(&HistoryClass);
-    GarbageClass.setHistoryRecord(&HistoryClass);
     engine.addImageProvider(QLatin1String("resultImage"), new ResultImageProvider(&ProcessorClass, &GarbageClass));
 
     QObject::connect(
