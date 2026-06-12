@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(TrashGo VERSION 2.2.3 LANGUAGES CXX)
+project(TrashGo VERSION 2.3.0 LANGUAGES CXX)
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(CMAKE_CXX_STANDARD 17)
