@@ -38,6 +38,8 @@ public:
     QString result() const { return m_result; }
     QString garbageType() const { return m_garbageType; }
 
+    void init();
+
 signals:
     void imageChanged();
     void resultChanged();

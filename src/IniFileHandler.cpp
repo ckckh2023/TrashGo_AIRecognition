@@ -13,15 +13,18 @@ IniFileHandler::IniFileHandler(QObject *parent) : QObject(parent) {
     m_settings = new QSettings(IniPath, QSettings::IniFormat, this);
 
     if (!QFile::exists(IniPath)) {
-        m_settings->setValue("Appearance/Theme", "跟随系统");
-        m_settings->setValue("Appearance/Color", "蓝色");
-        m_settings->setValue("Model/Provider", "本地模型");
-        m_settings->setValue("Model/Baidu", "");
-        m_settings->setValue("Model/Aliyun", "");
-        m_settings->setValue("Limit/Interval", "500");
-        m_settings->setValue("Graphics/Renderer", "自动选择");
+        ensureSettingExists("Appearance/Theme", "跟随系统");
+        ensureSettingExists("Appearance/Color", "蓝色");
+        ensureSettingExists("Model/Provider", "本地模型");
+        ensureSettingExists("Model/Baidu", "");
+        ensureSettingExists("Model/Aliyun", "");
+        ensureSettingExists("Limit/Interval", "500");
+        ensureSettingExists("LocalModel/Provider", "ResNet");
+        ensureSettingExists("Graphics/Renderer", "自动选择");
         m_settings->sync();
     }
+
+    qDebug() << "Ini配置项引擎初始化成功(IniFileHandler-IniFileHandler)";
 }
 
 IniFileHandler::~IniFileHandler() { }
@@ -41,6 +44,8 @@ QString IniFileHandler::currentApiKey() const {
 }
 
 int IniFileHandler::timeLimit() const { return m_settings->value("Limit/Interval", "500").toInt(); }
+
+QString IniFileHandler::localProvider() const { return m_settings->value("LocalModel/Provider", "ResNet").toString(); }
 
 QString IniFileHandler::renderer() const {
     #ifdef Q_OS_WIN
@@ -109,6 +114,18 @@ void IniFileHandler::setTimeLimit(int interval) {
     }
 }
 
+void IniFileHandler::setLocalProvider(const QString &localProvider) {
+    if (localProvider == this->localProvider()) return;
+    else {
+        m_settings->setValue("LocalModel/Provider", localProvider);
+        m_settings->sync();
+
+        emit localProviderChanged();
+        emit messageSentInfo("本地模型已变更为：" + localProvider);
+        emit messageSentInfo("此操作需要重启软件！点击设置项的右侧按钮重启");
+    }
+}
+
 void IniFileHandler::setRenderer(const QString &renderer) {
     if (renderer == this->renderer()) return;
     else {
@@ -119,6 +136,11 @@ void IniFileHandler::setRenderer(const QString &renderer) {
         emit messageSentInfo("渲染器已变更为：" + renderer);
         emit messageSentInfo("此操作需要重启软件！点击设置项的右侧按钮重启");
     }
+}
+
+void IniFileHandler::ensureSettingExists(const QString &key, const QVariant &defaultValue) {
+    if (!m_settings->contains(key)) m_settings->setValue(key, defaultValue);
+    else return;
 }
 
 void IniFileHandler::restartApp(int exitCode) {

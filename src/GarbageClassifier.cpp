@@ -15,7 +15,6 @@
 #include <QNetworkRequest>
 
 GarbageClassifier::GarbageClassifier(QObject *parent) : QObject(parent) {
-    loadModel();
     m_networkManager = new QNetworkAccessManager(this);
     connect(m_networkManager, &QNetworkAccessManager::finished, this, &GarbageClassifier::onBaiduApiReplyFinished);
 
@@ -23,7 +22,8 @@ GarbageClassifier::GarbageClassifier(QObject *parent) : QObject(parent) {
 }
 
 void GarbageClassifier::loadModel() {
-    QString ModelPath = QCoreApplication::applicationDirPath() + "/model/ResNet.onnx";
+    QString modelName = m_iniHandler->localProvider();
+    QString ModelPath = QCoreApplication::applicationDirPath() + "/model/" + modelName + ".onnx";
 
     if (!QFile::exists(ModelPath)) {
         qDebug() << "ResNet.onnx模型组件缺失(GarbageClassifier-loadModel)";
@@ -44,6 +44,8 @@ void GarbageClassifier::loadModel() {
         m_modelLoaded = false;
     }
 }
+
+void GarbageClassifier::init() { loadModel(); }
 
 void GarbageClassifier::loadImage() {
     qDebug() << "加载图片：" + ImagePath << "(GarbageClassifier-loadImage)";
