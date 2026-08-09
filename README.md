@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-red?logo=opensourceinitiative&logoColor=white)](LICENSE)
 [![Qt](https://img.shields.io/badge/Qt-6.10.3-brightgreen?logo=qt&logoColor=white)](https://www.qt.io/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-blue?logo=windows&logoColor=white)]()
-[![GitHub release](https://img.shields.io/github/v/Release/ckckh2023/TrashGo_AIRecognition?include_prereleases&logo=github)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
+[![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition?include_prereleases&logo=github)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
 [![Stars](https://img.shields.io/github/stars/ckckh2023/TrashGo_AIRecognition?style=social&logo=github)]()
 
 **其他语言:** [English](README.en.md)
