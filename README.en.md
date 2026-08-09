@@ -2,7 +2,7 @@
 
 <img width="375" height="131" alt="TrashGo" src="https://github.com/user-attachments/assets/6f6b24e6-d62f-4ea6-9a77-030f98b35845" />
 
-[![License](https://img.shields.io/badge/license-MIT-red.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-MIT-red.svg)](LICENSE)
 [![Qt](https://img.shields.io/badge/Qt-6.10.3-brightgreen)](https://www.qt.io/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue)]()
 [![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition?include_prereleases)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
