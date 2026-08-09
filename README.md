@@ -3,7 +3,7 @@
 
 
 
-[![License](https://img.shields.io/badge/license-MIT-red.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-MIT-red.svg)](LICENSE)
 [![Qt](https://img.shields.io/badge/Qt-6.10.3-brightgreen)](https://www.qt.io/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue)]()
 [![GitHub release](https://img.shields.io/github/v/release/ckckh2023/TrashGo_AIRecognition?include_prereleases)](https://github.com/ckckh2023/TrashGo_AIRecognition/releases)
