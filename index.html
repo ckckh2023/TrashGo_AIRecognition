@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrashGo 智识助手 - AI 垃圾分类识别</title>
+    <meta name="description" content="TrashGo 智识助手：基于 Qt 6 + OpenCV 的桌面端 AI 垃圾分类识别应用，支持 4 大类 120 种细分类别，本地模型与百度云双引擎。">
+    <link rel="icon" type="image/png" href="assets/images/icon_128.png">
+    <script>
+        (function () {
+            var theme = 'light';
+            var color = 'blue';
+            try {
+                theme = localStorage.getItem('trashgo_theme') || 'light';
+                color = localStorage.getItem('trashgo_color') || 'blue';
+            } catch (e) { }
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('data-color', color);
+        })();
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app" v-cloak>
+        <header class="tg-header">
+            <div class="tg-header-inner">
+                <a class="tg-logo" href="#top" @click.prevent="scrollTo('top')">
+                    <img class="tg-logo-img" :src="logoSrc" alt="TrashGo">
+                </a>
+                <nav class="tg-nav">
+                    <a v-for="item in nav" :key="item.id" href="#" @click.prevent="scrollTo(item.id)">{{ item.text }}</a>
+                </nav>
+                <div class="tg-header-actions">
+                    <button class="tg-icon-btn" :title="'切换配色：' + colorName" @click="cycleColor">
+                        <span class="tg-color-dot" :style="{ background: highlightColor }"></span>
+                    </button>
+                    <button class="tg-icon-btn" title="切换主题" @click="toggleTheme">
+                        <svg v-if="theme === 'light'" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 9.5A5.5 5.5 0 0 1 6.5 3 5.5 5.5 0 1 0 13 9.5Z"></path>
+                        </svg>
+                        <svg v-else viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                            <circle cx="8" cy="8" r="3.2"></circle>
+                            <path d="M8 1.5v1.8M8 12.7v1.8M1.5 8h1.8M12.7 8h1.8M3.4 3.4l1.3 1.3M11.3 11.3l1.3 1.3M12.7 3.4l-1.3 1.3M4.7 11.3l-1.3 1.3"></path>
+                        </svg>
+                    </button>
+                    <a class="tg-ghost-btn" :href="links.github" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main id="top" class="tg-main">
+            <section class="tg-hero">
+                <div class="tg-hero-badge">
+                    <span class="tg-dot"></span> v{{ version }} · 基于 Qt 6.10.3 + OpenCV 4.12.0
+                </div>
+                <h1 class="tg-hero-title">TrashGo 智识助手</h1>
+                <p class="tg-hero-subtitle">用 AI 看懂每一件垃圾，让分类不再凭感觉</p>
+                <p class="tg-hero-desc">桌面端垃圾分类识别应用，上传图片即可识别 4 大类 120 种细分类别，提供投放建议。支持本地 ONNX 模型离线识别与百度云 API 双引擎切换。</p>
+                <div class="tg-hero-actions">
+                    <a class="tg-primary-btn" :href="links.release" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 2v9M4.5 7.5 8 11l3.5-3.5M2 14h12"></path>
+                        </svg>
+                        下载最新版本
+                    </a>
+                    <a class="tg-secondary-btn" :href="links.github" target="_blank" rel="noopener noreferrer">
+                        查看源码
+                    </a>
+                </div>
+                <div class="tg-hero-categories">
+                    <div v-for="cat in categories" :key="cat.key" class="tg-cat-card">
+                        <img class="tg-cat-icon" :src="'assets/images/' + cat.icon" :alt="cat.name">
+                        <div class="tg-cat-name">{{ cat.name }}</div>
+                        <div class="tg-cat-count">{{ cat.count }} 种</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="tg-section">
+                <h2 class="tg-section-title">核心功能</h2>
+                <p class="tg-section-desc">五大功能模块，覆盖识别、记录、收藏与个性化设置</p>
+                <div class="tg-feature-grid">
+                    <article v-for="f in features" :key="f.title" class="tg-feature">
+                        <span class="tg-feature-icon" v-html="f.icon"></span>
+                        <h3 class="tg-feature-title">{{ f.title }}</h3>
+                        <p class="tg-feature-desc">{{ f.desc }}</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="how" class="tg-section">
+                <h2 class="tg-section-title">识别流程</h2>
+                <p class="tg-section-desc">三步完成一次垃圾分类识别</p>
+                <div class="tg-steps">
+                    <div v-for="(step, i) in steps" :key="i" class="tg-step">
+                        <div class="tg-step-num">{{ i + 1 }}</div>
+                        <h3 class="tg-step-title">{{ step.title }}</h3>
+                        <p class="tg-step-desc">{{ step.desc }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tech" class="tg-section">
+                <h2 class="tg-section-title">技术栈</h2>
+                <p class="tg-section-desc">成熟的桌面端技术选型，兼顾性能与跨平台</p>
+                <div class="tg-tech-grid">
+                    <article v-for="t in techStack" :key="t.name" class="tg-tech">
+                        <img v-if="t.img" class="tg-tech-img" :src="'assets/images/' + t.img" :alt="t.name">
+                        <span v-else class="tg-tech-emoji">{{ t.emoji }}</span>
+                        <div class="tg-tech-info">
+                            <div class="tg-tech-name">{{ t.name }}</div>
+                            <div class="tg-tech-version">{{ t.version }}</div>
+                            <div class="tg-tech-role">{{ t.role }}</div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="categories" class="tg-section">
+                <h2 class="tg-section-title">分类一览</h2>
+                <p class="tg-section-desc">4 大类 · 120 种细分类别 · 每种均附投放建议</p>
+                <div class="tg-cat-tabs">
+                    <button v-for="cat in categories" :key="cat.key"
+                            class="tg-cat-tab" :class="{ active: activeCat === cat.key }"
+                            @click="activeCat = cat.key">
+                        <span class="tg-cat-tab-dot" :style="{ background: cat.color }"></span>
+                        {{ cat.name }}
+                    </button>
+                </div>
+                <div class="tg-cat-detail">
+                    <div class="tg-cat-detail-head">
+                        <img class="tg-cat-detail-icon" :src="'assets/images/' + activeCategoryObj.icon" :alt="activeCategoryObj.name">
+                        <div>
+                            <h3 class="tg-cat-detail-name">{{ activeCategoryObj.name }}</h3>
+                            <p class="tg-cat-detail-tip">{{ activeCategoryObj.tip }}</p>
+                        </div>
+                    </div>
+                    <div class="tg-cat-tags">
+                        <span v-for="item in activeCategoryObj.items" :key="item" class="tg-tag">{{ item }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="download" class="tg-section tg-download">
+                <h2 class="tg-section-title">立即体验</h2>
+                <p class="tg-section-desc">从 GitHub Releases 下载对应平台的安装包，或查看源码</p>
+                <div class="tg-download-actions">
+                    <a class="tg-primary-btn" :href="links.release" target="_blank" rel="noopener noreferrer">前往 GitHub Releases</a>
+                    <a class="tg-secondary-btn" :href="links.gitee" target="_blank" rel="noopener noreferrer">Gitee 镜像</a>
+                </div>
+                <div class="tg-download-tip">提示：首次使用本地模型需将 ResNet.onnx / MobileNet.onnx 放入 model 目录；选择百度云引擎需在设置中填入 API Key。</div>
+            </section>
+        </main>
+
+        <footer class="tg-footer">
+            <div class="tg-footer-inner">
+                <div class="tg-footer-brand">
+                    <img class="tg-footer-logo" :src="logoSrc" alt="TrashGo">
+                    <span>TrashGo 智识助手 · v{{ version }}</span>
+                </div>
+                <div class="tg-footer-links">
+                    <a :href="links.github" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a :href="links.gitee" target="_blank" rel="noopener noreferrer">Gitee</a>
+                    <a :href="links.release" target="_blank" rel="noopener noreferrer">Releases</a>
+                    <a :href="links.github + '#readme'" target="_blank" rel="noopener noreferrer">使用说明</a>
+                </div>
+                <div class="tg-footer-copy">版权所有 © GitHub-ckckh2023 · Powered by Qt 6 & OpenCV</div>
+            </div>
+        </footer>
+
+        <transition name="tg-toast">
+            <div v-if="toast.show" class="tg-toast" :class="'tg-toast-' + toast.type">{{ toast.text }}</div>
+        </transition>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
