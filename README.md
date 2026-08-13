@@ -64,10 +64,10 @@ TrashGo 是一款集多种图像信息识别功能于一体的智能工具，旨
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=ckckh2023%2FTrashGo_AIRecognition&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=ckckh2023%2FTrashGo_AIRecognition&type=date&legend=bottom-right">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&theme=dark&legend=bottom-right&sealed_token=kyyb2sciyjDIr7LOyWzLRnMWismoTtBzk5xPGX0VbyStFg4wxzbxG7MNJ4s2k9vg7JB1rhlO6AjjwOPJ--aTV4mNSwOP3qdz_bj-UpaG37o9lX6gtdvgdg" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=bottom-right&sealed_token=kyyb2sciyjDIr7LOyWzLRnMWismoTtBzk5xPGX0VbyStFg4wxzbxG7MNJ4s2k9vg7JB1rhlO6AjjwOPJ--aTV4mNSwOP3qdz_bj-UpaG37o9lX6gtdvgdg" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ckckh2023/TrashGo_AIRecognition&type=date&legend=bottom-right&sealed_token=kyyb2sciyjDIr7LOyWzLRnMWismoTtBzk5xPGX0VbyStFg4wxzbxG7MNJ4s2k9vg7JB1rhlO6AjjwOPJ--aTV4mNSwOP3qdz_bj-UpaG37o9lX6gtdvgdg" />
  </picture>
 </a>
